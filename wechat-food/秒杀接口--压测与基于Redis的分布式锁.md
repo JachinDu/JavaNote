@@ -1,0 +1,231 @@
+
+
+# 秒杀接口--压测与基于Redis的分布式锁
+
+
+
+## 0、使用 apache ab压测工具
+
+命令举例：
+
+![image-20190827223420434](/Users/jc/Library/Application Support/typora-user-images/image-20190827223420434.png)
+
+
+
+
+
+测压工具：Apache ab
+
+- 命令：`ab -n 100 -c 100 http://www.XXXX.com`
+
+> 这里-n表示发出100个请求，-c模拟100个线程并发，相当于100个人同时访问，最后是我们要测试的url； 也可以这样写: `ab -t 60 -c 100 http://www.XXX.com/`
+> -t表示60秒，-c表示100个并发，它会在连续60秒内不停地发请求。
+> 更详细的命令说明，见[官方文档](http://httpd.apache.org/docs/2.0/programs/ab.html)
+
+
+
+## 1、高并发带来的“超卖”现象
+
+即：**<font color='red'>订单数 > 库存减少数</font>**
+
+如：“国庆活动，皮蛋粥特价，限量份100000 还剩：99992 份 该商品成功下单用户数目：1000 人”
+
+解决方法见下文。
+
+## 2、synchronized关键字实现锁
+
+在秒杀业务方法上加`synchronized`关键字。
+
+如：
+
+```java
+@Override
+public synchronized void orderProductMockDiffUser(String productId)
+{
+   
+    //1.查询该商品库存，为0则活动结束。
+    int stockNum = stock.get(productId);
+    if(stockNum == 0) {
+        throw new SellException(100,"活动结束");
+    }else {
+        //2.下单(模拟不同用户openid不同)
+        orders.put(KeyUtil.genUniqueKey(),productId);
+        //3.减库存
+        stockNum =stockNum-1;
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        stock.put(productId,stockNum);
+    }
+}
+```
+
+
+
+> 缺点：
+>
+> - **<font color='red'>无法做到细粒度控制。</font>**当有许多商品时，每个商品id不同，但这里对每个商品的抢购都会加锁，假如秒杀A商品的人很多，秒杀B商品的人很少，一旦进入这个方法都会造成一样的慢，这就是说无法做到细粒度的控制。
+> - 只适合单点的情况。只能跑在单机上。**<font color='red'>因为`synchronized`锁基于jvm，当应用集群化后，相当于有多个jvm，这种锁自然就失效了。</font>**
+
+
+
+------
+
+
+
+## 3、Redis实现分布式锁
+
+![image-20190827223750182](/Users/jc/Library/Application Support/typora-user-images/image-20190827223750182.png)
+
+
+
+**<font color='red' size=5>需要手动加锁/解锁</font>**
+
+
+
+引入依赖：
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+    <version>2.1.6.RELEASE</version>
+</dependency>
+```
+
+
+
+
+
+> 重点基于：redis的两个命令，具体见http://www.redis.cn/commands.html
+>
+>  1. <font color='blue'>redis的 [**SETNX key value**] 对应java代码中的 `setIfAbsent`</font>
+>
+>  ​	![image-20190827224126574](/Users/jc/Library/Application Support/typora-user-images/image-20190827224126574.png)
+>
+>  
+>
+> 2. <font color='blue'>[**GETSET key value**] 对应java代码中的 `getAndSet`</font>
+>
+>   ![image-20190827224252412](/Users/jc/Library/Application Support/typora-user-images/image-20190827224252412.png)
+>
+
+
+
+------
+
+
+
+### 实现：
+
+```java
+package com.jachin.sell.service;
+@Component
+@Slf4j
+public class RedisLock {
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
+    /**
+     * 加锁
+     * @param key ：productID
+     * @param value ：当前时间+超时时间
+     * @return
+     */
+    public boolean lock(String key, String value) {
+      
+        // setIfAbsent，如果key不存在，则set成功，否则失败
+        if(redisTemplate.opsForValue().setIfAbsent(key, value)) {
+            return true;
+        }
+
+        // 以下代码加入过期判断防止死锁
+        // currentValue是旧值
+        String currentValue = redisTemplate.opsForValue().get(key);
+        //如果锁过期
+        if (!StringUtils.isEmpty(currentValue)
+                && Long.parseLong(currentValue) < System.currentTimeMillis()) {
+            
+            //获取旧值并将新值写入
+            String oldValue = redisTemplate.opsForValue().getAndSet(key, value);
+            if (!StringUtils.isEmpty(oldValue) && oldValue.equals(currentValue)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 解锁
+     * @param key
+     * @param value
+     */
+    public void unlock(String key, String value) {
+        try {
+            String currentValue = redisTemplate.opsForValue().get(key);
+            if (!StringUtils.isEmpty(currentValue) && currentValue.equals(value)) {
+                redisTemplate.opsForValue().getOperations().delete(key);
+            }
+        }catch (Exception e) {
+            log.error("【redis分布式锁】解锁异常, {}", e);
+        }
+    }
+
+}
+```
+
+> **<font color='red'>上面的41行由于，getAndSet相当于原子操作，同时只能有一个线程执行。所以，就算当前锁过期后，有多个线程同时到达41行，也只有一个线程能成功获取锁。</font>**
+
+
+
+### 使用：
+
+Service代码截取
+
+==用商品id作为key，可以更细粒度控制代码==
+
+```java
+@Override
+public void orderProductMockDiffUser(String productId)
+{
+    //加锁
+    long time = System.currentTimeMillis() + TIMEOUT;
+    // 用商品id作为key，可以更细粒度控制代码
+    if (!redisLock.lock(productId, String.valueOf(time))) {
+        throw new SellException(101, "诶呦喂，人也太多了，换个姿势再试试～～");
+    }
+
+
+    //1.查询该商品库存，为0则活动结束。
+    int stockNum = stock.get(productId);
+    if(stockNum == 0) {
+        throw new SellException(100,"活动结束");
+    }else {
+        //2.下单(模拟不同用户openid不同)
+        orders.put(KeyUtil.genUniqueKey(),productId);
+        //3.减库存
+        stockNum =stockNum-1;
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        stock.put(productId,stockNum);
+    }
+
+    //解锁
+    redisLock.unlock(productId, String.valueOf(time));
+}
+```
+
+==速度也比synchronized快==
+
+
+
+**关于分布式锁的更多讨论，mysql分布式锁、zookeeper分布式锁、redission、redlock等详见：**
+
+https://juejin.im/post/5bbb0d8df265da0abd3533a5

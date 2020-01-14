@@ -8,7 +8,7 @@
 
 下图为ReentrantLock类中的静态内部类Sync、即其两个子类（对应公平和非公平）的类图。可见，==均继承自AQS。==
 
-![image-20191217114914984](/Users/jc/Documents/JavaNote/并发编程/image-20191217114914984.png)
+![image-20191217114914984](../PicSource/image-20191217114914984.png)
 
 
 
@@ -16,7 +16,7 @@
 
 
 
-![image-20191217114957123](/Users/jc/Documents/JavaNote/并发编程/image-20191217114957123.png)
+![image-20191217114957123](../PicSource/image-20191217114957123.png)
 
 
 
@@ -26,7 +26,7 @@
 
 **<font color='red'>注意：head节点(队头)是一个虚节点，仅保留waitStatus属性供后继节点做相应的判断。它代表其中的线程正在工作。</font>**
 
-![image-20191217115057708](/Users/jc/Documents/JavaNote/并发编程/image-20191217115057708.png)
+![image-20191217115057708](../PicSource/image-20191217115057708.png)
 
 ```java
 static final class Node {
@@ -100,11 +100,11 @@ protected final boolean compareAndSetState(int expect, int update) {
 
 我们可以通过修改state字段实现多线程的独占/共享加锁模式：
 
-![image-20191217115324973](/Users/jc/Documents/JavaNote/并发编程/image-20191217115324973.png)
+![image-20191217115324973](../PicSource/image-20191217115324973.png)
 
 ------
 
-![image-20191217115333553](/Users/jc/Documents/JavaNote/并发编程/image-20191217115333553.png)
+![image-20191217115333553](../PicSource/image-20191217115333553.png)
 
 
 
@@ -140,7 +140,7 @@ public final void acquire(int arg) {
 
 
 
-![img](/Users/jc/Documents/JavaNote/并发编程/640-20200108105646029.jpeg)
+![img](../PicSource/640-20200108105646029.jpeg)
 
 ------
 
@@ -296,7 +296,7 @@ private final boolean parkAndCheckInterrupt() {
 
 #### e）整个`acquire()`流程
 
-![image-20191217145308748](/Users/jc/Documents/JavaNote/并发编程/image-20191217145308748.png)
+![image-20191217145308748](../PicSource/image-20191217145308748.png)
 
 
 
@@ -325,11 +325,11 @@ public final boolean release(int arg) {
 
 
 
-![image-20191217144549565](/Users/jc/Documents/JavaNote/并发编程/image-20191217144549565.png)
+![image-20191217144549565](../PicSource/image-20191217144549565.png)
 
 ------
 
-![img](/Users/jc/Documents/JavaNote/并发编程/640-20200108105552457.jpeg)
+![img](../PicSource/640-20200108105552457.jpeg)
 
 
 
@@ -415,7 +415,7 @@ final boolean nonfairTryAcquire(int acquires) {
 
 
 
-![image-20191217143535498](/Users/jc/Documents/JavaNote/并发编程/image-20191217143535498.png)
+![image-20191217143535498](../PicSource/image-20191217143535498.png)
 
 
 

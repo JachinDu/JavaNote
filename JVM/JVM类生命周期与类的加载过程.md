@@ -4,7 +4,7 @@
 
 类的生命周期：
 
-![image-20191130201821840](/Users/jc/Documents/JavaNote/JVM/image-20191130201821840.png)
+![image-20191130201821840](../PicSource/image-20191130201821840.png)
 
 ==.class文件被加载到虚拟机内存后才可生效。==
 
@@ -14,7 +14,7 @@
 
 
 
-![img](/Users/jc/Documents/JavaNote/JVM/640.png)
+![img](../PicSource/640.png)
 
 <font color='red'>Java 源代码---->编译器---->jvm 可执行的 Java 字节码(即虚拟指令)---->jvm---->jvm 中==解释器==----->机器可执行的==二进制机器码==---->程序运行。</font>
 
@@ -112,7 +112,7 @@ Java 语言通过字节码的方式，在一定程度上解决了传统解释型
 
 ==虚拟机完全主导== ，cafebabe，参见文末参考文章
 
-![image-20191218195219037](/Users/jc/Documents/JavaNote/JVM/image-20191218195219037.png)
+![image-20191218195219037](../PicSource/image-20191218195219037.png)
 
 ### ==3）准备阶段==
 

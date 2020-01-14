@@ -116,15 +116,15 @@ catalina start  # 单纯的启动
 
 
 
-![image-20190622154717219](/Users/jc/Library/Application Support/typora-user-images/image-20190622154717219.png)
+![image-20190622154717219](../PicSource/image-20190622154717219.png)
 
 
 
-![image-20190622154600887](/Users/jc/Library/Application Support/typora-user-images/image-20190622154600887.png)
+![image-20190622154600887](../PicSource/image-20190622154600887.png)
 
 
 
-![image-20190622154754661](/Users/jc/Library/Application Support/typora-user-images/image-20190622154754661.png)
+![image-20190622154754661](../PicSource/image-20190622154754661.png)
 
 
 

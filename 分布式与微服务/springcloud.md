@@ -12,19 +12,19 @@
 
 
 
-![image-20190703212440980](/Users/jc/Library/Application Support/typora-user-images/image-20190703212440980.png)
+![image-20190703212440980](../PicSource/image-20190703212440980.png)
 
 
 
 注册中心：
 
-![image-20190703204326487](/Users/jc/Library/Application Support/typora-user-images/image-20190703204326487.png)
+![image-20190703204326487](../PicSource/image-20190703204326487.png)
 
 
 
 消费者和服务提供者：（要选web）
 
-![image-20190703210049429](/Users/jc/Library/Application Support/typora-user-images/image-20190703210049429.png)
+![image-20190703210049429](../PicSource/image-20190703210049429.png)
 
 
 
@@ -82,7 +82,7 @@ eureka:
 
 
 
-![image-20190703212718856](/Users/jc/Library/Application Support/typora-user-images/image-20190703212718856.png)
+![image-20190703212718856](../PicSource/image-20190703212718856.png)
 
 
 
@@ -154,13 +154,13 @@ eureka:
 
 命令行运行两个实例：
 
-![image-20190703211015967](/Users/jc/Library/Application Support/typora-user-images/image-20190703211015967.png)
+![image-20190703211015967](../PicSource/image-20190703211015967.png)
 
 
 
 http://localhost:8761/：
 
-![image-20190703211029713](/Users/jc/Library/Application Support/typora-user-images/image-20190703211029713.png)
+![image-20190703211029713](../PicSource/image-20190703211029713.png)
 
 
 
@@ -168,7 +168,7 @@ http://localhost:8761/：
 
 
 
-![image-20190703213134078](/Users/jc/Library/Application Support/typora-user-images/image-20190703213134078.png)
+![image-20190703213134078](../PicSource/image-20190703213134078.png)
 
 
 
@@ -260,10 +260,10 @@ http://localhost:8761/：
 
 消费者和服务提供者都注册到了注册中心eureka中
 
-![image-20190703211934282](/Users/jc/Library/Application Support/typora-user-images/image-20190703211934282.png)
+![image-20190703211934282](../PicSource/image-20190703211934282.png)
 
 
 
 消费者买票行为及结果：
 
-![image-20190703212110678](/Users/jc/Library/Application Support/typora-user-images/image-20190703212110678.png)
+![image-20190703212110678](../PicSource/image-20190703212110678.png)

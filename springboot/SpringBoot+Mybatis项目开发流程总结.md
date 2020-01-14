@@ -6,11 +6,11 @@
 
 
 
-![image-20190704145151879](/Users/jc/Library/Application Support/typora-user-images/image-20190704145151879.png)
+![image-20190704145151879](../PicSource/image-20190704145151879.png)
 
 
 
-![image-20190704145205094](/Users/jc/Library/Application Support/typora-user-images/image-20190704145205094.png)
+![image-20190704145205094](../PicSource/image-20190704145205094.png)
 
 
 

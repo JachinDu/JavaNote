@@ -6,7 +6,7 @@
 
 ### 1）对象头
 
-![img](/Users/jc/Documents/JavaNote/并发编程/640-20200108111040166.jpeg)
+![img](../PicSource/640-20200108111040166.jpeg)
 
 
 
@@ -22,7 +22,7 @@
 
 
 
-![image-20200108131729480](/Users/jc/Documents/JavaNote/并发编程/image-20200108131729480.png)
+![image-20200108131729480](../PicSource/image-20200108131729480.png)
 
 > 注意：
 >

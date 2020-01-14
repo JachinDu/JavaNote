@@ -10,7 +10,7 @@
 >
 > ​		登录验证：在访问任何后端管理页面时均需要验证后端商家用户的登录状态，即检查cookie中是否有相应的token。（视频12章内容）
 >
-> ​			![image-20190827173319525](/Users/jc/Library/Application Support/typora-user-images/image-20190827173319525.png)
+> ​			![image-20190827173319525](../PicSource/image-20190827173319525.png)
 
 
 
@@ -167,4 +167,4 @@ public class SellExceptionHandler {
 
 ==此处处理异常的方式为返回微信扫码登录页==，关于微信开放平台扫码登录等问题见微信点餐课程doc中的相关文档。
 
-![image-20190827174138015](/Users/jc/Library/Application Support/typora-user-images/image-20190827174138015.png)
+![image-20190827174138015](../PicSource/image-20190827174138015.png)

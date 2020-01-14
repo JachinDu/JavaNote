@@ -14,11 +14,11 @@
 
 ### **1）目录结构**
 
-![image-20190602150427752](/Users/jc/Library/Application Support/typora-user-images/image-20190602150427752.png)
+![image-20190602150427752](../PicSource/image-20190602150427752.png)
 
 **<font color="red" size=5>注意：要将conf文件夹设置为Resoures Root或Sources Root，这样就相当于conf中的配置文件直接放在src下了（表面效果）</font>**
 
-![image-20190602150514914](/Users/jc/Library/Application Support/typora-user-images/image-20190602150514914.png)
+![image-20190602150514914](../PicSource/image-20190602150514914.png)
 
 
 

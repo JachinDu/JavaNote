@@ -12,7 +12,7 @@
 
 
 
-![image-20191117201916175](/Users/jc/Library/Application Support/typora-user-images/image-20191117201916175.png)
+![image-20191117201916175](../PicSource/image-20191117201916175.png)
 
 
 

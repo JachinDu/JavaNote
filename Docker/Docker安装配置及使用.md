@@ -117,8 +117,8 @@ $ sudo systemctl restart docker
 
 
 
-![image-20191220143845664](/Users/jc/Documents/JavaNote/Docker/image-20191220143845664.png)
+![image-20191220143845664](../PicSource/image-20191220143845664.png)
 
 
 
-![image-20191220143914067](/Users/jc/Documents/JavaNote/Docker/image-20191220143914067.png)
+![image-20191220143914067](../PicSource/image-20191220143914067.png)

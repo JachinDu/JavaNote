@@ -21,13 +21,13 @@
 
 
 
-![img](/Users/jc/Documents/JavaNote/JVM/640.jpeg)
+![img](../PicSource/640.jpeg)
 
 
 
 
 
-![image-20191218162439883](/Users/jc/Documents/JavaNote/JVM/image-20191218162439883.png)
+![image-20191218162439883](../PicSource/image-20191218162439883.png)
 
 
 
@@ -41,7 +41,7 @@
 
 jdk1.8之前的堆内存示意图：
 
-![image-20191208223007631](/Users/jc/Documents/JavaNote/JVM/image-20191208223007631.png)
+![image-20191208223007631](../PicSource/image-20191208223007631.png)
 
 **<font color='red'>1.8之前方法区由永久代实现在堆内存中，1.8之后，方法区由元空间实现在物理内存之中。</font>**
 
@@ -94,7 +94,7 @@ jdk1.8之前的堆内存示意图：
 
 ## 3、栈
 
-![img](/Users/jc/Documents/JavaNote/JVM/640-20200101204640675.png)
+![img](../PicSource/640-20200101204640675.png)
 
 
 
@@ -110,7 +110,7 @@ jdk1.8之前的堆内存示意图：
 
 
 
-![img](/Users/jc/Documents/JavaNote/JVM/640-20200101204755905.png)
+![img](../PicSource/640-20200101204755905.png)
 
 参考：
 

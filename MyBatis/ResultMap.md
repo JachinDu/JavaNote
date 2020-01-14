@@ -48,7 +48,7 @@ EmployeeMapperPlus.xml：
 
 tb_employee:
 
-![image-20190604182546231](/Users/jc/Library/Application Support/typora-user-images/image-20190604182546231.png)
+![image-20190604182546231](../PicSource/image-20190604182546231.png)
 
 将外键与tb_dept的主键(id)绑定：
 
@@ -61,7 +61,7 @@ foreign key (d_id) references tb_dept(id)
 
 tb_dept:
 
-![image-20190604182604048](/Users/jc/Library/Application Support/typora-user-images/image-20190604182604048.png)
+![image-20190604182604048](../PicSource/image-20190604182604048.png)
 
 
 
@@ -222,7 +222,7 @@ public Department getDeptByIdStep(Integer id);
 
 对应的映射：
 
-![image-20190604194846961](/Users/jc/Library/Application Support/typora-user-images/image-20190604194846961.png)
+![image-20190604194846961](../PicSource/image-20190604194846961.png)
 
 
 
@@ -269,4 +269,4 @@ EmployeeMapperPlus.xml
 
 测试时如果是女生，则结果为：
 
-![image-20190604201507689](/Users/jc/Library/Application Support/typora-user-images/image-20190604201507689.png)
+![image-20190604201507689](../PicSource/image-20190604201507689.png)

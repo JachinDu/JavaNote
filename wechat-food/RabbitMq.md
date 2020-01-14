@@ -15,7 +15,7 @@
 
 ## <font color='red'>2、整体模型架构</font>
 
-![图1-RabbitMQ 的整体模型架构](/Users/jc/Documents/JavaNote/wechat-food/96388546.jpg)
+![图1-RabbitMQ 的整体模型架构](../PicSource/96388546.jpg)
 
 
 
@@ -53,7 +53,7 @@
 >
 > - **绑定建(BindingKey)** ：RabbitMQ 中通过 **Binding(绑定)** 将 **Exchange(交换器)** 与 **Queue(消息队列)** 关联起来，在绑定的时候一般会指定一个 **BindingKey(绑定建)** ,这样 RabbitMQ 就知道如何正确将消息路由到队列了。
 >
->   ![Binding(/Users/jc/Documents/JavaNote/wechat-food/70553134-20200104160800266.jpg) 示意图](http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-16/70553134.jpg)
+>   ![70553134](../PicSource/70553134.jpg)
 
 生产者将消息发送给交换器时，需要一个**RoutingKey**,当 **BindingKey** 和 **RoutingKey** 相匹配时，消息会被路由到对应的队列中。在绑定多个队列到同一个交换器的时候，这些绑定允许使用相同的 BindingKey。BindingKey 并不是在所有的情况下都生效，它依赖于交换器类型，比如fanout类型的交换器就会无视，而是将消息路由到所有绑定到该交换器的队列中。
 
@@ -69,7 +69,7 @@
 >
 > 2. **direct**：direct 类型的Exchange路由规则也很简单，它会把消息路由到那些 Bindingkey 与 RoutingKey <font color='red'>完全匹配的 Queue 中</font>。严格。
 >
->    ![direct 类型交换器](/Users/jc/Documents/JavaNote/wechat-food/37008021.jpg)
+>    ![direct 类型交换器](../PicSource/37008021.jpg)
 >
 >    以上图为例，如果发送消息的时候设置路由键为“warning”,那么消息会路由到 Queue1 和 Queue2。如果在发送消息的时候设置路由键为"Info”或者"debug”，消息只会路由到Queue2。如果以其他的路由键发送消息，则消息不会路由到这两个队列中。
 >
@@ -87,7 +87,7 @@
 >
 >      
 >
->    ![topic 类型交换器](/Users/jc/Documents/JavaNote/wechat-food/73843.jpg)
+>    ![topic 类型交换器](../PicSource/73843.jpg)
 >
 >    以上图为例：
 >
@@ -119,7 +119,7 @@
 
 下图展示了生产者将消息存入 RabbitMQ Broker,以及消费者从Broker中消费数据的整个流程。
 
-![消息队列的运转过程](/Users/jc/Documents/JavaNote/wechat-food/67952922.jpg)
+![消息队列的运转过程](../PicSource/67952922.jpg)
 
 
 

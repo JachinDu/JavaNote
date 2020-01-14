@@ -2,7 +2,7 @@
 
 ## jdk1.7:
 
-![img](/Users/jc/Documents/JavaNote/集合/5cd1d2c5ce95c.jpg)
+![img](../PicSource/5cd1d2c5ce95c.jpg)
 
 > - **元素封装为HashEntry，同jdk1.7的HashMap**
 > - **分段锁+链表**
@@ -36,7 +36,7 @@
 
 ------
 
-![img](/Users/jc/Documents/JavaNote/集合/5cd1d2ce33795.jpg)
+![img](../PicSource/5cd1d2ce33795.jpg)
 
 
 

@@ -2,7 +2,7 @@
 
 
 
-![image-20190703201915505](/Users/jc/Library/Application Support/typora-user-images/image-20190703201915505.png)
+![image-20190703201915505](../PicSource/image-20190703201915505.png)
 
 
 
@@ -20,7 +20,7 @@
 
 #### **2、idea创建一个空工程，然后建两个springboot的module，一个为服务提供者，一个为消费者**
 
-![image-20190703202201960](/Users/jc/Library/Application Support/typora-user-images/image-20190703202201960.png)
+![image-20190703202201960](../PicSource/image-20190703202201960.png)
 
 
 
@@ -83,7 +83,7 @@
 
 
 
-![image-20190703202522786](/Users/jc/Library/Application Support/typora-user-images/image-20190703202522786.png)
+![image-20190703202522786](../PicSource/image-20190703202522786.png)
 
 
 
@@ -139,7 +139,7 @@ dubbo.scan.base-packages=com.jachin.providerdicket.service
 
 
 
-![image-20190703202912226](/Users/jc/Library/Application Support/typora-user-images/image-20190703202912226.png)
+![image-20190703202912226](../PicSource/image-20190703202912226.png)
 
 
 
@@ -219,4 +219,4 @@ public class ConsumerUserApplicationTests {
 
 
 
-![image-20190703203242466](/Users/jc/Library/Application Support/typora-user-images/image-20190703203242466.png)
+![image-20190703203242466](../PicSource/image-20190703203242466.png)

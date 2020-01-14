@@ -6,7 +6,7 @@ jdk版本：1.8
 
 前置约定：
 
-![image-20191205162533563](/Users/jc/Documents/JavaNote/源码笔记/image-20191205162533563.png)
+![image-20191205162533563](../PicSource/image-20191205162533563.png)
 
 >- 哈希表table。
 >- table[index]为解决hash冲突的数据结构（链表，红黑树）的头节点引用。
@@ -157,7 +157,7 @@ static final int hash(Object key) {
 
 流程图解析：
 
-![hashmap_put](/Users/jc/Documents/JavaNote/源码笔记/hashmap_put.png)
+![hashmap_put](../PicSource/hashmap_put.png)
 
 > 注意：
 >

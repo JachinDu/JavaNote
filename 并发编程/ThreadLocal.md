@@ -14,7 +14,7 @@
 
  **<font color='red'>`ThreadLocal` 本身并不存储值，它只是作为一个 `key` 来让线程从 `ThreadLocalMap` 获取 `value`。值得注意的是图中的虚线，表示 `ThreadLocalMap` 是使用 `ThreadLocal` 的弱引用作为 `Key`的，弱引用的对象在 GC 时会被回收。</font>**
 
-![img](/Users/jc/Documents/JavaNote/并发编程/v2-45affd67cf3dfb5637878d8f46ea5061_hd.jpg)
+![img](../PicSource/v2-45affd67cf3dfb5637878d8f46ea5061_hd.jpg)
 
 
 

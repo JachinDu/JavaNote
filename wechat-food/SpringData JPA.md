@@ -30,7 +30,7 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
 
 
 
-![image-20191231171238791](/Users/jc/Documents/JavaNote/wechat-food/image-20191231171238791.png)
+![image-20191231171238791](../PicSource/image-20191231171238791.png)
 
 其中重要的就是`CrudRepository`和`PagingAndSortingRepository`接口
 

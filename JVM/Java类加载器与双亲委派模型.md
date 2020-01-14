@@ -16,7 +16,7 @@
 >
 > 
 >
-> ![image-20191202210255128](/Users/jc/Documents/JavaNote/JVM/image-20191202210255128.png)
+> ![image-20191202210255128](../PicSource/image-20191202210255128.png)
 
 
 
@@ -26,7 +26,7 @@
 
 
 
-![image-20191218195859685](/Users/jc/Documents/JavaNote/JVM/image-20191218195859685.png)
+![image-20191218195859685](../PicSource/image-20191218195859685.png)
 
 ------
 

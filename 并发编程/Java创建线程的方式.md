@@ -94,7 +94,7 @@ Java5提供了Future接口来接收Callable接口中call()方法的返回值。*
 
 
 
-![image-20200105152909226](/Users/jc/Documents/JavaNote/并发编程/image-20200105152909226.png)
+![image-20200105152909226](../PicSource/image-20200105152909226.png)
 
 ------
 

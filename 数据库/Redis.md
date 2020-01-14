@@ -14,13 +14,13 @@ https://snailclimb.gitee.io/javaguide/#/docs/database/Redis/Redis
 
 > - **高性能：<font color='red'>将redis作为数据库的前置存储。</font>**
 >
->   ![img](/Users/jc/Documents/JavaNote/数据库/54316596.jpg)
+>   ![img](../PicSource/54316596.jpg)
 >
 >   
 >
 > - **高并发：<font color='red'>将部分数据从数据库分离出来，存在redis中(数据库中不再存储)</font>**。
 >
->   ![img](/Users/jc/Documents/JavaNote/数据库/85146760.jpg)
+>   ![img](../PicSource/85146760.jpg)
 
 
 
@@ -135,13 +135,13 @@ Redis 通过 MULTI、EXEC、WATCH 等命令来实现事务(transaction)功能。
 
 使用Multi命令表示开启一个事务
 
-![img](/Users/jc/Documents/JavaNote/数据库/redis1.jpg)
+![img](../PicSource/redis1.jpg)
 
 
 
 开启一个事务过后中间输入的所有命令都不会被立即执行，而是被加入到队列中缓存起来，当收到Exec命令的时候Redis服务会按入队顺序依次执行命令。
 
-![img](/Users/jc/Documents/JavaNote/数据库/redis2.jpg)
+![img](../PicSource/redis2.jpg)
 
 从上面的两个截图中我们可以看出以下几点
 
@@ -153,7 +153,7 @@ Redis 通过 MULTI、EXEC、WATCH 等命令来实现事务(transaction)功能。
 
 
 
-![img](/Users/jc/Documents/JavaNote/数据库/redis3.jpg)
+![img](../PicSource/redis3.jpg)
 
 3. 输入`exec`命令后会依次执行加入到队列中的命令
 
@@ -175,7 +175,7 @@ Redis 通过 MULTI、EXEC、WATCH 等命令来实现事务(transaction)功能。
 > - **<font color='blue'>事中：本地ehcache缓存 + hystrix==限流&降级==，避免MySQL崩掉</font>**
 > - **<font color='blue'>事后：利用 redis ==持久化机制==保存的数据尽快恢复缓存</font>**
 
-![img](/Users/jc/Documents/JavaNote/数据库/6078367.jpg)
+![img](../PicSource/6078367.jpg)
 
 
 
@@ -189,11 +189,11 @@ Redis 通过 MULTI、EXEC、WATCH 等命令来实现事务(transaction)功能。
 
 > - 正常缓存处理流程：
 >
->   ​							<img src="/Users/jc/Documents/JavaNote/数据库/正常缓存处理流程-redis.png" alt="img" style="zoom: 67%;" />
+>   ​							![正常缓存处理流程-redis](../PicSource/正常缓存处理流程-redis.png)
 >
 > - 缓存穿透情况处理流程：
 >
->   <img src="/Users/jc/Documents/JavaNote/数据库/缓存穿透处理流程-redis.png" alt="img" style="zoom:67%;" />
+>   ![缓存穿透处理流程-redis](../PicSource/缓存穿透处理流程-redis.png)
 >
 >   **<font color='red'>数据库并发能力很低</font>**：一般MySQL 默认的最大连接数在 150 左右，这个可以通过 `show variables like '%max_connections%';`命令来查看。最大连接数一个还只是一个指标，cpu，内存，磁盘，网络等无力条件都是其运行指标，这些指标都会限制其并发能力！所以，一般 3000 个并发请求就能打死大部分数据库了。
 
@@ -236,7 +236,7 @@ Redis 通过 MULTI、EXEC、WATCH 等命令来实现事务(transaction)功能。
 >
 >    布隆过滤器是一个非常神奇的数据结构，通过它我们可以非常方便地判断一个给定数据是否存在与海量数据中。我们需要的就是判断 key 是否合法，有没有感觉布隆过滤器就是我们想要找的那个“人”。具体是这样做的：把所有可能存在的请求的值都存放在布隆过滤器中，当用户请求过来，我会先判断用户发来的请求的值是否存在于布隆过滤器中。不存在的话，直接返回请求参数错误信息给客户端，存在的话才会走下面的流程。总结一下就是下面这张图：
 >
->    <img src="/Users/jc/Documents/JavaNote/数据库/布隆过滤器-缓存穿透-redis.png" alt="img" style="zoom:67%;" />
+>    ![布隆过滤器-缓存穿透-redis](../PicSource/布隆过滤器-缓存穿透-redis.png)
 
 
 

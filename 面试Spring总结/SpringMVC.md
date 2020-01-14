@@ -4,7 +4,7 @@
 
 ## 1、<font color='red'>SpringMVC工作原理</font>
 
-![SpringMVC运行原理](http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-11/49790288.jpg)
+![SpringMVC运行原理](../PicSource/49790288-20200114192109686.jpg)
 
 
 

@@ -6,7 +6,7 @@ https://yemengying.com/2016/07/14/spring-bean-life-cycle/
 
 
 
-![image-20191226134704044](/Users/jc/Documents/JavaNote/面试Spring总结/image-20191226134704044.png)
+![image-20191226134704044](../PicSource/image-20191226134704044.png)
 
 从开始执行Bean的构造器开始才算是bean的生命周期开始：
 
@@ -23,19 +23,19 @@ https://yemengying.com/2016/07/14/spring-bean-life-cycle/
 > - 当要销毁 Bean 的时候，如果 Bean 实现了 `DisposableBean` 接口，执行 `destroy()` 方法。
 > - 当要销毁 Bean 的时候，如果 Bean 在配置文件中的定义包含 destroy-method 属性，执行指定的方法。
 
-![image-20191226135002898](/Users/jc/Documents/JavaNote/面试Spring总结/image-20191226135002898.png)
+![image-20191226135002898](../PicSource/image-20191226135002898.png)
 
 
 
 <font color='red'>**实例化A时需要依赖B，则进入实例化B的流程**</font>
 
-![img](/Users/jc/Documents/JavaNote/面试Spring总结/bean注入依赖过程.png)
+![img](../PicSource/bean注入依赖过程.png)
 
 
 
 <font color='red'>**setter注入可解决循环依赖，构造器注入不可以**</font>
 
-![img](/Users/jc/Documents/JavaNote/面试Spring总结/循环依赖.png)
+![img](../PicSource/循环依赖.png)
 
 
 
@@ -45,5 +45,5 @@ https://yemengying.com/2016/07/14/spring-bean-life-cycle/
 
 ## Bean的作用域
 
-![img](http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/1188352.jpg)
+![img](../PicSource/1188352-20200114192052236.jpg)
 

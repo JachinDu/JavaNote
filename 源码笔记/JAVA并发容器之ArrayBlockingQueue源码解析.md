@@ -6,7 +6,7 @@
 
 
 
-![image-20191125152628548](/Users/jc/Library/Application Support/typora-user-images/image-20191125152628548.png)
+![image-20191125152628548](../PicSource/image-20191125152628548-9000954.png)
 
 
 

@@ -39,13 +39,13 @@ public class ResultVO<T> implements Serializable {
 
 ==其中18行使用插件生成唯一id：==
 
-![image-20190828143814803](/Users/jc/Library/Application Support/typora-user-images/image-20190828143814803.png)
+![image-20190828143814803](../PicSource/image-20190828143814803.png)
 
 使用方法：
 
 快捷键command+o：
 
-![image-20190828143932709](/Users/jc/Library/Application Support/typora-user-images/image-20190828143932709.png)
+![image-20190828143932709](../PicSource/image-20190828143932709.png)
 
 
 
@@ -69,7 +69,7 @@ yml配置文件：
 
 ==有密码的话还需要配置密码==
 
-![image-20190828144031175](/Users/jc/Library/Application Support/typora-user-images/image-20190828144031175.png)
+![image-20190828144031175](../PicSource/image-20190828144031175.png)
 
 
 

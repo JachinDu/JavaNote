@@ -6,7 +6,7 @@
 
 
 
-![image-20191218165414556](/Users/jc/Documents/JavaNote/JVM/image-20191218165414556.png)
+![image-20191218165414556](../PicSource/image-20191218165414556.png)
 
 
 
@@ -16,7 +16,7 @@
 
 ### 内存分配的两种方式：
 
-![image-20191218165126963](/Users/jc/Documents/JavaNote/JVM/image-20191218165126963.png)
+![image-20191218165126963](../PicSource/image-20191218165126963.png)
 
 
 
@@ -267,7 +267,7 @@ public class ConstructorExample {
 
 总之，java对象的初始化（类的实例化）是一个==递归==的过程，如下图所示：
 
-![image-20191128215429507](/Users/jc/Documents/JavaNote/JVM/image-20191128215429507.png)
+![image-20191128215429507](../PicSource/image-20191128215429507.png)
 
 
 
@@ -279,14 +279,14 @@ public class ConstructorExample {
 
 **<font color='red'>注意：对上除了有普通对象外，还会存放数组对象</font>**
 
-![image-20191218170013304](/Users/jc/Documents/JavaNote/JVM/image-20191218170013304.png)
+![image-20191218170013304](../PicSource/image-20191218170013304.png)
 
 
 
 > 1. 对象头
 >    - 标记字段：**对象自身的自身运行时数据**（哈希码、==GC 分代年龄==、==锁状态==标志等等）
 >    - 类型指针：确定该对象是哪个类的实例
->    - ![img](/Users/jc/Documents/JavaNote/JVM/640-20200108111040166.jpeg)
+>    - ![img](../PicSource/640-20200108111040166-9001016.jpeg)
 > 2. 实例数据：**对象真正存储的有效信息**，也是在程序中所定义的各种类型的==字段==内容。
 > 3. 对齐填充：对象的大小必须是 8 字节的整数倍
 
@@ -302,13 +302,13 @@ public class ConstructorExample {
 
 ### 1）句柄
 
-<img src="/Users/jc/Documents/JavaNote/JVM/image-20191218170457800.png" alt="image-20191218170457800" style="zoom:80%;" />
+![image-20191218170457800](../PicSource/image-20191218170457800.png)
 
 
 
 ### 2）直接指针
 
-![image-20191218170529379](/Users/jc/Documents/JavaNote/JVM/image-20191218170529379.png)
+![image-20191218170529379](../PicSource/image-20191218170529379.png)
 
 
 

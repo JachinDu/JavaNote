@@ -13,11 +13,11 @@ Nginx 是一款轻量级的 Web 服务器/反向代理服务器及电子邮件�
 
 ------
 
-![正向代理](/Users/jc/Documents/JavaNote/60925795.jpg)
+![正向代理](PicSource/60925795.jpg)
 
 ------
 
-![反向代理](/Users/jc/Documents/JavaNote/62563930.jpg)
+![反向代理](PicSource/62563930.jpg)
 
 
 

@@ -87,7 +87,7 @@ public void testDynamicSql() throws IOException {
 
 结果：
 
-![image-20190604210753077](/Users/jc/Library/Application Support/typora-user-images/image-20190604210753077.png)
+![image-20190604210753077](../PicSource/image-20190604210753077.png)
 
 可见拼接sql语句时没有带gender字段作为查询条件。
 
@@ -214,7 +214,7 @@ public void testDynamicSql() throws IOException {
 
 同时携带了id和last_name，则进入id的情况后就不进入之后的了，所以结果是只拿id去查，如下：
 
-![image-20190605130125326](/Users/jc/Library/Application Support/typora-user-images/image-20190605130125326.png)
+![image-20190605130125326](../PicSource/image-20190605130125326.png)
 
 
 

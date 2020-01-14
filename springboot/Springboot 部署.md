@@ -10,7 +10,7 @@
 
 
 
-![image-20190713204908401](/Users/jc/Library/Application Support/typora-user-images/image-20190713204908401.png)
+![image-20190713204908401](../PicSource/image-20190713204908401.png)
 
 
 

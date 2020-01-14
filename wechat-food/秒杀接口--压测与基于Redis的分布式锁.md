@@ -8,7 +8,7 @@
 
 命令举例：
 
-![image-20190827223420434](/Users/jc/Library/Application Support/typora-user-images/image-20190827223420434.png)
+![image-20190827223420434](../PicSource/image-20190827223420434.png)
 
 
 
@@ -77,7 +77,7 @@ public synchronized void orderProductMockDiffUser(String productId)
 
 ## 3、Redis实现分布式锁
 
-![image-20190827223750182](/Users/jc/Library/Application Support/typora-user-images/image-20190827223750182.png)
+![image-20190827223750182](../PicSource/image-20190827223750182.png)
 
 
 
@@ -103,13 +103,13 @@ public synchronized void orderProductMockDiffUser(String productId)
 >
 >  1. <font color='blue'>redis的 [**SETNX key value**] 对应java代码中的 `setIfAbsent`</font>
 >
->  ​	![image-20190827224126574](/Users/jc/Library/Application Support/typora-user-images/image-20190827224126574.png)
+>  	![image-20190827224126574](/Users/jc/Library/Application Support/typora-user-images/image-20190827224126574.png)
 >
 >  
 >
 > 2. <font color='blue'>[**GETSET key value**] 对应java代码中的 `getAndSet`</font>
 >
->   ![image-20190827224252412](/Users/jc/Library/Application Support/typora-user-images/image-20190827224252412.png)
+>   ![image-20190827224252412](../PicSource/image-20190827224252412.png)
 >
 
 

@@ -6,13 +6,13 @@
 
 
 
-![image-20190826180028905](/Users/jc/Library/Application Support/typora-user-images/image-20190826180028905.png)
+![image-20190826180028905](../PicSource/image-20190826180028905.png)
 
 ------
 
 
 
-![image-20190826180012896](/Users/jc/Library/Application Support/typora-user-images/image-20190826180012896.png)
+![image-20190826180012896](../PicSource/image-20190826180012896.png)
 
 ------
 
@@ -85,7 +85,7 @@ Session复制顾名思义，就是每台应用服务，都保存会话session数
 
 
 
-![image-20190911113134234](/Users/jc/Library/Application Support/typora-user-images/image-20190911113134234.png)
+![image-20190911113134234](../PicSource/image-20190911113134234.png)
 
 
 

@@ -10,7 +10,7 @@ HttpSession类：保存会话数据
 
 
 
-![Session Based Authentication flow](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/Session-Based-Authentication-flow.png)
+![Session Based Authentication flow](../PicSource/Session-Based-Authentication-flow-20200114191949075.png)
 
 
 

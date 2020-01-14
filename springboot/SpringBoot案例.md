@@ -12,11 +12,11 @@
 
 一共需要三个（默认，英文，中文）
 
-![image-20190625215319606](/Users/jc/Library/Application Support/typora-user-images/image-20190625215319606.png)
+![image-20190625215319606](../PicSource/image-20190625215319606.png)
 
 任意打开一个，
 
-![image-20190625215226608](/Users/jc/Library/Application Support/typora-user-images/image-20190625215226608.png)
+![image-20190625215226608](../PicSource/image-20190625215226608.png)
 
 使用这样配置即可。
 

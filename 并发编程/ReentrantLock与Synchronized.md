@@ -2,7 +2,7 @@
 
 ReentrantLock与Synchronized区别：
 
-![image-20191217114714199](/Users/jc/Documents/JavaNote/并发编程/image-20191217114714199.png)
+![image-20191217114714199](../PicSource/image-20191217114714199.png)
 
 
 

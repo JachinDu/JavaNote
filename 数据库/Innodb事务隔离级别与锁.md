@@ -94,7 +94,7 @@
 
 ------
 
-![image-20191224134126031](/Users/jc/Documents/JavaNote/数据库/image-20191224134126031.png)
+![image-20191224134126031](../PicSource/image-20191224134126031.png)
 
 
 
@@ -168,7 +168,7 @@ select时读取数据的规则为：
 
 ==但没有解决增删改操作的幻读问题==，如下：
 
-![image-20191224234837986](/Users/jc/Documents/JavaNote/数据库/image-20191224234837986.png)
+![image-20191224234837986](../PicSource/image-20191224234837986.png)
 
 
 

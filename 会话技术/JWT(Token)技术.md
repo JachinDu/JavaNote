@@ -4,7 +4,7 @@
 
 ## 1、Token原理
 
-![Token Based Authentication flow](https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-7/Token-Based-Authentication.png)
+![Token Based Authentication flow](../PicSource/Token-Based-Authentication-20200114191941819.png)
 
 > 1. 用户向服务器发送用户名和密码用于登陆系统。
 > 2. 身份验证服务响应并返回了签名的 JWT，上面**<font color='red'>包含了用户是谁的内容。</font>**

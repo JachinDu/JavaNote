@@ -21,7 +21,7 @@
 
 - 目录：
 
-  ![image-20190813142518933](/Users/jc/Library/Application Support/typora-user-images/image-20190813142518933.png)
+  ![image-20190813142518933](../PicSource/image-20190813142518933.png)
 
 - 文件内容：
 

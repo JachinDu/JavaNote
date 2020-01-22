@@ -29,6 +29,8 @@
 >
 > - 注意：
 >
+>   https://mp.weixin.qq.com/s/muiJ2vKK6a68_yCW6XWsVg
+>   
 >   - **<font color='red'>哈希表是volatile Node<K,V>[]类型，这里的volatile保证的是扩容时对整张哈希表的可见性。</font>**
 >   - **<font color='red'>Node<K,V>中的val和next是volatile的，用来保证数组元素的可见性。</font>**
 

@@ -62,7 +62,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
 }
 ```
 
-> 包含：key的hash值，key，value，next引用
+> 包含：**<font color='red'>key的hash值</font>，key，value，next引用**
 
 
 
@@ -78,7 +78,7 @@ public V put(K key, V value) {
 
 ### 2.1、putVal函数
 
-由于jdk1.8引入了红黑树座位存储结构，所以这里调用新封装的putVal函数，具体如下：
+由于jdk1.8引入了红黑树作为存储结构，所以这里调用新封装的putVal函数，具体如下：
 
 **<font color='red'>注意代码中的“边判断边赋值的写法”</font>**
 
@@ -140,18 +140,19 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 
 
 
-其中的hash方法：
+#### hash方法：
 
 ```java
 static final int hash(Object key) {
     int h;
     return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+  	// >>>是无符号右移，>>是带符号右移(不改变正负)，^是异或
 }
 ```
 
 > 再其中的hashCode()方法已是native方法，不予追究了。
 >
-> ==注意：key为null时，hash值为0。==
+> **<font color='red'>注意：key为null时，hash值为0。</font>**
 
 
 
@@ -233,6 +234,7 @@ final TreeNode<K,V> putTreeVal(HashMap<K,V> map, Node<K,V>[] tab,
  */
 final void treeifyBin(Node<K,V>[] tab, int hash) {
     int n, index; Node<K,V> e;
+    // 树化时有个最小容量要求，没达到要扩容！！！！
     if (tab == null || (n = tab.length) < MIN_TREEIFY_CAPACITY)
         resize();
     else if ((e = tab[index = (n - 1) & hash]) != null) {
@@ -261,7 +263,7 @@ final void treeifyBin(Node<K,V>[] tab, int hash) {
 >
 > 1. 哈希表为null或长度为0
 > 2. 哈希表中Node<K,V>数目超过阈值threshold
-> 3. 哈希表长度小于`MIN_TREEIFY_CAPACITY`，即64
+> 3. 哈希表长度小于`MIN_TREEIFY_CAPACITY`，即64，发生在初始化时
 >
 > 注意，==扩容是扩哈希表，与链表和红黑树无关==
 

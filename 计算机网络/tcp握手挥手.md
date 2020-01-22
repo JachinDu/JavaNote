@@ -4,6 +4,14 @@
 
 https://blog.csdn.net/qzcsu/article/details/72861891
 
+## 0、TCP状态机
+
+![image-20200122181901580](../PicSource/image-20200122181901580.png)
+
+------
+
+
+
 ## 1、三次握手建立连接
 
 ![三次握手](../PicSource/SouthEast-20200114194623938.png)
@@ -20,7 +28,11 @@ https://blog.csdn.net/qzcsu/article/details/72861891
 
 **所以三次握手就能确认双发收发功能都正常，缺一不可。**
 
-
+> **<font color='red'>若TCP三次握手第三次握手时ACK丢失怎么办？</font>**
+>
+> ​	**当Client端收到Server的SYN+ACK应答后，其状态变为ESTABLISHED，并发送ACK包给Server；**
+>
+> ​	**如果此时ACK在网络中丢失，那么Server端该TCP连接的状态为SYN_RECV，并且依次等待3秒、6秒、12秒后重新发送SYN+ACK包，以便Client重新发送ACK包。** 	
 
 
 

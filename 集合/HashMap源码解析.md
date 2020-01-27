@@ -427,3 +427,9 @@ final Node<K,V> getNode(int hash, Object key) {
 
 
 参考：https://juejin.im/post/5c8910286fb9a049ad77e9a3
+
+
+
+## 5、HashMap 容量为什么总是为 2 的次幂？
+
+https://mp.weixin.qq.com/s/GsUlZdRWE7FLfzkTyij2Bg

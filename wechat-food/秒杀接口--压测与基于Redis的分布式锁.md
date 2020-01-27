@@ -142,7 +142,7 @@ public class RedisLock {
             return true;
         }
 
-        // 以下代码加入过期判断防止死锁
+        // 重点：以下代码加入过期判断防止死锁！！！！
         // currentValue是旧值
         String currentValue = redisTemplate.opsForValue().get(key);
         //如果锁过期
@@ -178,15 +178,15 @@ public class RedisLock {
 }
 ```
 
-> **<font color='red'>上面的41行由于，getAndSet相当于原子操作，同时只能有一个线程执行。所以，就算当前锁过期后，有多个线程同时到达41行，也只有一个线程能成功获取锁。</font>**
+> **<font color='red'>上面的32行由于，getAndSet相当于原子操作，同时只能有一个线程执行。所以，就算当前锁过期后，有多个线程同时到达30行，也只有一个线程能成功获取锁。</font>**
 
 
 
 ### 使用：
 
-Service代码截取
+Service层代码截取
 
-==用商品id作为key，可以更细粒度控制代码==
+**<font color='green'>用商品id作为key，可以更细粒度控制代码</font>**
 
 ```java
 @Override
@@ -198,7 +198,6 @@ public void orderProductMockDiffUser(String productId)
     if (!redisLock.lock(productId, String.valueOf(time))) {
         throw new SellException(101, "诶呦喂，人也太多了，换个姿势再试试～～");
     }
-
 
     //1.查询该商品库存，为0则活动结束。
     int stockNum = stock.get(productId);

@@ -8,7 +8,7 @@
 
 ## 2、与远程仓库连接ssh
 
-> - `ssh-keygen -t rsa -C "你的邮箱"`，然后一直按回车
+> - `ssh-keygen -t rsa -C "你的邮箱"`，然后**一直按回车（不设置密码）**
 >
 > - `cd ~/.ssh`文件夹中的公钥文件id_rsa.pub文件内容复制出来，放到github或gitee的对应位置上**(切记去掉最后的邮箱，保留斜杠)**
 >
@@ -49,3 +49,5 @@
 >   ![image-20200127174856166](PicSource/image-20200127174856166.png)
 >
 > - 可见，各种配置都在这里
+>
+> - <font color='red'>**免密码可将url配置为：url = git@gitee.com:jachindo/JavaNote.git即在push/pull时无需密码，因为创建ssh时我们一路回车，没设置密码**</font>

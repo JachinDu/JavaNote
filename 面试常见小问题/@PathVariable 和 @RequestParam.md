@@ -16,10 +16,10 @@ https://www.cnblogs.com/goloving/p/9241393.html
 
 顾名思义，前者是从路径中获取变量，也就是把路径当做变量，后者是从请求里面获取参数，从请求来看：
 
-​	 ==`/Springmvc/user/page.do?pageSize=3&pageNow=2`==
+​	 **<font color='red'>`/Springmvc/user/page.do?pageSize=3&pageNow=2`</font>**
 
 　　`pageSize`和`pageNow`应该是属于参数而不是路径，所以应该添加`@RequestParam`的注解。
 
 　　如果做成如下URL，则可以使用`@PathVariable`
 
-　　==`someUrl/{paramId}`==，这里的`paramId`是路径中的变量，应使用`@pathVariable`
+　　**<font color='red'>`someUrl/{paramId}`</font>**，这里的`paramId`是路径中的变量，应使用`@pathVariable`

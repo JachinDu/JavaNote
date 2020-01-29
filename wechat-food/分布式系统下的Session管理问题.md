@@ -91,7 +91,7 @@ Session复制顾名思义，就是每台应用服务，都保存会话session数
 
 
 
-实现水平和垂直扩展**<font color='red'> redis也可扩展</font>****
+实现水平和垂直扩展**<font color='red'> redis也可扩展</font>**
 
 ==将登陆信息session缓存到redis，多台服务应用需要session时从redis中获取，用户登出时从redis中删除session。==
 

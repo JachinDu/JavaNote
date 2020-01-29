@@ -167,6 +167,8 @@ public class TokenFilter extends ZuulFilter {
 
 ## 5、限流
 
+限流概念参考：https://mp.weixin.qq.com/s/08qtprGeWqb1wFz-5AcvoQ
+
 **控制请求速率，放在进入zuul的第一步进行**
 
 **令牌桶限流：**
@@ -215,3 +217,9 @@ public class RateLimitFilter extends ZuulFilter {
     }
 }
 ```
+
+
+
+### &sect; 漏桶限流与令牌桶限流的区别
+
+**漏桶只能以==固定的速率==去处理请求，而令牌桶可以以桶子==最大的令牌数去处理请求==**

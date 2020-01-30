@@ -75,7 +75,36 @@ public synchronized void orderProductMockDiffUser(String productId)
 
 
 
-## 3、Redis实现分布式锁
+## 3、分布式锁
+
+### &sect; **特点：**
+
+> - 互斥性: 和我们本地锁一样互斥性是最基本，但是分布式锁需要保证在**<font color='red'>不同节点的不同线程的互斥。</font>**
+>
+> - 可重入性: 同一个节点上的同一个线程如果获取了锁之后那么也可以再次获取这个锁。
+>
+> - 锁超时: 和本地锁一样支持锁超时，防止死锁。
+>
+> - 高效，高可用: 加锁和解锁需要高效，同时也需要保证高可用防止分布式锁失效，可以增加降级。
+>
+> - 支持阻塞和非阻塞: 和ReentrantLock一样支持lock和trylock以及tryLock(long timeOut)。
+>
+> - 支持公平锁和非公平锁(可选): 公平锁的意思是按照请求加锁的顺序获得锁，非公平锁就相反是无序的。这个一般来说实现的比较少。
+
+------
+
+### &sect; 实现方式：
+
+> - MySql
+> - Zookeeper
+> - **<font color='red'>Redis（自己手动实现(如下)、redission、redLock）</font>**
+> - 自研分布式锁:如谷歌的Chubby。
+
+------
+
+
+
+## 4、Redis实现分布式锁
 
 ![image-20190827223750182](../PicSource/image-20190827223750182.png)
 

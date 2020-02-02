@@ -1,5 +1,13 @@
 # Short类型比较的坑
 
+前提约定：
+
+***<font color='red' size=4.5>精度小于int的数值==运算的时候(定义时不会)==都回被自动转换为int后进行计算</font>***
+
+------
+
+
+
 ```java
 short x = 3;
 Short s1 = 2;

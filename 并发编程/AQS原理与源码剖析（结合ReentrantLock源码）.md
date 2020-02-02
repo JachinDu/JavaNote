@@ -24,9 +24,13 @@
 
 节点的详细信息如下：
 
-**<font color='red'>注意：head节点(队头)是一个虚节点，仅保留waitStatus属性供后继节点做相应的判断。它代表其中的线程正在工作。</font>**
+**<font color='red'>注意：head节点(队头)是一个虚节点(*`thread字段为null`*)，仅保留waitStatus属性供后继节点做相应的判断。它代表其中的线程正在工作。</font>**
 
 ![image-20191217115057708](../PicSource/image-20191217115057708.png)
+
+------
+
+
 
 ```java
 static final class Node {
@@ -98,7 +102,9 @@ protected final boolean compareAndSetState(int expect, int update) {
 }
 ```
 
-我们可以通过修改state字段实现多线程的独占/共享加锁模式：
+------
+
+我们可以通过修改state字段实现多线程的==独占/共享==加锁模式：
 
 ![image-20191217115324973](../PicSource/image-20191217115324973.png)
 
@@ -116,8 +122,6 @@ protected final boolean compareAndSetState(int expect, int update) {
 
 
 
-
-
 > 1. 首先调用可以由子类重写的<font color='red'>`tryAcquire`方法获取资源（修改state）。</font>
 > 2. 成功则无事，<font color='red'>失败则入队`addWaiter(Node.EXCLUSIVE)`。</font>
 > 3. <font color='red'>`acquireQueued`方法对入队节点进行相应操作使其获取资源/停止获取，中断。</font>
@@ -125,6 +129,8 @@ protected final boolean compareAndSetState(int expect, int update) {
 
 
 一般来说，自定义同步器要么是==独占方式，要么是共享方式==，它们也只需实现<font color='red'>`tryAcquire-tryRelease、tryAcquireShared-tryReleaseShared`</font>中的一种即可。AQS也支持自定义同步器同时实现独占和共享两种方式，如ReentrantReadWriteLock。ReentrantLock是独占锁，所以实现了`tryAcquire-tryRelease`。
+
+------
 
 
 
@@ -166,7 +172,7 @@ private Node addWaiter(Node mode) {
     }
   	// 2. 尝试插入失败，则调用enq()重新插入
     enq(node);
-    return node;
+    return node; // 返回新入队的节点，用于acquireQueued()对其进行处理
 }
 ```
 
@@ -207,8 +213,9 @@ private Node enq(final Node node) {
 ==一个Node被放入等待队列后会做些什么？==
 
 ```java
+/** 处理新入队的节点 */
 final boolean acquireQueued(final Node node, int arg) {
-  	// 获取资源失败？
+  	// 先设置成获取资源失败？
     boolean failed = true;
     try {
         // 被中断？
@@ -356,6 +363,7 @@ protected final boolean tryAcquire(int acquires) {
             return true;
         }
     }
+  	// 偏向，可重入
     else if (current == getExclusiveOwnerThread()) {
         int nextc = c + acquires;
         if (nextc < 0)
@@ -402,6 +410,7 @@ final boolean nonfairTryAcquire(int acquires) {
                     return true;
                 }
             }
+  					// 偏向，可重入
             else if (current == getExclusiveOwnerThread()) {
                 int nextc = c + acquires;
                 if (nextc < 0) // overflow
@@ -413,7 +422,7 @@ final boolean nonfairTryAcquire(int acquires) {
         }
 ```
 
-
+------
 
 ![image-20191217143535498](../PicSource/image-20191217143535498.png)
 

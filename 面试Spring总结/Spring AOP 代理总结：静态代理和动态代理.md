@@ -6,9 +6,11 @@
 
 自己手动创建`Proxy`类，并将`RealSubject`类注入。
 
-![img](/Users/jc/Documents/JavaNote/Spring/AOP/2016-03-10_56e132dacae37.jpg)
+![image-20200201222845606](../PicSource/image-20200201222845606.png)
 
 
+
+------
 
 
 

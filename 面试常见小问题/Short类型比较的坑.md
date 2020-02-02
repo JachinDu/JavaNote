@@ -22,9 +22,11 @@ if (s1.equals(x - 1)) {
 >
 > - 而在运算中编译器不会做上述转换，**<font color='red'>即: x - 1 变为了int 类型</font>**，而Short类型重写的equals方法如下：
 >
+>   - ***<font color='blue'>!!!目标不是Short类型，直接会返回false</font>***
+>
 >   ```java
 >   public boolean equals(Object obj) {
->       // 目标不是Short类型，直接会返回false
+>       // !!!目标不是Short类型，直接会返回false
 >       if (obj instanceof Short) {
 >           return value == ((Short)obj).shortValue();
 >       }
@@ -35,4 +37,15 @@ if (s1.equals(x - 1)) {
 >   因此不会有任何输出。
 >
 > - 将if中的语句改为`s1.equals((short)(x-1))`即可
+>
+> - **<font color='red'>因此，在map的使用时，应避免Short为key，若必须要用Short，则要注意这些，否则会出问题</font>**
+>
+>   如HashMap中remove时对传入的key和map中的元素的对比：
+>
+>   ```java
+>   if (p.hash == hash &&
+>       ((k = p.key) == key || (key != null && key.equals(k))))// 其中key为外部传入的经过运算后的Short，为Integer，而k为Short
+>   ```
+>
+>   ***<font color='red'>此时，第2行的 == 判断直接false了，因为Short和Integer类型不能用==比较，而后面equals也为false，所以remove实效了。</font>***
 

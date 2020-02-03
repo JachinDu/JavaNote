@@ -6,7 +6,7 @@
 
 ### jdk1.8之前
 
-
+![img](../PicSource/JVM运行时数据区域.png)
 
 ------
 
@@ -19,13 +19,7 @@
 - **<font color='red'>由永久代在运行时数据区实现的方法区转为由元空间在==直接内存==实现。</font>**
 - **<font color='red'>运行时常量池从方法区迁到了堆中。（这一项是jdk1.7开始就有的）</font>**
 
-
-
-![img](../PicSource/640.jpeg)
-
-
-
-
+------
 
 ![image-20191218162439883](../PicSource/image-20191218162439883.png)
 
@@ -96,9 +90,9 @@ jdk1.8之前的堆内存示意图：
 
 ![img](../PicSource/640-20200101204640675.png)
 
+------
 
-
-![img](/Users/jc/Documents/JavaNote/JVM/640-20200101204625509.png)
+![img](../PicSource/640-20200101204625509.png)
 
 
 
@@ -106,11 +100,13 @@ jdk1.8之前的堆内存示意图：
 
 ## 4、方法区
 
-<font color='red'>**存放常量、静态变量、类元信息**</font>
+*<font color='red' size=5>**存放常量、静态变量、类元信息**</font>*
 
 
 
 ![img](../PicSource/640-20200101204755905.png)
+
+------
 
 参考：
 

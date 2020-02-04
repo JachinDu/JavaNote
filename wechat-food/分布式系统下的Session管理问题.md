@@ -165,6 +165,71 @@ public class SellerUserController {
 }
 ```
 
+其中`CookieUtil`如下：
 
+```java
+package com.jachin.sell.utils;
+
+/**
+ * @description: cookie工具类
+ * @Author: JachinDo
+ * @Date: 2019/08/27 16:07
+ */
+
+public class CookieUtil {
+
+
+    /**
+     * 设置cookie
+     * @param response
+     * @param name
+     * @param value
+     * @param maxAge
+     */
+    public static void set(HttpServletResponse response,
+                           String name,
+                           String value,
+                           int maxAge) {
+
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath("/");  // 可解决一定程度的cookie跨域问题
+        cookie.setMaxAge(7200);
+        response.addCookie(cookie);
+    }
+
+
+    /**
+     * 获取指定名称cookie
+     * @param request
+     * @param name
+     * @return
+     */
+    public static Cookie get(HttpServletRequest request,
+                           String name) {
+        Map<String, Cookie> cookieMap = readCookieMap(request);
+        if (cookieMap.containsKey(name)) {
+            return cookieMap.get(name);
+        } else {
+            return null;
+        }
+    }
+
+
+
+    // 将获取到到所有cookie(数组形式)转化为map，便于找到我们所需到cookie
+    private static Map<String, Cookie> readCookieMap(HttpServletRequest request) {
+
+        Map<String, Cookie> cookieMap = new HashMap<>();
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                cookieMap.put(cookie.getName(), cookie);
+            }
+        }
+        return cookieMap;
+    }
+}
+```
 
 参考：[https://github.com/sqmax/springboot-project/wiki/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8BSession%E7%AE%A1%E7%90%86](https://github.com/sqmax/springboot-project/wiki/分布式系统下Session管理)

@@ -171,7 +171,7 @@ public class RedisLock {
             return true;
         }
 
-        // 重点：以下代码加入过期判断防止死锁！！！！
+        // 重点：以下代码加入过期判断防止死锁(忘记手动解锁）！！！！
         // currentValue是旧值
         String currentValue = redisTemplate.opsForValue().get(key);
         //如果锁过期

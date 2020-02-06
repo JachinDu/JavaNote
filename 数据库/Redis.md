@@ -28,15 +28,67 @@ https://snailclimb.gitee.io/javaguide/#/docs/database/Redis/Redis
 
 ## 3、redis常见数据结构
 
-> - String:
-> - Hash
-> - List
-> - Set
-> - SortedSet
+https://juejin.im/post/5b53ee7e5188251aaa2d2e16
+
+### &sect; string
+
+> Redis的字符串是==动态字符串==，是可以修改的字符串，**<font color='red'>内部结构实现上类似于Java的ArrayList，采用预分配冗余空间的方式来减少内存的频繁分配，</font>**如图中所示，内部为当前字符串实际分配的空间capacity一般要高于实际字符串长度len。当字符串长度小于1M时，扩容都是==加倍==现有的空间，如果超过1M，扩容时一次只会多扩1M的空间。需要注意的是字符串最大长度为512M。
 
 
 
+![image-20200206175016740](../PicSource/image-20200206175016740.png)
 
+![image-20200206175027702](../PicSource/image-20200206175027702.png)
+
+
+
+------
+
+### &sect; list
+
+> Redis将列表数据结构命名为list而不是array，是因为**<font color='red'>列表的存储结构用的是链表而不是数组，而且链表还是双向链表</font>**。因为它是链表，所以随机定位性能较弱，首尾插入删除性能较优。如果list的列表长度很长，使用时我们一定要关注链表相关操作的时间复杂度。
+
+------
+
+
+
+> - **==负下标==** 链表元素的位置使用自然数`0,1,2,....n-1`表示，还可以使用负数`-1,-2,...-n`来表示，`-1`表示「倒数第一」，`-2`表示「倒数第二」，那么`-n`就表示第一个元素，对应的下标为`0`。
+> - **==队列／堆栈==** 链表可以从表头和表尾追加和移除元素，结合使用rpush/rpop/lpush/lpop四条指令，可以将链表作为队列或堆栈使用，左向右向进行都可以
+
+------
+
+
+
+### &sect; hash
+
+同hashmap，除扩容外还可以“缩容”。![image-20200206175758298](../PicSource/image-20200206175758298.png)
+
+------
+
+### &sect; set
+
+同hashset
+
+
+
+### &sect; zset (SortedSet)
+
+zset是Redis提供的一个非常特别的数据结构，*<font color='red'>一方面它等价于Java的数据结构`Map<value,score>`，可以给每一个元素value赋予一个权重`score`，另一方面它又类似于`TreeSet`，内部的元素会按照权重score进行排序，</font>*可以得到每个元素的名次，还可以通过score的范围来获取元素的列表。
+
+------
+
+> zset底层实现使用了两个数据结构:
+>
+> - ==hash==：hash的作用就是<font color='red'>关联元素value和权重score，保障元素value的唯一性，可以通过元素value找到相应的score值。</font>
+> - ==跳表==：跳跃列表的目的在于<font color='red'>给元素value排序</font>，根据score的范围获取元素列表。
+
+------
+
+#### 有关跳表
+
+因为zset要**==支持随机的插入和删除，所以它不好使用数组来表示。==**
+
+​	
 
 ## 4、redis过期时间
 

@@ -418,6 +418,8 @@ final Node<K,V> getNode(int hash, Object key) {
 
 当put中执行resize时，由resize的实现可见，在完成扩容后，==还未转移元素之前，就将新哈希表赋值给了旧表==，即旧表为空了。所以，若这个时候get，则为null。
 
+
+
 ### 4.3、put并发导致循环链表，进而导致get死循环（JDK1.7）
 
 **<font color='red'>因为jdk1.7使用头插入法插入链表，jdk1.8改为尾插入了</font>**
@@ -428,7 +430,7 @@ final Node<K,V> getNode(int hash, Object key) {
 
 参考：https://juejin.im/post/5c8910286fb9a049ad77e9a3
 
-
+​	
 
 ## 5、HashMap 容量为什么总是为 2 的次幂？
 

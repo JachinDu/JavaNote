@@ -22,15 +22,21 @@
 > -t表示60秒，-c表示100个并发，它会在连续60秒内不停地发请求。
 > 更详细的命令说明，见[官方文档](http://httpd.apache.org/docs/2.0/programs/ab.html)
 
+------
+
 
 
 ## 1、高并发带来的“超卖”现象
 
-即：**<font color='red'>订单数 > 库存减少数</font>**
+> 即：**<font color='red'>订单数 > 库存减少数</font>**
+>
+> 如：“国庆活动，皮蛋粥特价，限量份100000 还剩：99992 份 该商品成功下单用户数目：1000 人”
+>
+> 解决方法见下文。
 
-如：“国庆活动，皮蛋粥特价，限量份100000 还剩：99992 份 该商品成功下单用户数目：1000 人”
+------
 
-解决方法见下文。
+
 
 ## 2、synchronized关键字实现锁
 
@@ -67,7 +73,7 @@ public synchronized void orderProductMockDiffUser(String productId)
 > 缺点：
 >
 > - **<font color='red'>无法做到细粒度控制。</font>**当有许多商品时，每个商品id不同，但这里对每个商品的抢购都会加锁，假如秒杀A商品的人很多，秒杀B商品的人很少，一旦进入这个方法都会造成一样的慢，这就是说无法做到细粒度的控制。
-> - 只适合单点的情况。只能跑在单机上。**<font color='red'>因为`synchronized`锁基于jvm，当应用集群化后，相当于有多个jvm，这种锁自然就失效了。</font>**
+> - 只适合单点的情况。只能跑在单机上。***<font color='red' size=4.5>因为`synchronized`锁基于jvm，当应用集群化后，相当于有多个jvm，这种锁自然就失效了。</font>***
 
 
 
@@ -130,18 +136,10 @@ public synchronized void orderProductMockDiffUser(String productId)
 
 > 重点基于：redis的两个命令，具体见http://www.redis.cn/commands.html
 >
->  1. <font color='blue'>redis的 [**SETNX key value**] 对应java代码中的 `setIfAbsent`</font>
+>  1. <font color='gree'>redis的 [**SETNX key value**] 对应java代码中的 `setIfAbsent`</font>
 >
->  	![image-20190827224126574](/Users/jc/Library/Application Support/typora-user-images/image-20190827224126574.png)
+> 2. <font color='gree'>[**GETSET key value**] 对应java代码中的 `getAndSet`</font>
 >
->  
->
-> 2. <font color='blue'>[**GETSET key value**] 对应java代码中的 `getAndSet`</font>
->
->   ![image-20190827224252412](../PicSource/image-20190827224252412.png)
->
-
-
 
 ------
 
@@ -257,3 +255,9 @@ public void orderProductMockDiffUser(String productId)
 **关于分布式锁的更多讨论，mysql分布式锁、zookeeper分布式锁、redission、redlock等详见：**
 
 https://juejin.im/post/5bbb0d8df265da0abd3533a5
+
+
+
+## 5、易错点难点
+
+> 切记，***<font color='red'>redis和 mq是无法通过springboot中的实务机制回滚的，所以一旦出了异常，try catch中要手动将数据改回去（手动回滚）。</font>***

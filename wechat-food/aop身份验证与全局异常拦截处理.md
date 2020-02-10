@@ -1,4 +1,4 @@
-# aop与卖家端身份验证
+# aop身份验证与全局异常拦截处理
 
 
 
@@ -104,7 +104,7 @@ public class SellerAuthorizeAspect {
 >
 > 1. 36行切入点@Pointcut：
 >
->    使用execution表达式划分切入范围，即需要验证的范围，具体表达式语法网上有很多。此处因为后端管理各页面controller类均以Sell开头，除了用户登录登出controller，所以!execution用来排出不切入的点。
+>    使用==execution表达式==划分切入范围，即需要验证的范围，具体表达式语法网上有很多。此处因为后端管理各页面controller类均以Sell开头，除了用户登录登出controller，所以!execution用来排出不切入的点。
 >
 >    ==作用：当程序执行到对应切入范围，则执行@Pointcut所标注的方法，此处为vertify()==
 >
@@ -137,13 +137,6 @@ public class SellerAuthorizeException extends RuntimeException {
 
 ```java
 package com.jachin.sell.handler;
-
-import com.jachin.sell.exception.SellerAuthorizeException;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
-
 /**
  * @description:
  * @Author: JachinDo

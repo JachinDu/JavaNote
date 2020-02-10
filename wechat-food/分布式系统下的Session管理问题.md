@@ -30,7 +30,7 @@
 
 
 
-## 2、布式Session管理方法
+## 2、分布式Session管理方法
 
 
 
@@ -61,7 +61,7 @@ Session复制顾名思义，就是每台应用服务，都保存会话session数
 这个也很好理解，**<font color='red'> 再加一台服务，专门来管理session数据，每台应用服务都从专门的session管理服务中取会话session数据。</font>**可以使用数据库，NOSQL数据库等。和Session复制相比，减少了每台应用服务的内存使用，同步session带来的网络开销问题。
 但还是有缺点：
 
-> 1. 读写session引入了网络操作，相对于本机读写session，带来了==延时和不稳定性==。
+> 1. 读写session引入了网络操作，==相对于本机读写session，带来了延时和不稳定性==。
 > 2. 如果Session集中服务有问题，会影响应用。
 
 

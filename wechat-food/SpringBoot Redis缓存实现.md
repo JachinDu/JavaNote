@@ -2,17 +2,12 @@
 
 
 
-## 1、缓存对象必须实现==序列化==
+## 1、<font color='red'>缓存对象必须实现==序列化==</font>
 
 如：
 
 ```java
 package com.jachin.sell.VO;
-
-import lombok.Data;
-
-import java.io.Serializable;
-
 /**
  * @description: http请求返回的最外层对象
  * @Author: JachinDo
@@ -21,8 +16,6 @@ import java.io.Serializable;
 
 @Data
 public class ResultVO<T> implements Serializable {
-
-
     // 利用插件保证序列化时唯一id
     private static final long serialVersionUID = -1712970983658219564L;
 
@@ -43,9 +36,13 @@ public class ResultVO<T> implements Serializable {
 
 使用方法：
 
-快捷键command+o：
+快捷键==`command+o`==：
 
 ![image-20190828143932709](../PicSource/image-20190828143932709.png)
+
+
+
+------
 
 
 
@@ -71,19 +68,14 @@ yml配置文件：
 
 ![image-20190828144031175](../PicSource/image-20190828144031175.png)
 
+------
 
 
 
-
-启动类加`@EnableCaching`注解：
+***<font color='red'>启动类加`@EnableCaching`注解：</font>***
 
 ```java
 package com.jachin.sell;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
-
 @SpringBootApplication
 @EnableCaching
 public class SellApplication {
@@ -95,6 +87,8 @@ public class SellApplication {
 }
 ```
 
+------
+
 
 
 ## 3、缓存使用举例
@@ -105,15 +99,12 @@ public class SellApplication {
 
 ```java
 package com.jachin.sell.service.impl;
-
-
 @Service
 @CacheConfig(cacheNames = "product")
 public class ProductServiceImpl implements ProductService {
-
     @Autowired
     private ProductInfoDao dao;
-
+  
     @Override
     @Cacheable(key = "123")
     public ProductInfo findById(String productId) {
@@ -132,7 +123,7 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-> 1. @Cacheable: 第一次进入会执行其标注的方法，执行后，将==返回值类型的数据==进行缓存，之后则不会执行方法，直接从缓存中获取数据。
+> 1. @Cacheable：第一次进入会执行其标注的方法，执行后，将==返回值类型的数据==进行缓存，之后则不会执行方法，直接从缓存中获取数据。
 >
 > 2. @CachePut：**<font color='green'>每一次都会执行其标注的方法，每一次都将执行后的新返回值用于更新缓存。</font>**
 >
@@ -142,7 +133,7 @@ public class ProductServiceImpl implements ProductService {
 >
 > 5. @CacheConfig：用来配置一些作用域相关的东西，简化上述注解中相同属性的编写。
 >
-> 6. **<font color='red' size=4>key：key值必须要写，cacheNames + key 唯一标示缓存，而key默认值是函数入参，所以防止不统一，建议必须给出该属性值。</font>**
+> 6. **<font color='red' size=4>key：key值必须要写，cacheNames + key 唯一标示缓存，而==key默认值是函数入参==，所以防止不统一，建议必须给出该属性值。</font>**
 >
 > 7. 更丰富的语法：
 >
@@ -152,8 +143,9 @@ public class ProductServiceImpl implements ProductService {
 >    public ResultVO list(@RequestParam(value = "sellerId", required = false) String sellerId) {}
 >    ```
 >
->    用到了<font color='red' size=4>spel表达式。condition和unless都表示缓存条件，满足才缓存。</font>
+>    用到了<font color='red' size=4>==spel表达式==。condition和unless都表示缓存条件，满足才缓存。</font>
 
 
 
-**<font color='blue'>注意：三个缓存注解是将方法的==“返回值”==作为value存入redis，所以，通常注解不加在Controller层的方法上，因为Controller层的方法通常返回ModelAndView，通常加在Service层。总之，我们通常是要缓存自己定义的数据对象吧。</font>**
+**<font color='gree'>注意：三个缓存注解是将方法的==“返回值”==作为value存入redis，所以，通常注解不加在Controller层的方法上，因为Controller层的方法通常返回ModelAndView，通常加在Service层。总之，我们通常是要缓存自己定义的数据对象吧。</font>**
+

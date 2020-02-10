@@ -43,15 +43,15 @@
 
 **Exchange(交换器)** 用来接收生产者发送的消息并将这些消息路由给服务器中的队列中，如果路由不到，或许会返回给 **Producer(生产者)** ，或许会被直接丢弃掉 。这里可以将RabbitMQ中的交换器看作一个简单的实体。
 
-**RabbitMQ 的 Exchange(交换器) 有4种类型，不同的类型对应着不同的路由策略**：**direct(默认)**，**fanout**, **topic**, 和 **headers**，不同类型的Exchange转发消息的策略有所区别。
+==**RabbitMQ 的 Exchange(交换器) 有4种类型，不同的类型对应着不同的路由策略**：**direct(默认)**，**fanout**, **topic**, 和 **headers**，不同类型的Exchange转发消息的策略有所区别。==
 
 ------
 
 
 
-> - **路由键(RoutingKey)：**生产者将消息发给交换器的时候，一般会指定一个 **RoutingKey(路由键)**，用来指定这个消息的路由规则，而这个 **RoutingKey 需要与交换器类型和绑定键(BindingKey)联合使用才能最终生效**。
+> - **路由键(RoutingKey)：**生产者将消息发给交换器的时候，一般会指定一个 **RoutingKey(路由键)**，用来指定这个消息的路由规则，而这个 ***<font color='red'>RoutingKey 需要与交换器类型和绑定键(BindingKey)联合使用才能最终生效</font>***。
 >
-> - **绑定建(BindingKey)** ：RabbitMQ 中通过 **Binding(绑定)** 将 **Exchange(交换器)** 与 **Queue(消息队列)** 关联起来，在绑定的时候一般会指定一个 **BindingKey(绑定建)** ,这样 RabbitMQ 就知道如何正确将消息路由到队列了。
+> - **绑定建(BindingKey)** ：RabbitMQ 中通过 **Binding(绑定)** 将 **Exchange(交换器)** 与 **Queue(消息队列)** 关联起来，在绑定的时候一般会指定一个 **BindingKey(绑定建)** ,这样 RabbitMQ 交换器就知道如何正确将消息路由到队列了。
 >
 >   ![70553134](../PicSource/70553134.jpg)
 
@@ -113,7 +113,7 @@
 
 
 
-### 5）消息中间件服务节点(Broker)
+### 5）消息中间件服务节点(==Broker==)
 
 对于 RabbitMQ 来说，<font color='red'>一个 RabbitMQ Broker 可以简单地看作一个 RabbitMQ 服务节点，或者RabbitMQ服务实例</font>。大多数情况下也可以将一个 RabbitMQ Broker 看作一台 RabbitMQ 服务器。
 

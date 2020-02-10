@@ -4,12 +4,14 @@
 
 ## 1、序列化
 
-对象的序列化主要有两种用途:
+### &sect; 用途:
 
-- 把对象序列化成字节码，保存到指定介质上(如磁盘等)
-- 用于网络传输
+- **==把对象序列化成字节码，保存到指定介质上(如磁盘等)==**
+- **==用于网络传输==**
 
 被序列化的实例所属类需要实现`Serializable`接口：
+
+------
 
 
 
@@ -21,9 +23,13 @@
 
 简单来说，Java的序列化机制是**<font color='red'>通过判断类的`serialVersionUID`来验证版本一致性的</font>**。
 
-在进行反序列化时，JVM会把传来的**<font color='red'>字节流中的`serialVersionUID`与本地相应实体类的`serialVersionUID`进行比较</font>**，如果相同就认为是一致的，可以进行反序列化，否则就会出现序列化版本不一致的异常，即是`InvalidCastException`。
+在进行反序列化时，JVM会把传来的**<font color='red'>字节流中的`serialVersionUID`与本地相应实体类的`serialVersionUID`进行比较</font>**，如果相同就认为是一致的，可以进行反序列化，否则就会出现序列化版本不一致的异常，即是==`InvalidCastException`==。
 
-**具体的序列化过程是这样的**：序列化操作的时候系统会把当前类的`serialVersionUID`写入到序列化文件中，当反序列化时系统会去检测文件中的`serialVersionUID`，判断它是否与当前类的`serialVersionUID`一致，如果一致就说明序列化类的版本与当前类版本是一样的，可以反序列化成功，否则失败。
+
+
+> **具体的序列化过程是这样的**：序列化操作的时候系统会把当前类的`serialVersionUID`写入到序列化文件中，当反序列化时系统会去检测文件中的`serialVersionUID`，判断它是否与当前类的`serialVersionUID`一致，如果一致就说明序列化类的版本与当前类版本是一样的，可以反序列化成功，否则失败。
+
+------
 
 
 

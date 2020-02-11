@@ -158,6 +158,8 @@ static final int hash(Object key) {
 
 流程图解析：
 
+![图片描述](../PicSource/5d5fc7e200016af809121188.jpg)
+
 ![hashmap_put](../PicSource/hashmap_put.png)
 
 > 注意：
@@ -416,7 +418,7 @@ final Node<K,V> getNode(int hash, Object key) {
 
 ### 4.2、put和get并发，可能导致get到null
 
-当put中执行resize时，由resize的实现可见，在完成扩容后，==还未转移元素之前，就将新哈希表赋值给了旧表==，即旧表为空了。所以，若这个时候get，则为null。
+当put中执行resize时，由resize的实现可见，在完成扩容后，==还未转移元素之前，就将新哈希表赋值给了旧表==，即旧表为空了。所以，若这个时候get，则为null。***<font color='red'>所以在ConcurrentHashMap中的put操作中对数组是否正在进行扩容进行了判断从而保证线程安全。</font>***
 
 
 

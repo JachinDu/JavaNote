@@ -26,6 +26,8 @@
 
 > 如果有多个调用者（callers）同时请求相同资源（如内存或磁盘上的数据存储），他们会共同获取**相同的指针指向相同的资源**，直到某个调用者**试图修改**资源的内容时，系统才会**真正复制一份专用副本**（private copy）给该调用者，而其他调用者所见到的最初的资源仍然保持不变。**优点**是如果调用者**没有修改该资源，就不会有副本**（private copy）被建立，因此多个调用者只是读取操作时可以**共享同一份资源**。
 
+------
+
 
 
 ## 2、CopyOnWriteArrayList介绍
@@ -42,7 +44,7 @@
 
 ### &sect; 基本结构
 
-**<font color='blue' size=4.5>*Object数组 + ReentrantLock*</font>**
+**<font color='gree' size=4.5>*Object数组 拷贝 + ReentrantLock + volatile*</font>**
 
 ```java
 public class CopyOnWriteArrayList<E>
@@ -95,6 +97,12 @@ public boolean add(E e) {
     }
 }
 ```
+
+> ***<font color='red'>其中10行改变了array，又因为array是volatile的，所以，保证了可见性。所以这一步将array指向新数组是同步的关键。</font>***
+
+
+
+------
 
 
 

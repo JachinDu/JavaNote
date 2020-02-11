@@ -1,4 +1,4 @@
-# SpringData JPA
+# SpringData JPA与分页
 
 在Spring Boot中使用JPA，需要引入如下依赖：
 
@@ -22,9 +22,9 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
 }
 ```
 
-所有dao层都会继承**<font color='red'>`JpaRepository<实体类,主键类型>`</font>**接口。
+所有dao层都会继承***<font color='red'>`JpaRepository<实体类,主键类型>`</font>***接口。
 
-
+------
 
 **`JpaRepository`接口的继承关系图：**
 

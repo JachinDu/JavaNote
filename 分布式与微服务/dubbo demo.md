@@ -91,9 +91,7 @@
 
 ```java
 package com.jachin.providerdicket.service;
-
 public interface TicketService {
-
     String getTicket();
 }
 ```
@@ -104,11 +102,6 @@ public interface TicketService {
 
 ```java
 package com.jachin.providerdicket.service;
-
-
-import org.apache.dubbo.config.annotation.Service;
-import org.springframework.stereotype.Component;
-
 @Component
 //必须引入dubbo才有该注解（不仅要引入starter）
 @Service //org.apache.dubbo.config.annotation.Service下的注解
@@ -161,12 +154,6 @@ UserService:
 
 ```java
 package com.jachin.consumeruser.service;
-
-
-import com.jachin.providerdicket.service.TicketService;
-import org.apache.dubbo.config.annotation.Reference;
-import org.springframework.stereotype.Service;
-
 @Service  //这是Spring的service
 public class UserService {
 
@@ -189,19 +176,9 @@ public class UserService {
 
 ```java
 package com.jachin.consumeruser;
-
-import com.jachin.consumeruser.service.UserService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ConsumerUserApplicationTests {
-
-
     @Autowired
     UserService userService;
 

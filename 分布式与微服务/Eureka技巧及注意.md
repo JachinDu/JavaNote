@@ -8,7 +8,7 @@
 
 具体demo可见“分布式与微服务/springcloud”笔记。
 
-<font color='red' size = 5>server启动类加`@EnableEurekaServer`，client启动类加`@EnableDiscoveryClient`</font>
+*<font color='red' size = 4>server启动类加`@EnableEurekaServer`，client启动类加`@EnableDiscoveryClient`</font>*
 
 ## 后台启动eureka server：
 
@@ -16,15 +16,19 @@
 >
 >   2. 后台执行jar包：
 >
->      `nohup java -jar target/eureka-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &`
+>      ==`nohup java -jar target/eureka-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &`==
 >
-> 		3. 执行情况及查看：
+>   3. 执行情况及查看：
 >
->      `ps -ef |grep eureka` ：通过关键字‘eureka’ 查找进程
+>      ==`ps -ef |grep eureka`== ：通过关键字‘eureka’ 查找进程
 >
->      ![image-20190912094738415](../PicSource/image-20190912094738415.png)
+>   
 >
->      红框为进程号，可使用`kill -9 进程号` 来停止该进程
+>   ![image-20190912094738415](../PicSource/image-20190912094738415.png)
+>
+>   红框为进程号，可使用`kill -9 进程号` 来停止该进程
+
+------
 
 
 
@@ -40,15 +44,13 @@
 
 ![image-20190912111832374](../PicSource/image-20190912111832374.png)
 
-
-
-
-
-
+------
 
 
 
 ## 高可用eureka
+
+***<font color='red' size = 4>eureka之间互相注册</font>***
 
 实现多台eureka服务器互通，可以同时为client提供服务。
 
@@ -92,7 +94,7 @@
 
 > 方式1: 客户端发现
 >
-> ​		b服务都注册到注册中心，a通过自己的机制（轮询、负载均衡等）直接从注册中心挑选一个b作为自己的服务提供者。如eureka。
+> ​		b服务都注册到注册中心，a通过自己的机制（轮询、负载均衡(默认)等）直接从注册中心挑选一个b作为自己的服务提供者。如eureka。
 >
 > 方式2: 服务端发现
 >

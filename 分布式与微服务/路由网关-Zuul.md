@@ -2,7 +2,7 @@
 
 ## 1、为什么需要网关
 
-**<font color='blue' size = 5>一个处理非业务类服务的绝佳场所</font>**
+**<font color='gree' size = 5>一个处理非业务类服务的绝佳场所</font>**
 
 ------
 
@@ -22,8 +22,10 @@
 
 过滤器：每种类型的过滤器都有很多种实现
 
-> - Pre：限流、鉴权、参数校验调整
+> - **<font color='gree'>Pre：限流、鉴权、参数校验调整</font>**
 > - Post：统计、日志
+
+------
 
 
 
@@ -35,7 +37,11 @@
 
 ![image-20200106210434078](../PicSource/image-20200106210434078.png)
 
-### 2）启动类加`@EnableZuulProxy`注解
+------
+
+
+
+### 2）启动类加==`@EnableZuulProxy`==注解
 
 
 
@@ -53,7 +59,7 @@
 
 > - **<font color='red'>其中，第一个product是应用名，可通过yml配置自定义，详见下一节。</font>**
 >
-> - 可以通过访问:`http://localhost:9000/actuator/routes`可以查看所有可访问应用：
+> - 可以通过访问:==`http://localhost:9000/actuator/routes`==可以查看所有可访问应用：
 >
 >   ![image-20200106211131537](../PicSource/image-20200106211131537.png)
 
@@ -100,7 +106,7 @@ zuul:
 ```
 
 > - 配置1：可以通过问`http://localhost:9000/myProduct/product/list`接口就可以实现对product应用的/product/list接口的调用。
-> - <font color='red'>配置2：配置要对客户端屏蔽的应用接口，因为配置1，所以现在对网关有两种请求方式都可以访问到应用的listForOrder接口，故要将两个访问路径都屏蔽，所以可以通过通配符写法，更加简洁。客户端访问被屏蔽的路径，会返回404。</font>
+> - <font color='red'>配置2：配置要对客户端屏蔽的应用接口，因为配置1，所以现在对网关有两种请求方式都可以访问到应用的listForOrder接口，故要将两个访问路径都屏蔽，所以可以通过通配符写法，更加简洁。客户端访问被屏蔽的路径，会**==返回404==**。</font>
 
 
 
@@ -148,7 +154,7 @@ public class TokenFilter extends ZuulFilter {
         HttpServletRequest request = currentContext.getRequest();
 
         // 这里从url中获取，也可以从cookie、header中获取，从cookie中获取要先配置禁止敏感头过滤
-        // 因为默认是会过滤掉前端传来的 cookie的
+        // 因为默认是会过滤掉前端传来的cookie
         String token = request.getParameter("token");
         if (StringUtils.isEmpty(token)) {
             currentContext.setSendZuulResponse(false); // 表示请求不通过

@@ -2,13 +2,13 @@
 
 
 
-> 1.继承Thread类
+> 1. 继承Thread类
 >
-> 2.实现Runnable接口
+> 2. 实现Runnable接口
 >
-> 3.使用Callable和Future
+> 3. 使用Callable和Future
 
-**<font color='blue'>2、3方法都要调用`new Thread(Runnable args)`，将接口实现类作为参数传入，注意，`Thread`只接收Runnable对象，而Callable不是Runnable子接口，需要包装为FutureTask对象才可。</font>**
+***<font color='red'>2、3方法都要调用`new Thread(Runnable args)`，将接口实现类作为参数传入，注意，`Thread`只接收Runnable对象，而Callable不是Runnable子接口，需要包装为FutureTask对象才可。</font>***
 
 ------
 
@@ -158,7 +158,7 @@ class CallableTest implements Callable{
 
 （3）增加程序的健壮性，代码和数据独立
 
-（4）**<font color='red'>线程池只能放入Runable或Callable接口实现类，不能直接放入继承Thread的类</font>**
+（4）***<font color='red'>线程池只能放入Runable或Callable接口实现类，不能直接放入继承Thread的类</font>***
 
 ## 5.Callable和Runnable的区别
 
@@ -169,4 +169,15 @@ class CallableTest implements Callable{
 (3) call()方法可以抛出==异常==，run()方法不可以
 
 (4) ==运行Callable任务可以拿到一个Future对象，表示异步计算的结果 。通过Future对象可以了解任务执行情况，可取消任务的执行，还可获取执行结果==
+
+------
+
+## FutureTask整合了Runnable 和 Callable
+
+我们现在清楚了，新建任务有两种方式，一种是无返回值的 Runnable，一种是有返回值的 Callable，但对 Java 其他 API 来说使用起来并不是很方便，没有一个统一的接口，比如说线程池在提交任务时，是不是应该针对 Runnable 和 Callable 两种情况提供不同的实现思路呢？所以 FutureTask 出现了，FutureTask 实现了 RunnableFuture 接口，又集合了 Callable（Callable 是 FutureTask 的属性），还提供了两者一系列的转化方法，这样 FutureTask 就统一了 Callable 和 Runnable，我们一起来细看下。
+
+
+
+> 1. <font color='red'>***run 方法是没有返回值的，通过给 outcome 属性赋值（set(result)），get 时就能从 outcome 属性中拿到返回值；***</font>
+> 2. <mark>**FutureTask 两种构造器，最终都转化成了 Callable**</mark>，所以在 run 方法执行的时候，只需要执行 Callable 的 call 方法即可，在执行 c.call() 代码时，<mark>**如果入参是 Runnable 的话， 调用路径为 c.call() -> RunnableAdapter.call() -> Runnable.run()，如果入参是 Callable 的话，直接调用。**</mark>
 

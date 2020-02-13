@@ -28,7 +28,6 @@
 
 
 
-
 ------
 
 
@@ -52,6 +51,8 @@ synchronized 是依赖于 JVM 实现的，前面我们也讲到了 虚拟机团�
 
 
 ### **4、 ReentrantLock可实现选择性通知（Condition: 锁可以绑定多个条件）**
+
+==**场景：锁+队列**==
 
 - <font color='red'>**ReentrantLock 提供了一种能够中断等待锁的线程的机制**，通过 `lock.lockInterruptibly()` 来实现这个机制。也就是说正在等待的线程可以选择放弃等待，改为处理其他事情。</font>
 - **ReentrantLock 可以指定是公平锁还是非公平锁。而 synchronized 只能是非公平锁。所谓的公平锁就是先等待的线程先获得锁。** ReentrantLock 默认情况是非公平的，可以通过 ReentrantLock 类的`ReentrantLock(boolean fair)`构造方法来制定是否是公平的。

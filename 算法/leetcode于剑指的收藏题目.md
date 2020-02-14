@@ -80,7 +80,22 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 ### &sect; 字符串类
 
 > - 第一个只出现一次的字符
->   - 【🎖🎖】字符串的排列(固定一位，递归交换)
+>
+> - 【🎖🎖】字符串的排列(固定一位，递归交换)
+>
+> - 【🎖🎖】字符流中第一个不重复的字符：主要是LinkedHashMap/HashMap的遍历：
+>
+>   ```java
+>   Iterator<Map.Entry<Character,Integer>> itr = map.entrySet().iterator();
+>           while(itr.hasNext()){
+>               Map.Entry entry = itr.next();
+>               if(entry.getValue().equals(1)){
+>                   return (char)entry.getKey();
+>               }
+>           }
+>   ```
+>
+> - 【🎖】表示数值的字符串：疯狂判定
 
 
 

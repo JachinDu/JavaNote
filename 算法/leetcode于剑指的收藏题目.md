@@ -43,10 +43,60 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 ### &sect; 数组类
 
 > - 数组中的逆序对（归并排序）
+>
 > - 调整数组顺序使奇数位于偶数前面
+>
 > - 数字在排序数组中出现的次数（二分查找）：见到排序就可以想到二分
+>
 > - 【🎖🎖🎖】把数组排成最小的数(自定义Comparator)
+>
 > - 【🎖🎖】连续子数组的最大和(前面的和+当前值不可小于当前值，若小于，则起点重新从当前值开始)
+>
+> -  数组中重复的数字：
+>
+>   - 使用额外空间：
+>
+>     ```java
+>     boolean[] visited = new boolean[length];
+>     for(int i = 0; i < length; i++){
+>       if(!visited[numbers[i]]){
+>         visited[numbers[i]] = true;
+>       }else{
+>         duplication[0] = numbers[i];
+>         return true;
+>       }
+>     }
+>     return false;
+>     ```
+>
+>   - 不使用额外空间，每次交换归位元素，归位冲突即发现重复元素：
+>
+>     ```java
+>     int i = 0;
+>     while(i < length){
+>       if(numbers[i] != i){
+>         int temp = numbers[numbers[i]];
+>         if(temp == numbers[i]){
+>           duplication[0] = temp;
+>           return true;
+>         }else{
+>           numbers[numbers[i]] = numbers[i];
+>           numbers[i] = temp;
+>         }
+>       }else{
+>         i++;
+>       }
+>     }
+>     return false;
+>     ```
+>
+>     
+>
+> - 【🎖🎖🎖】构建乘积数组：构建二维（只用上三角，会有嵌套循环）&rArr;优化为上下三角
+>
+>   ![img](../PicSource/841505_1472459965615_8640A8F86FB2AB3117629E2456D8C652.jpeg)
+>
+>   
 
 ------
 
@@ -64,6 +114,21 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 ### &sect; 二进制与位运算
 
 > - 二进制中1的个数
+>
+> - 求1+2+3+...+n
+>
+>   ```java
+>   // 短路求值原理(&&前面为假后面就不计算了)
+>   public class Solution {
+>       public int Sum_Solution(int n) {
+>           int ans = n;
+>           boolean t=((ans!=0) && ((ans += Sum_Solution(n - 1))!=0));
+>           return ans;
+>       }
+>   }
+>   ```
+>
+>   
 
 ------
 
@@ -96,6 +161,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   ```
 >
 > - 【🎖】表示数值的字符串：疯狂判定
+>
+> - 【🎖🎖🎖🎖】正则表达式匹配：分清情况
 
 
 

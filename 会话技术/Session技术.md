@@ -8,8 +8,6 @@ HttpSession类：保存会话数据
 
 
 
-
-
 ![Session Based Authentication flow](../PicSource/Session-Based-Authentication-flow-20200114191949075.png)
 
 
@@ -18,9 +16,9 @@ HttpSession类：保存会话数据
 
 ​                                   new HttpSession();
 
-2）把JSESSIONID作为Cookie的值发送给浏览器保存
+2）<font color='red'>**把JSESSIONID作为Cookie的值发送给浏览器保存**</font>
 
-​            Cookie cookie = new Cookie("JSESSIONID", sessionID);
+​            `Cookie cookie = new Cookie("JSESSIONID", sessionID);`
 
 ​            response.addCookie(cookie);
 
@@ -50,7 +48,7 @@ HttpSession类：保存会话数据
 
 ​       
 
-结论：通过JSESSION的cookie值在服务器找session对象！！！！！
+结论：<font color='red'>通过JSESSION的cookie值在服务器找session对象！！！！！</font>
 
 
 
@@ -58,13 +56,12 @@ HttpSession类：保存会话数据
 
 
 
-request.getSession();
-
-setAttrbute("name","会话数据");
-
-getAttribute("会话数据")
-
-
+> request.getSession();
+>
+> setAttrbute("name","会话数据");
+>
+> getAttribute("会话数据")
+>
 
 如何避免浏览器的JSESSIONID的cookie随着浏览器关闭而丢失的问题：
 
@@ -128,16 +125,6 @@ getAttribute("会话数据")
 
 ```java
 package login_servlet;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.sql.rowset.serial.SerialStruct;
-import java.io.IOException;
-
 /*
 * 处理登陆逻辑
 * */
@@ -183,16 +170,6 @@ public class ServletLogin extends HttpServlet {
 
 ```java
 package login_servlet;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
-
 @WebServlet(name = "ServletIndex",urlPatterns = "/ServletIndex")
 public class ServletIndex extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -234,15 +211,6 @@ public class ServletIndex extends HttpServlet {
 
 ```java
 package login_servlet;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-
 @WebServlet(name = "ServletLogout",urlPatterns = "/ServletLogout")
 public class ServletLogout extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

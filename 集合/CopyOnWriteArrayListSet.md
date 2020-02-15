@@ -8,9 +8,9 @@
 
 **新老线程安全类，总结起来就是==粒度==的问题**
 
-> - **<font color='blue' size=4.5>*线程不安全 &rArr; synchronized(大粒度线程安全) &rArr; 优化后(细粒度)线程安全*</font>**
-> - **<font color='blue' size=4.5>*HashMap &rArr; HashTable/Collections.synchronized.. &rArr; ConcurrentHashMap*</font>**
-> - **<font color='blue' size=4.5>*ArrayList &rArr; Vector/Collections.synchronized.. &rArr; CopyOnWriteArrayList*</font>**
+- **线程不安全 &rArr; synchronized(大粒度线程安全) &rArr; 优化后(细粒度)线程安全**
+- HashMap &rArr; HashTable/Collections.synchronized.. &rArr; ConcurrentHashMap
+- ArrayList &rArr; Vector/Collections.synchronized.. &rArr; CopyOnWriteArrayList
 
 ------
 
@@ -212,7 +212,7 @@ static final class COWIterator<E> implements ListIterator<E> {
 
 ## 3、CopyOnWriteArraySet
 
-`CopyOnWriteArraySet`的原理就是`CopyOnWriteArrayList`。
+<font color='red'>`CopyOnWriteArraySet`的原理就是`CopyOnWriteArrayList`。</font>
 
 ```java
 private final CopyOnWriteArrayList<E> al;

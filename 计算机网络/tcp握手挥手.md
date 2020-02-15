@@ -32,7 +32,9 @@ https://blog.csdn.net/qzcsu/article/details/72861891
 >
 > ​	**当Client端收到Server的SYN+ACK应答后，其状态变为ESTABLISHED，并发送ACK包给Server；**
 >
-> ​	**如果此时ACK在网络中丢失，那么Server端该TCP连接的状态为SYN_RECV，并且依次等待3秒、6秒、12秒后重新发送SYN+ACK包，以便Client重新发送ACK包。** 	
+> ​	**<font color='red'>如果此时ACK在网络中丢失，那么Server端该TCP连接的状态为SYN_RECV，并且依次等待3秒、6秒、12秒后重新发送SYN+ACK包，以便Client重新发送ACK包。</font>** 	
+
+------
 
 
 
@@ -65,7 +67,7 @@ https://blog.csdn.net/qzcsu/article/details/72861891
 
 MSL（Maximum Segment Lifetime），TCP允许不同的实现可以设置不同的MSL值。
 
-- <font color='red'>保证客户端发送的最后一个ACK报文能够到达服务器</font>，因为这个ACK报文可能丢失，站在服务器的角度看来，我已经发送了FIN+ACK报文请求断开了，客户端还没有给我回应，应该是我发送的请求断开报文它没有收到，于是服务器又会重新发送一次，而客户端就能在这个2MSL时间段内收到这个重传的报文，接着给出回应报文，并且会重启2MSL计时器。
+- <font color='red'>***保证客户端发送的最后一个ACK报文能够到达服务器***</font>，因为这个ACK报文可能丢失，站在服务器的角度看来，我已经发送了FIN+ACK报文请求断开了，客户端还没有给我回应，应该是我发送的请求断开报文它没有收到，于是服务器又会重新发送一次，而客户端就能在这个2MSL时间段内收到这个重传的报文，接着给出回应报文，并且会重启2MSL计时器。
 
 - 防止类似与“三次握手”中提到了的“已经失效的连接请求报文段”出现在本连接中。客户端发送完最后一个确认报文后，在这个2MSL时间中，就可以使本连接持续的时间内所产生的所有报文段都从网络中消失。这样新的连接中不会出现旧连接的请求报文。
 

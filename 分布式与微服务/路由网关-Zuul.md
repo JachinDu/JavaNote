@@ -2,7 +2,7 @@
 
 ## 1、为什么需要网关
 
-**<font color='gree' size = 5>一个处理非业务类服务的绝佳场所</font>**
+**<font color='gree' size = 5>*一个处理非业务类服务的绝佳场所*</font>**
 
 ------
 
@@ -14,7 +14,7 @@
 
 ## 2、Zuul特点
 
-> - 就是一系列过滤器Filter：<font color='red'>前置(Pre)、后置(Post)、路由(Route)、错误(Error)四种类型的过滤器API</font>
+> - 就是一系列过滤器Filter：<font color='red'>***前置(Pre)、后置(Post)、路由(Route)、错误(Error)四种类型的过滤器API***</font>
 > - **<font color='red'>路由器 + 过滤器 = Zuul</font>**
 > - **<font color='red'>注册多实例到eureka实现高可用</font>**
 
@@ -22,7 +22,7 @@
 
 过滤器：每种类型的过滤器都有很多种实现
 
-> - **<font color='gree'>Pre：限流、鉴权、参数校验调整</font>**
+> - **<font color='gree' size=4.5>Pre：限流、鉴权、参数校验调整</font>**
 > - Post：统计、日志
 
 ------
@@ -184,6 +184,8 @@ public class TokenFilter extends ZuulFilter {
 ------
 
 实现：
+
+> ==直接用google的组件 RateLimiter==
 
 ```java
 package com.jachincloud.apigateway.filter;

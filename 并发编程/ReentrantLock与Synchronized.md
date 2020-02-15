@@ -8,7 +8,7 @@
 
 ------
 
-- **存在层面**：Syncronized 是Java 中的一个关键字，==存在于 JVM 层面==，Lock 是 Java 中的一个接口
+- **存在层面**：<font color='red'>***syncronized 是Java 中的一个关键字，==存在于 JVM 层面==，Lock 是 Java 中的一个接口***</font>
 
 - **锁的释放条件**：1. 获取锁的线程执行完同步代码后，自动释放；2. 线程发生异常时，JVM会让线程释放锁；**<font color='red'>Lock 必须在 finally 关键字中释放锁，不然容易造成线程死锁</font>**
 
@@ -16,7 +16,7 @@
 
 - **锁的状态**：==Synchronized 无法判断锁的状态，Lock 则可以判断==
 
-- **锁的类型**：Synchronized 是可重入，不可中断，非公平锁；Lock 锁则是 可重入，可判断，可公平锁
+- **锁的类型**：Synchronized 是可重入，不可中断，非公平锁；Lock 锁则是 可重入，可判断，==可公平锁==
 
 - **锁的性能**：Synchronized 适用于少量同步的情况下，性能开销比较大。Lock 锁适用于大量同步阶段：
 
@@ -24,7 +24,7 @@
 
 - **<font color='red'>在==竞争不是很激烈==的情况下，Synchronized的性能要优于ReetrantLock（因为优化出了偏向锁、自旋、轻量级锁等）</font>**，但是在资源竞争很激烈的情况下，Synchronized的性能会下降几十倍，但是ReetrantLock的性能能维持常态；
 
-- ReetrantLock 提供了多样化的同步，比如有时间限制的同步，**<font color='red'>可以被Interrupt的同步（synchronized的同步是不能Interrupt的</font>**）等
+- ReetrantLock 提供了多样化的同步，比如有时间限制的同步，**<font color='gree'>*可以被Interrupt的同步（synchronized的同步是不能Interrupt的*</font>**）等
 
 
 

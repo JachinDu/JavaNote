@@ -4,8 +4,10 @@
 
 ![img](../PicSource/5cd1d2c5ce95c.jpg)
 
-> - **元素封装为HashEntry，同jdk1.7的HashMap**
-> - **分段锁+链表**
+> - <font color='red'>**元素封装为HashEntry，同jdk1.7的HashMap**</font>
+> - <font color='red'>**分段锁+链表**</font>
+
+------
 
 
 
@@ -36,7 +38,7 @@
 
 ------
 
-保证线程安全的手段：
+==保证线程安全的手段：==
 
 1. 储存 Map 数据的数组被 volatile 关键字修饰，一旦被修改，立马就能通知其他线程，因为是数组，所以需要改变其内存值，才能真正的发挥出 volatile 的可见特性；
 2. put 时，如果计算出来的数组下标索引没有值的话，采用无限 for 循环 + CAS 算法，来保证一定可以新增成功，又不会覆盖其他线程 put 进去的值；

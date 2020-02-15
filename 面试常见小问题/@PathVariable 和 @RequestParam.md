@@ -6,7 +6,7 @@ https://www.cnblogs.com/goloving/p/9241393.html
 
 **PathVariable** 汉语意思是：**路径变量**。顾名思义，就是要获取一个url 地址中的一部分值，那一部分呢？
 
-　　RequestMapping 上说明了@RequestMapping(value="/emp/**{id}**"），我就是想获取你URL地址 /emp/ 的后面的那个 {id}的
+RequestMapping 上说明了@RequestMapping(value="/emp/**{id}**"），我就是想获取你URL地址 /emp/ 的后面的那个 {id}的
 
 **@PathVariable是用来获得请求url中的动态参数的**
 

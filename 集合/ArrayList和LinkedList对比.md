@@ -20,19 +20,19 @@ LinkedList 不支持高效的随机元素访问，而 ArrayList 支持。快速�
 
 ### **5. 内存空间占用：**
 
-**<font color='red'>ArrayList 的空 间浪费主要体现在在 list 列表的结尾会预留一定的容量空间，而 LinkedList 的空间花费则体现在它的每一个元素都需要消耗比 ArrayList 更多的空间（因为要存放直接后继和直接前驱以及数据）。</font>**
+**<font color='red'>*ArrayList 的空间浪费主要体现在在 list 列表的结尾会预留一定的容量空间，而 LinkedList 的空间花费则体现在它的每一个元素都需要消耗比 ArrayList 更多的空间（因为要存放直接后继和直接前驱以及数据）。*</font>**
 
 
 
-### 6、关于ArrayList初始化大小的问题
+### 6、==关于ArrayList初始化大小的问题==
 
 ```java
 ArrayList<Integer> list = new ArrayList<>(size);
 ```
 
+***<font color='red'>这里初始化了ArrayList的大小，但记住，并没有==”初始化元素“==，因此，在没有add任何元素前，该==list是空的！！！==访问指定位置元素时会抛出越界异常。</font>***
 
-
-**<font color='red'>这里初始化了ArrayList的大小，但记住，并没有==”初始化元素“==，因此，在没有add任何元素前，该==list是空的！！！==访问指定位置元素时会抛出越界异常。</font>**
+------
 
 
 

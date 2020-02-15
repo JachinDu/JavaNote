@@ -14,11 +14,11 @@ Cookie类：用于存储会话数据
 
 2）设置cookie
 
-​       `void setPath(java.lang.String uri) `  ：设置cookie的有效访问路径
+​      <font color='red'> `void setPath(java.lang.String uri) `  ：设置cookie的有效访问路径</font>
 
-​       `void setMaxAge(int expiry) `： 设置cookie的有效时间
+​     <font color='red'> `void setMaxAge(int expiry) `： 设置cookie的有效时间</font>
 
-​       `void setValue(java.lang.String newValue)` ：设置cookie的值
+​      <font color='red'> `void setValue(java.lang.String newValue)` ：设置cookie的值</font>
 
 3）发送cookie到浏览器端保存
 
@@ -26,7 +26,7 @@ Cookie类：用于存储会话数据
 
 4）服务器接收cookie
 
-​      `Cookie[] request.getCookies()`  : 接收cookie
+​     <font color='red'> `Cookie[] request.getCookies()`  : 接收cookie</font>
 
 
 
@@ -74,7 +74,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 
 
 
-## 3、cookie有效路径
+## 3、cookie有效路径(跨域)
 
 1）void setPath(java.lang.String uri) 
  ：<mark>设置cookie的有效访问路径。有效路径指的是cookie的有效路径保存在哪里，那么浏览器在有效路径下访问服务器时就会带着cookie信息，否则不带cookie信息。</mark>
@@ -117,13 +117,15 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
     }
 ```
 
-两个缓存中，继续访问<http://localhost:8080/day11/ServletCookieDemo1>，只有name缓存会带到request中传给服务器，因为当前url中路径为day11，只有访问day12的应用时，才会将email缓存带入request中。
+> 两个缓存中，继续访问<http://localhost:8080/day11/ServletCookieDemo1>，只有name缓存会带到request中传给服务器，因为当前url中路径为day11，只有访问day12的应用时，才会将email缓存带入request中。
+
+------
 
 
 
 ## 4、cookie有效时间
 
-2）void setMaxAge(int expiry) ： 设置cookie的有效时间。
+2）`void setMaxAge(int expiry) `： 设置cookie的有效时间。
 
 ​        正整数：表示cookie数据保存浏览器的缓存目录（硬盘中），数值表示保存的时间，==有效时间内浏览器重启不影响。==
 

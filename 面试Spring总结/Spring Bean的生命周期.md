@@ -12,13 +12,13 @@ https://yemengying.com/2016/07/14/spring-bean-life-cycle/
 
 ## &sect; 生命周期过程
 
-从开始执行Bean构造器开始才算是bean的生命周期开始：
+<font color='red'>从开始执行Bean构造器开始才算是bean的生命周期开始：</font>
 
 ### 1、实例化Bean
 
-> - <font color='red'>**BeanFactory容器**</font>，当客户向容器请求一个尚未初始化的bean时，或初始化bean的时候需要注入另一个尚未初始化的依赖时，容器就会调用createBean进行实例化。 
-> - <font color='red'>**ApplicationContext容器**</font>，**当容器启动结束后，便实例化所有的bean。** 容器通过获取BeanDefinition对象中的信息进行实例化。并且这一步仅仅是简单的实例化，并未进行依赖注入。 
-> - <font color='red'>**实例化对象被包装在BeanWrapper对象中**</font>，**BeanWrapper提供了设置对象属性的接口，从而避免了使用反射机制设置属性。**
+> - <font color='red'>**BeanFactory容器**</font>，当客户向容器请求一个尚未初始化的bean时，或初始化bean的时候需要注入另一个尚未初始化的依赖时，容器就会调用`createBean`进行实例化。 
+> - <font color='red'>**ApplicationContext容器**</font>，**当容器启动结束后，便实例化所有的bean。** 容器通过获取BeanDefinition对象中的信息进行实例化。==***并且这一步仅仅是简单的实例化，并未进行依赖注入(对象属性的设置)***==。 
+> - <font color='red'>**实例化对象被包装在==BeanWrapper==对象中**</font>，**BeanWrapper提供了设置对象属性的接口，从而避免了使用反射机制设置属性。**
 
 ------
 
@@ -26,7 +26,9 @@ https://yemengying.com/2016/07/14/spring-bean-life-cycle/
 
 ### 2、设置对象属性(依赖注入)
 
-> 实例化后的对象被封装在BeanWrapper对象中，并且此时对象仍然是一个原生的状态，并没有进行依赖注入。紧接着，<font color='red'>**Spring根据BeanDefinition中的信息进行依赖注入。并且通过BeanWrapper提供的设置属性的接口完成依赖注入。**</font>
+> 实例化后的对象被封装在BeanWrapper对象中，并且此时对象仍然是一个原生的状态，并没有进行依赖注入。紧接着，<font color='gree'>***Spring根据BeanDefinition中的信息进行依赖注入。并且通过BeanWrapper提供的设置属性的接口完成依赖注入。***</font>
+
+------
 
 
 
@@ -41,11 +43,11 @@ https://yemengying.com/2016/07/14/spring-bean-life-cycle/
 当经过上述几个步骤后，bean对象已经被正确构造，<font color='red'>**但如果你想要对象被使用前再进行一些自定义的处理，就可以通过BeanPostProcessor接口实现。** </font>
 该接口提供了两个函数：
 
-- <font color='blue'>`postProcessBeforeInitialzation( Object bean, String beanName ) `</font>
+- <font color='gree'>`postProcessBeforeInitialzation( Object bean, String beanName ) `</font>
   当前正在初始化的bean对象会被传递进来，我们就可以对这个bean作任何处理。 
   这个函数会先于InitialzationBean执行，因此称为**==前置处理==**。 
   **==所有Aware接口的注入就是在这一步完成的。==**
-- <font color='blue'>`postProcessAfterInitialzation( Object bean, String beanName ) `</font>
+- <font color='gree'>`postProcessAfterInitialzation( Object bean, String beanName ) `</font>
   当前正在初始化的bean对象会被传递进来，我们就可以对这个bean作任何处理。 
   这个函数会在InitialzationBean完成后执行，因此称为**==后置处理==**。
 

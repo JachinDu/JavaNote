@@ -1,5 +1,13 @@
 # Spring AOP 代理总结：静态代理和动态代理
 
+参考：https://mp.weixin.qq.com/s/dLOn23waK4gv-Rp9dC0Kfg
+
+## 0、作用
+
+> <font color='red' size=4>***将业务逻辑和系统处理的代码(关闭连接、事务管理、操作日志记录)解耦。***</font>
+
+------
+
 
 
 ## 1、静态代理 
@@ -22,9 +30,11 @@
 
 > JDK动态代理：利用==反射==接收被代理的类，从而生成代理类Proxy类。被代理的类必须实现一个接口
 >
-> Cglib动态代理：生成被代理类的==子类==作为代理类。（所以被代理类不能被`final`修饰）
+> Cglib动态代理：生成被代理类的==子类==作为代理类。（所以==被代理类不能被`final`修饰==）
 >
 > spring aop会根据被代理类是否实现了某个接口来自动选择动态代理方式
+
+------
 
 
 
@@ -32,13 +42,10 @@
 
 必须实现一个==接口==(必须有接口和实现类)
 
-
-
 目标类接口：
 
 ```java
 package a_proxy.a_jdk;
-
 public interface UserService {
     public void addUser();
     public void updateUser();
@@ -51,7 +58,6 @@ public interface UserService {
 
 ```java
 package a_proxy.a_jdk;
-
 public class UserServiceImpl implements UserService {
     @Override
     public void addUser() {
@@ -80,7 +86,6 @@ public class UserServiceImpl implements UserService {
 
 ```java
 package a_proxy.b_cglib;
-
 public class MyAspect {
     public void before() {
         System.out.println("鸡首");
@@ -118,8 +123,8 @@ public class MyBeanFactory {
         *   参数1：loader：类加载器，动态代理类运行时创建，任何类都需要类加载器将其加载到内存。
         *       一般情况：采用当前类.class.getClassLoader();
         *                目标类实例.getClass().getClassLoader();
-        *   参数2：interfaces：代理类要实现到所有接口
-        *       方式1：目标实例.getClass().getInterfaces() ,注意：只能获得自己到接口，不能获得父元素接口
+        *   参数2：interfaces：代理类要实现的所有接口
+        *       方式1：目标实例.getClass().getInterfaces() ,注意：只能获得自己的接口，不能获得父元素接口
         *       方式2：new Class[]{UserService.class}
         *   参数3：InvocationHandler：处理类，是一个接口，必须进行实现类，一般采用匿名内部方式.表示的是当我这个动态代理对象在调用方法的时候，会关联到哪一个 InvocationHandler 对象上
         *       提供invoke方法，代理类的每一个方法执行时，都将调用一次invoke
@@ -190,7 +195,9 @@ public class TestJDK {
 
 ==注意：==
 
-**通过 Proxy.newProxyInstance 创建的代理对象是在 jvm 运行时动态生成的一个对象，它并不是我们的 InvocationHandler 类型，==也不是我们定义的那组接口的类型==，而是在运行是动态生成的一个对象，并且命名方式都是这样的形式，以\$开头，proxy 为中，最后一个数字表示对象的标号，如`com.sun.proxy.$Proxy0`。**
+> **通过 Proxy.newProxyInstance 创建的代理对象是在 jvm 运行时动态生成的一个对象，它并不是我们的 InvocationHandler 类型，==也不是我们定义的那组接口的类型==，而是在运行是动态生成的一个对象，并且命名方式都是这样的形式，以\$开头，proxy 为中，最后一个数字表示对象的标号，如`com.sun.proxy.$Proxy0`。**
+
+------
 
 
 
@@ -210,15 +217,6 @@ public class TestJDK {
 
 ```java
 package a_proxy.b_cglib;
-
-import org.springframework.cglib.proxy.Enhancer;
-import org.springframework.cglib.proxy.MethodInterceptor;
-import org.springframework.cglib.proxy.MethodProxy;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-
 public class MyBeanFactory {
 
     public static UserServiceImpl createService() {

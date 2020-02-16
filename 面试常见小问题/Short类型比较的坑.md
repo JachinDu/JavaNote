@@ -22,7 +22,7 @@ if (s1.equals(x - 1)) {
 >
 > - 而在运算中编译器不会做上述转换，**<font color='red'>即: x - 1 变为了int 类型</font>**，而Short类型重写的equals方法如下：
 >
->   - ***<font color='blue'>!!!目标不是Short类型，直接会返回false</font>***
+>   - ***<font color='gree'>!!!目标不是Short类型，直接会返回false</font>***
 >
 >   ```java
 >   public boolean equals(Object obj) {
@@ -47,5 +47,5 @@ if (s1.equals(x - 1)) {
 >       ((k = p.key) == key || (key != null && key.equals(k))))// 其中key为外部传入的经过运算后的Short，为Integer，而k为Short
 >   ```
 >
->   ***<font color='red'>此时，第2行的 == 判断直接false了，因为Short和Integer类型不能用==比较，而后面equals也为false，所以remove实效了。</font>***
+>   ***<font color='red'>此时，第2行的 == 判断直接false了，因为Short和Integer类型不能用==比较，而后面equals也为false，所以remove失效了。</font>***
 

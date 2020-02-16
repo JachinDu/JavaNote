@@ -57,7 +57,9 @@ Mysql 查询不建议使用缓存，因为对于经常更新的数据来说，�
 
 ### &sect; 执行器
 
-当选择了执行方案后，mysql就准备开始执行了，**首先执行前会校验该用户有没有权限，如果没有权限，就会返回错误信息，如果有权限，就会去调用引擎的接口，返回接口执行的结果。**
+当选择了执行方案后，mysql就准备开始执行了，**==首先执行前会校验该用户有没有权限==，如果没有权限，就会返回错误信息，如果有权限，就会去调用引擎的接口，返回接口执行的结果。**
+
+------
 
 
 
@@ -108,15 +110,13 @@ update tb_student A set A.age='19' where A.name='张三';
 >
 > - 然后拿到查询的语句，把 age 改为19，然后调用引擎API接口，写入这一行数据，<font color='#02C874'>**InnoDB引擎把数据保存在内存中，同时记录==redo log==，此时redo log进入prepare状态，然后告诉执行器，执行完成了，随时可以提交。**</font>
 >
-> - 执行器收到通知后记录**==binlog==**，然后调用引擎接口，**提交==redo log== 为提交状态**。
+> - 执行器收到通知后记录**==binlog==**，然后调用==引擎接口==，**提交==redo log== 为提交状态**。
 >
 > - 更新完成。
 
 ------
 
-
-
-<font color='blue' size=5>**分析器  &rArr; 权限校验 &rArr; 执行器  &rArr; 引擎  &rArr; redo log(prepare 状态)  &rArr;  binlog  &rArr;  redo log(commit状态)**</font>
+<font color='purple'>**分析器  &rArr; 权限校验 &rArr; 执行器  &rArr; 引擎  &rArr; redo log(prepare 状态)  &rArr;  binlog  &rArr;  redo log(commit状态)**</font>
 
 ------
 
@@ -124,11 +124,11 @@ update tb_student A set A.age='19' where A.name='张三';
 
 ## 4、为什么要用两个日志模块，用一个日志模块不行吗？
 
-这就是之前mysql的模式了，MyISAM引擎是没有redo log的，那么我们知道它是不支持事务的，所以并不是说只用一个日志模块不可以，只是InnoDB引擎就是通过redo log来支持事务的。那么，又会有同学问，我用两个日志模块，但是不要这么复杂行不行，为什么redo log 要引入prepare预提交状态？这里我们用反证法来说明下为什么要这么做？
+这就是之前mysql的模式了，MyISAM引擎是没有redo log的，那么我们知道它是不支持事务的，所以并不是说只用一个日志模块不可以，只==是InnoDB引擎就是通过redo log来支持事务的==。那么，又会有同学问，我用两个日志模块，但是不要这么复杂行不行，为什么redo log 要引入prepare预提交状态？这里我们用反证法来说明下为什么要这么做？
 
 <font color='red' size=5>***redo log两段提交：主要是解决数据一致性***</font>
 
-- **先写redo log 直接提交，然后写 binlog**，假设写完redo log 后，机器挂了，binlog日志没有被写入，那么机器重启后，这台机器会通过redo log恢复数据，但是这个时候bingog并没有记录该数据，后续进行机器备份的时候，就会丢失这一条数据，同时主从同步也会丢失这一条数据。
+- **先写redo log 直接提交，然后写 binlog**，假设写完redo log 后，机器挂了，binlog日志没有被写入，那么机器重启后，这台机器会通过redo log恢复数据，但是这个时候binlog并没有记录该数据，后续进行机器备份的时候，就会丢失这一条数据，同时主从同步也会丢失这一条数据。
 - **先写binlog，然后写redo log**，假设写完了binlog，机器异常重启了，由于没有redo log，本机是无法恢复这一条记录的，但是binlog又有记录，那么和上面同样的道理，就会产生数据不一致的情况。
 
 如果采用redo log 两阶段提交的方式就不一样了，写完binglog后，然后再提交redo log就会防止出现上述的问题，从而保证了数据的一致性。那么问题来了，有没有一个极端的情况呢？假设redo log 处于预提交状态，binglog也已经写完了，这个时候发生了异常重启会怎么样呢？ 这个就要依赖于mysql的处理机制了，mysql的处理过程如下：

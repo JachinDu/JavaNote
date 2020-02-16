@@ -6,7 +6,7 @@ https://blog.csdn.net/qzcsu/article/details/72861891
 
 ## 0、TCP状态机
 
-![image-20200122181901580](../PicSource/image-20200122181901580.png)
+![image-20200216100609393](../PicSource/image-20200216100609393.png)
 
 ------
 

@@ -45,23 +45,6 @@ DruidConfig:
 
 ```java
 package com.jachin.wechat.config;
-
-
-import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.support.http.StatViewServlet;
-import com.alibaba.druid.support.http.WebStatFilter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import javax.servlet.Filter;
-import javax.sql.DataSource;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 @Configuration
 public class DruidConfig {
 
@@ -146,17 +129,6 @@ mybatis:
 
 ```java
 package com.jachin.wechat.config;
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.TransactionManagementConfigurer;
-
-import javax.sql.DataSource;
-
 @Configuration
 @EnableTransactionManagement   //开启事务管理
 public class TransactionConfiguration implements TransactionManagementConfigurer {
@@ -171,9 +143,7 @@ public class TransactionConfiguration implements TransactionManagementConfigurer
 }
 ```
 
-
-
-
+------
 
 ==业务逻辑和事务在service层添加，有异常应分类抛出（这里简化为同种异常）==
 
@@ -181,17 +151,6 @@ public class TransactionConfiguration implements TransactionManagementConfigurer
 
 ```java
 package com.jachin.wechat.service.Impl;
-
-import com.jachin.wechat.entity.Area;
-import com.jachin.wechat.mapper.AreaDaoMapper;
-import com.jachin.wechat.service.AreaService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
-import java.util.List;
-
 @Service
 public class AreaServiceImpl implements AreaService {
 

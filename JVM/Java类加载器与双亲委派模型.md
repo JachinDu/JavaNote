@@ -6,7 +6,7 @@
 
 <font color='red'>对于任何一个类，都需要由加载它的类加载器和这个类来确立其在JVM中的唯一性。也就是说，两个类来源于同一个Class文件，并且被同一个类加载器加载，这两个类才相等。</font>
 
-
+------
 
 分类，常用三种：
 
@@ -36,9 +36,9 @@
 
 > **<font color='red'>优点：</font>**
 >
-> 解决了各个类加载器的基础类统一问题，越基础的类由越上层的类加载器进行加载。
+> 解决了各个类加载器的基础类统一问题，<font color='red'>***越基础的类由越上层的类加载器进行加载。***</font>
 >
-> ==例如java.lang.Object类，无论哪个类加载器去加载该类，最终都是由启动类加载器进行加载，因此Object类在程序的各种类加载器环境中都是同一个类==。否则的话，如果不使用该模型的话，如果用户自定义一个java.lang.Object类且存放在classpath中，那么系统中将会出现多个Object类，应用程序也会变得很混乱。
+> ==例如`java.lang.Object`类，无论哪个类加载器去加载该类，最终都是由启动类加载器进行加载，因此Object类在程序的各种类加载器环境中都是同一个类==。否则的话，如果不使用该模型的话，如果用户自定义一个java.lang.Object类且存放在classpath中，那么系统中将会出现多个Object类，应用程序也会变得很混乱。
 >
 > **<font color='red'>缺点：</font>**
 >
@@ -105,7 +105,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 >        }
 >    ```
 >
->    ==说明该方法需要开发者自己去实现，否则抛出异常，详情见下节“自定义类的加载器”==
+>    ==***说明该方法需要开发者自己去实现，否则抛出异常，详情见下节“自定义类的加载器”***==
 
 
 
@@ -113,10 +113,10 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 方式：
 
-> 1. 继承`java.lang.ClassLoader`类
-> 2. 重写`findClass()`方法，返回值即为`java.lang.Class`类的实例，不建议重写`loadClass()`方法(破坏了双亲委派机制)。
+> 1. <font color='gree'>继承`java.lang.ClassLoader`类</font>
+> 2. <font color='gree'>重写`findClass()`方法，返回值即为`java.lang.Class`类的实例，不建议重写`loadClass()`方法(破坏了双亲委派机制)。</font>
 
-**<font color='red'>java.lang.ClassLoader 类的基本职责就是根据一个指定的类的名称，找到或者生成其对应的==字节码==，然后从这些字节码中定义出一个 Java 类，即 java.lang.Class 类的一个实例。</font>**
+**<font color='red'>*java.lang.ClassLoader 类的基本职责就是根据一个指定的类的名称，找到或者生成其对应的==字节码==，然后从这些字节码中定义出一个 Java 类，即 java.lang.Class 类的一个实例。*</font>**
 
 示例代码：
 
@@ -240,13 +240,13 @@ public class Main {
 
 > 举例：
 >
-> 如果两个”类”的全限定名相同，但不是由一个 ClassLoader 加载，==是无法将一个类的实例强转为另外一个类的==。这就是ClassLoader隔离。
+> <font color='red'>***如果两个”类”的全限定名相同，但不是由一个 ClassLoader 加载，==是无法将一个类的实例强转为另外一个类的==。这就是ClassLoader隔离。***</font>
 
 
 
 ## 5、如何避免双亲委派
 
-由于系统自带的三个类加载器都加载特定目录下的类，如果我们自己的类加载器放在一个特殊的目录，那么系统的加载器就无法加载，也就是最终还是由我们自己的加载器加载。
+由于系统自带的三个类加载器都加载特定目录下的类，==如果我们自己的类加载器放在一个特殊的目录，那么系统的加载器就无法加载，也就是最终还是由我们自己的加载器加载。==
 
 或者重写`loadClass()`方法。
 

@@ -1,8 +1,10 @@
 #  Java内存区域详解
 
-## 1、内存区域（运行时数据区 ）一览
+## 1、==内存区域（运行时数据区 ）==一览
 
 ==运行时数据区 != 运行时常量池==
+
+
 
 ### jdk1.8之前
 
@@ -56,9 +58,9 @@ jdk1.8之前的堆内存示意图：
 > - 新生代：
 >
 >
-> ​	MinorGC: 每一次MinorGC都会将Eden和某一个Survivor区(如Survivor1)中存活的对象转移到另一个Survivor(如Survivor2)中，然后清空前者。下一次MinorGC就清理Eden和另一个Survivor(这里该是Survivor2)，这样交替进行，每熬过一次MinorGC，对象年龄增加1。==当要复制到的survivor满了时，将对象们都移动到老年代==。
+> ​	MinorGC: 每一次MinorGC都会将Eden和某一个Survivor区(如Survivor1)中存活的对象转移到另一个Survivor(如Survivor2)中，然后清空前者。下一次MinorGC就清理Eden和另一个Survivor(这里该是Survivor2)，这样交替进行，每熬过一次MinorGC，对象年龄增加1。==***当要复制到的survivor满了时，将对象们都移动到老年代***==。
 >
-> - ==**分配担保机制**：survivor放不下，直接提前去老年代。==
+> - <font color='red'>**分配担保机制**：survivor放不下，直接提前去老年代。</font>
 >
 > - 老年代：FullGC/MajorGC
 
@@ -74,7 +76,7 @@ jdk1.8之前的堆内存示意图：
 >
 > 2. 为什么需要2个Survivor?
 >
->    Survivor 如果只有一个区域。Minor GC 执行后，Eden 区被清空了，存活的对象放到了 Survivor 区，==而之前 Survivor 区中的对象，可能也有一些是需要被清除的==。问题来了，这时候我们怎么清除它们？在这种场景下，我们只能标记清除，而我们知道标记清除最大的问题就是==内存碎片==，在新生代这种经常会消亡的区域，采用标记清除必然会让内存产生严重的碎片化。因为 Survivor 有 2 个区域，所以每次 Minor GC，会将之前 Eden 区和 From 区中的存活对象复制到 To 区域。第二次 Minor GC 时，From 与 To 职责兑换，这时候会将 Eden 区和 To 区中的存活对象再复制到 From 区域，以此反复。
+>    Survivor 如果只有一个区域。Minor GC 执行后，Eden 区被清空了，存活的对象放到了 Survivor 区，==而之前 Survivor 区中的对象，可能也有一些是需要被清除的==。问题来了，这时候我们怎么清除它们？在这种场景下，我们只能标记清除，而我们知道标记清除最大的问题就是==***内存碎片***==，在新生代这种经常会消亡的区域，采用标记清除必然会让内存产生严重的碎片化。因为 Survivor 有 2 个区域，所以每次 Minor GC，会将之前 Eden 区和 From 区中的存活对象复制到 To 区域。第二次 Minor GC 时，From 与 To 职责兑换，这时候会将 Eden 区和 To 区中的存活对象再复制到 From 区域，以此反复。
 >
 >    这种机制最大的好处就是，==整个过程中，永远有一个 Survivor space 是空的，另一个非空的 Survivor space 是无碎片的==。那么，Survivor 为什么不分更多块呢？比方说分成三个、四个、五个? 显然，如果 Survivor 区再细分下去，每一块的空间就会比较小，容易导致 Survivor 区满，两块 Survivor 区可能是经过权衡之后的最佳方案。
 

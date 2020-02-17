@@ -4,7 +4,7 @@
 
 springboot对静态资源的默认扫描路径是：
 
-```
+```yml
 classpath:/static
 classpath:/public
 classpath:/resources
@@ -48,7 +48,7 @@ classpath:/META-INF/resources
 
 这样，springboot才会将对应资源编译到target目录中，如下图：
 
-![image-20190705230258358](../../PicSource/image-20190705230258358.png)
+![image-20190705230258358](../PicSource/image-20190705230258358.png)
 
 
 
@@ -60,15 +60,6 @@ classpath:/META-INF/resources
 
 ```java
 package com.tmall.tmallspringboot.config;
-
-
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 @EnableWebMvc
 @Configuration
 public class CORSConfiguration implements WebMvcConfigurer {

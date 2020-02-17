@@ -1,5 +1,7 @@
 # Java内存模型(JMM)与Volatile关键字
 
+参考：https://zhuanlan.zhihu.com/p/29881777
+
 ## 1、JMM
 
 ![image-20200105170656465](../PicSource/image-20200105170656465.png)
@@ -83,3 +85,13 @@ http://www.liuhaihua.cn/archives/564823.html
 
 ### 2）<font color='red' size=5>***线程读取volatile变量时，会触发对所有变量的主内存读取。***</font>
 
+
+
+## 5、**happens before：**
+
+> <font color='red'>**在JMM中，如果一个操作执行的结果需要对另一个操作可见（两个操作既可以是在一个线程之内，也可以是在不同线程之间）**，那么这两个操作之间必须要存在happens-before关系：</font>
+
+- 程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作。
+- 监视器锁规则：==对一个锁的解锁，happens-before于随后对这个锁的加锁。==
+- volatile变量规则：==对一个volatile域的写，happens-before于任意后续对这个volatile域的读。==
+- 传递性：如果A happens-before B，且B happens-before C，那么A happens-before C。

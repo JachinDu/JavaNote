@@ -110,7 +110,7 @@ update tb_student A set A.age='19' where A.name='张三';
 >
 > - 然后拿到查询的语句，把 age 改为19，然后调用引擎API接口，写入这一行数据，<font color='#02C874'>**InnoDB引擎把数据保存在内存中，同时记录==redo log==，此时redo log进入prepare状态，然后告诉执行器，执行完成了，随时可以提交。**</font>
 >
-> - 执行器收到通知后记录**==binlog==**，然后调用==引擎接口==，**提交==redo log== 为提交状态**。
+> - ==执行器==收到通知后记录**==binlog==**，然后调用==引擎接口==，**提交==redo log== 为提交状态**。
 >
 > - 更新完成。
 
@@ -138,3 +138,8 @@ update tb_student A set A.age='19' where A.name='张三';
 
 这样就解决了数据一致性的问题。
 
+------
+
+## 5、redo log/binlog/undo log
+
+https://blog.csdn.net/u010002184/article/details/88526708

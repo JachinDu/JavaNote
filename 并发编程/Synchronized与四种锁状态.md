@@ -42,3 +42,8 @@
 >
 >   获取失败要==阻塞==
 
+锁膨胀过程：
+
+https://juejin.im/post/5c936018f265da60ec281bcb
+
+![img](../PicSource/e0e01e43gy1g1cozajzz3j22zf1e7u0x.jpg)

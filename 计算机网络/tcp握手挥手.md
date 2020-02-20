@@ -30,9 +30,8 @@ https://blog.csdn.net/qzcsu/article/details/72861891
 
 > **<font color='red'>若TCP三次握手第三次握手时ACK丢失怎么办？</font>**
 >
-> ​	**当Client端收到Server的SYN+ACK应答后，其状态变为ESTABLISHED，并发送ACK包给Server；**
+> ​	**当Client端收到Server的SYN+ACK应答后，其状态变为ESTABLISHED，并发送ACK包给Server；** **<font color='red'>如果此时ACK在网络中丢失，那么Server端该TCP连接的状态为SYN_RECV，并且依次等待3秒、6秒、12秒后重新发送SYN+ACK包，以便Client重新发送ACK包。</font>** 	
 >
-> ​	**<font color='red'>如果此时ACK在网络中丢失，那么Server端该TCP连接的状态为SYN_RECV，并且依次等待3秒、6秒、12秒后重新发送SYN+ACK包，以便Client重新发送ACK包。</font>** 	
 
 ------
 
@@ -77,5 +76,5 @@ MSL（Maximum Segment Lifetime），TCP允许不同的实现可以设置不同�
 
 ### 为什么建立连接是三次握手，关闭连接确是四次挥手呢？
 
-建立连接的时候， 服务器在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。
+建立连接的时候， ==服务器在LISTEN状态下==，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。
 而关闭连接时，**<font color='red'>服务器收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据，而自己也未必全部数据都发送给对方了，所以己方可以立即关闭，也可以发送一些数据给对方后，再发送FIN报文给对方来表示同意现在关闭连接，因此，己方ACK和FIN一般都会分开发送，从而导致多了一次。</font>**

@@ -200,6 +200,8 @@ public void execute(Runnable command) {
 
 > <font color = 'red'>其中第23-24行的代码就是处理，若corePoolSize = 0，且使用无界队列时，防止任务不断入队，但并没有线程来起动执行的情况</font>
 
+------
+
 
 
 ### 4）核心方法addWorker()
@@ -309,20 +311,20 @@ private boolean addWorker(Runnable firstTask, boolean core) {
 其中：
 
 > ```java
->if (rs >= SHUTDOWN &&
+> if (rs >= SHUTDOWN &&
 >          ! (rs == SHUTDOWN &&
 >             firstTask == null &&
 >                ! workQueue.isEmpty()))
 >             return false;
->    ```
->    
+> ```
+>
 > 简要说明：
 >
 > 1. 状态大于SHUTDOWN时因不允许提交任务，并且要终止线程，所以不可新建线程。
->2. 状态等于SHUTDOWN时，提交的任务`firstTask != null`。因为不允许提交任务了。
-> 3. 状态等于SHUTDOWN时，任务队列为空，因为不允许提交任务了，所以也无需新线程。
-> 
-> <font color = 'red'>注意，当状态等于SHUTDOWN时，且`firstTask == null`可以创建新线程。</font>
+> 2. <font color = 'red'>**状态等于SHUTDOWN时，提交的任务`firstTask != null`。因为不允许提交任务了。**</font>
+> 3. 状态等于SHUTDOWN时，==任务队列为空==，因为不允许提交任务了，所以也无需新线程。
+>
+> <font color = 'red'>***注意，当状态等于SHUTDOWN时，且`firstTask == null`可以创建新线程。***</font>
 
 ------
 

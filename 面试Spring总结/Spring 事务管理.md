@@ -8,7 +8,7 @@ https://juejin.im/entry/5a8fe57e5188255de201062b
 
 
 
-# 1、事务隔离级别
+## 1、事务隔离级别
 
 对应于数据库中的事务隔离级别：
 
@@ -67,3 +67,37 @@ public void methodA(){
 > **==其他情况：==**
 >
 > - **TransactionDefinition.PROPAGATION_NESTED：** 如果当前存在事务，<font color='red'>则创建一个事务作为当前事务的==嵌套事务==来运行</font>；如果当前没有事务，则该取值等价于TransactionDefinition.PROPAGATION_REQUIRED。
+
+------
+
+## 3、@Transactional
+
+> Spring 事务管理分为编码式和声明式的两种方式。编程式事务指的是通过编码方式实现事务；<font color='red'>**声明式事务基于 AOP,将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染**</font>, 因此在实际使用中声明式事务用的比较多。声明式事务有两种方式，一种是在配置文件（xml）中做相关的事务规则声明，另一种是基于@Transactional 注解的方式。注释配置是目前流行的使用方式，因此本文将着重介绍基于@Transactional 注解的事务管理。
+
+------
+
+### @Transactional属性：
+
+| 属性名           | 说明                                                         |
+| :--------------- | :----------------------------------------------------------- |
+| name             | 当在配置文件中有多个 TransactionManager , 可以用该属性指定选择哪个事务管理器。 |
+| propagation      | 事务的传播行为，默认值为 REQUIRED。                          |
+| isolation        | 事务的隔离度，默认值采用 DEFAULT。                           |
+| timeout          | 事务的超时时间，默认值为-1。如果超过该时间限制但事务还没有完成，则自动回滚事务。 |
+| read-only        | 指定事务是否为只读事务，默认值为 false；为了忽略那些不需要事务的方法，比如读取数据，可以设置 read-only 为 true。 |
+| rollback-for     | 用于指定能够触发事务回滚的异常类型，如果有多个异常类型需要指定，各类型之间可以通过逗号分隔。 |
+| no-rollback- for | 抛出 no-rollback-for 指定的异常类型，不回滚事务。            |
+
+------
+
+除此以外，==@Transactional 注解也可以添加到类级别上。当把@Transactional 注解放在类级别时，表示所有该类的公共方法都配置相同的事务属性信息。==当类级别配置了@Transactional，方法级别也配置了@Transactional，应用程序会以方法级别的事务属性信息来管理事务，换言之，方法级别的事务属性信息会覆盖类级别的相关配置信息。
+
+------
+
+### 实现机制：
+
+> Spring Framework 默认使用 AOP 代理，<font color='red'>***在代码运行时生成一个代理对象，根据@Transactional 的属性配置信息，这个代理对象决定该声明@Transactional 的目标方法是否由==拦截器 TransactionInterceptor 来使用拦截==，在 TransactionInterceptor 拦截时，会在在目标方法开始执行之前创建并加入事务，并执行目标方法的逻辑, 最后根据执行情况是否出现异常，利用抽象==事务管理器AbstractPlatformTransactionManager 操作数据源 DataSource 提交或回滚事务。==***</font>
+
+------
+
+![img](../PicSource/image001.jpg)

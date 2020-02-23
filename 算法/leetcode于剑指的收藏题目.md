@@ -97,6 +97,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 【🎖🎖🎖】 [下一个排列](https://leetcode-cn.com/problems/next-permutation/)
 >
+> -  [子集](https://leetcode-cn.com/problems/subsets/)
+>
 > -  数组中重复的数字：
 >
 >   - 使用额外空间：
@@ -187,6 +189,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 > - 【🎖🎖】 [不同路径](https://leetcode-cn.com/problems/unique-paths/)：机器人走路
 > - 【🎖🎖】 [最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/)：和上一题如出一辙
 > -  【🎖🎖🎖🎖】[编辑距离](https://leetcode-cn.com/problems/edit-distance/)
+> - 【🎖🎖】[ 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
+> -  [买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
 
 ------
 
@@ -213,6 +217,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 > - 【🎖】表示数值的字符串：疯狂判定
 >
 > - 【🎖🎖🎖🎖】正则表达式匹配：分清情况
+>
+> - 【🎖】 [复原IP地址](https://leetcode-cn.com/problems/restore-ip-addresses/)
 
 
 
@@ -226,3 +232,9 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 ### &sect; 回溯法
 
 > - 【🎖🎖🎖🎖】 [N皇后](https://leetcode-cn.com/problems/n-queens/)
+
+------
+
+### &sect; dfs/bfs
+
+> - 【🎖🎖🎖】 [岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)

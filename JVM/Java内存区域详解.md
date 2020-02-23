@@ -1,5 +1,7 @@
 #  Java内存区域详解
 
+参考：https://segmentfault.com/a/1190000021424972
+
 ## 1、==内存区域（运行时数据区 ）==一览
 
 ==运行时数据区 != 运行时常量池==
@@ -26,6 +28,14 @@
 ![image-20191218162439883](../PicSource/image-20191218162439883.png)
 
 
+
+------
+
+![image.png](../PicSource/240928729-5e05f6b55a32f_articlex.jpeg)
+
+------
+
+![image.png](../PicSource/1890787668-5e05f6b7a723f_articlex.jpeg)
 
 ------
 

@@ -2,7 +2,9 @@
 
 ## new一个对象的过程中发生了什么？
 
-参考：https://mp.weixin.qq.com/s/BPQKu5UcpnoT3vVLmhCDRg
+## 必看参考：
+
+https://mp.weixin.qq.com/s/BPQKu5UcpnoT3vVLmhCDRg
 
 
 
@@ -25,6 +27,10 @@
 ### &sect; 内存分配
 
 **<font color='red'>分配的内存包括本类和父类的所有==实例变量==，但不包括任何静态变量</font>**
+
+#### &sect; 内存分配的流程
+
+![image.png](../PicSource/1959895107-5e05f6baa104f_articlex.jpeg)
 
 ------
 

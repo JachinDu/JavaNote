@@ -36,7 +36,35 @@ SOA/微服务架构中提供**<font color='red'>服务隔离、熔断、降级�
 主要分为：
 
 > 1. RestTemplate整合hystrix：==`@HystrixCommand(fallbackMethod = "fallback")`==，指定降级函数名。需要另定义一个fallback函数。
+>
 > 2. Feign整合hystrix：
+>
+>    ```java
+>    @FeignClient(name = "product", fallback = ProductClient.ProductClientFallback.class)
+>    public interface ProductClient {
+>    
+>        @PostMapping("/product/listForOrder")
+>        List<ProductInfo> listForOrder(@RequestBody List<String> productIdList);
+>    
+>        @PostMapping("/product/decreaseStock")
+>        void decreaseStock(@RequestBody List<CartDTO> cartDTOList);
+>    
+>        @Component // 勿忘
+>        static class ProductClientFallback implements ProductClient{
+>    
+>            @Override
+>            public List<ProductInfo> listForOrder(List<String> productIdList) {
+>                return null;
+>            }
+>    
+>            @Override
+>            public void decreaseStock(List<CartDTO> cartDTOList) {
+>    
+>            }
+>        }
+>    
+>    }
+>    ```
 
 
 

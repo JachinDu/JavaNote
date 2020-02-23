@@ -10,7 +10,7 @@
 
 **<font color='red'>统一接收前端请求，并配置到后端各服务的转发规则</font>**
 
-
+![【微服务】Zuul的必要性](../PicSource/java10-1560850998.jpg)
 
 ## 2、Zuul特点
 
@@ -231,3 +231,29 @@ public class RateLimitFilter extends ZuulFilter {
 ### &sect; 漏桶限流与令牌桶限流的区别
 
 **漏桶只能以==固定的速率==去处理请求，而令牌桶可以以桶子==最大的令牌数去处理请求==**
+
+
+
+## 6、负载均衡和熔断
+
+Zuul中默认就已经集成了Ribbon负载均衡和Hystix熔断机制。但是所有的超时策略都是走的默认值，比如熔断超时时间只有1S，很容易就触发了。因此建议我们手动进行配置：
+
+```java
+zuul:
+  retryable: true
+ribbon:
+  ConnectTimeout: 250 # 连接超时时间(ms)
+  ReadTimeout: 2000 # 通信超时时间(ms)
+  OkToRetryOnAllOperations: true # 是否对所有操作重试
+  MaxAutoRetriesNextServer: 2 # 同一服务不同实例的重试次数
+  MaxAutoRetries: 1 # 同一实例的重试次数
+hystrix:
+  command:
+  	default:
+        execution:
+          isolation:
+            thread:
+              timeoutInMillisecond: 6000 # 熔断超时时长：6000ms
+```
+
+

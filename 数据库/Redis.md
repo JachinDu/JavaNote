@@ -234,7 +234,7 @@ Redis 通过 **<font color='red'>MULTI、EXEC、WATCH</font>** 等命令来实�
 
 **如何解决？**
 
-> - **<font color='blue'>事前：尽量保证整个 redis ==集群的高可用性==，发现机器宕机尽快补上。选择合适的内存淘汰策略。</font>**
+> - **<font color='blue'>事前：尽量保证整个 redis ==集群的高可用性(主从+哨兵，redis cluster)==，发现机器宕机尽快补上。选择合适的内存淘汰策略。</font>**
 > - **<font color='blue'>事中：本地ehcache缓存 + hystrix==限流&降级==，==避免MySQL数据库崩掉==</font>**
 > - **<font color='blue'>事后：利用 redis ==持久化机制==保存的数据尽快==恢复缓存==</font>**
 

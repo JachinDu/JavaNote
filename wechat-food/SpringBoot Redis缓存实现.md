@@ -1,4 +1,4 @@
-# SpringBoot Redis缓存实现
+# SpringBoot + Redis缓存实现
 
 
 
@@ -57,8 +57,6 @@ public class ResultVO<T> implements Serializable {
     <version>2.1.6.RELEASE</version>
 </dependency>
 ```
-
-
 
 
 

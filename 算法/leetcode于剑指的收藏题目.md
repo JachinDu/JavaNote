@@ -99,6 +99,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > -  [子集](https://leetcode-cn.com/problems/subsets/)
 >
+> -   [数组中的第K个最大元素](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)：快速选择（利用快排的partition，因为归位的元素便已知是第几大）/或用最小堆
+>
 > -  数组中重复的数字：
 >
 >   - 使用额外空间：
@@ -237,4 +239,4 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; dfs/bfs
 
-> - 【🎖🎖🎖】 [岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)
+> - 【🎖🎖🎖】 [岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)：递归去“连岛成片”，每次连到头都是发现了一座孤独的大岛。

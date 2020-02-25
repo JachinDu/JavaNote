@@ -42,7 +42,7 @@
 ![Token Based Authentication flow](../PicSource/Token-Based-Authentication-20200114191941819.png)
 
 > 1. 用户向服务器发送用户名和密码用于登陆系统。
-> 2. 身份验证服务响应并返回了签名的 JWT，上面**<font color='red'>包含了用户是谁的内容。</font>**
+> 2. 身份验证服务响应并返回了==签名的 JWT==，上面**<font color='red'>包含了用户是谁的内容。</font>**
 > 3. 用户以后每次向后端发请求都在Header中带上 JWT。
 > 4. 服务端检查 JWT 并从中获取用户相关信息。
 
@@ -58,7 +58,7 @@ eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpcCI6IjEyNy4wLjAuMSIsInV1aWQiOiJmZjEyMTJ
 
 眼睛看仔细一些，你会发现 JWT 里面有两个`.`
 
-数据格式是这样的**<font color='red'> `header.payload.signature`</font>**
+数据格式是这样的**<font color='red' size=5> `header.payload.signature`</font>**
 
 ------
 
@@ -98,7 +98,7 @@ console.log(header);
 
 ### &sect; Payload
 
-payload 是主体部分，意为载体，承载着有效的 JWT 数据包，它包含三个部分
+<font color='red'> **payload 是主体部分，意为载体，承载着有效的 JWT 数据包**</font>，它包含三个部分
 
 > - 标准声明：
 >
@@ -134,7 +134,7 @@ payload 是主体部分，意为载体，承载着有效的 JWT 数据包，它�
 >   }
 >   ```
 >
->   私有声明是 JWT 提供者添加的字段，一样可以被解密，所以也不能存放敏感信息。
+>   私有声明是 JWT 提供者添加的字段，==**一样可以被解密**==，所以也不能存放敏感信息。
 >
 > **上面的 JWT 的 payload 结构是这样的：**
 >
@@ -171,7 +171,7 @@ payload 是主体部分，意为载体，承载着有效的 JWT 数据包，它�
 
 ### &sect; Signature
 
-signature 是签证信息，该签证信息是通过`header`和`payload`，加上`secret`，通过算法加密生成。
+signature 是签证信息，==**该签证信息是通过`header`和`payload`，加上`secret`，通过算法加密生成。**==
 
 公式 **<font color='red' size=5>`signature = 加密算法(header + "." + payload, 密钥);`</font>**
 
@@ -203,7 +203,7 @@ console.log(signature);
 
 #### &sect; 它是如何做身份验证的？
 
-- 首先，**<font color='red'>JWT 的 Token 相当于是明文，是可以解密的(base64)，任何存在 payload 的东西，都没有秘密可言，所以隐私数据不能签发 token。</font>**
+- 首先，**<font color='red'>JWT 的 Token 相当于是明文，是可以解密的(base64)，任何存在 payload 的东西，都没有秘密可言，所以==*隐私数据不能签发 token*==。</font>**
 
 - **而服务端，拿到 token 后解密，即可知道用户信息，例如本例中的`uuid`**
 
@@ -229,7 +229,7 @@ payload 中有个标准字段 `exp`，明确表示了这个 token 的过期时�
 
 假如黑客/中间人串改了`payload`，那么服务器可以通过`signature`去验证是否被篡改过。
 
-**<font color='red'>*在服务端在执行一次 `signature = 加密算法(header + "." + payload, 密钥);`, 然后对比 signature 是否一致，如果一致则说明没有被篡改。*</font>**
+**<font color='red' size=4>*在服务端在执行一次 `signature = 加密算法(header + "." + payload, 密钥);`, 然后对比 signature 是否一致，如果一致则说明没有被篡改。*</font>**
 
 所以为什么说服务器的密钥不能被泄漏。
 

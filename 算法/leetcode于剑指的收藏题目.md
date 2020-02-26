@@ -101,6 +101,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > -   [数组中的第K个最大元素](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)：快速选择（利用快排的partition，因为归位的元素便已知是第几大）/或用最小堆
 >
+> -   [较小的三数之和]([较小的三数之和](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/))：遍历+双指针
+>
 > -  数组中重复的数字：
 >
 >   - 使用额外空间：
@@ -193,6 +195,9 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 > -  【🎖🎖🎖🎖】[编辑距离](https://leetcode-cn.com/problems/edit-distance/)
 > - 【🎖🎖】[ 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
 > -  [买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
+> -  【🎖🎖】 [完全平方数](https://leetcode-cn.com/problems/perfect-squares/)：找出前面最小dp[i]
+> -  【🎖🎖】 [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)：找出前面最大dp[i]
+> -  【🎖🎖🎖】 [二维区域和检索 - 矩阵不可变](https://leetcode-cn.com/problems/range-sum-query-2d-immutable/)
 
 ------
 
@@ -240,3 +245,9 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 ### &sect; dfs/bfs
 
 > - 【🎖🎖🎖】 [岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)：递归去“连岛成片”，每次连到头都是发现了一座孤独的大岛。
+
+------
+
+### &sect; 数据结构设计
+
+> - 【🎖🎖🎖】 [常数时间插入、删除和获取随机元素](https://leetcode-cn.com/problems/insert-delete-getrandom-o1/)：hashmap+list，hashmap存list中的下标，删除时若要删除的元素下标不是list末尾，则将末尾元素赋给目标位置即可，然后删除末尾。

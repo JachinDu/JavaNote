@@ -8,6 +8,48 @@ https://blog.csdn.net/qq_32998153/article/details/80022489
 
 超文本传输协议HTTP协议被用于在**<font color='red'>Web浏览器和网站服务器之间传递信息</font>**，HTTP协议以明文方式发送内容，不提供任何方式的数据加密。
 
+------
+
+###&sect; HTTP请求报文
+
+HTTP请求报文：在请求中，HTTP报文由方法、URI、HTTP版本、HTTP首部字段等部分组成。
+
+<img src="https://tva1.sinaimg.cn/large/0082zybply1gc9yhbaljcj311w0e2jzl.jpg" alt="image-20200226175927839 z" style="zoom:50%;" />
+
+------
+
+> 1. <font color='red'>**请求行**</font>：【描述客户端的<font color='#02DF82'>**请求方式**</font>、<font color='#02DF82'>**请求的资源名称**</font>，以及使用的<font color='#02DF82'>**HTTP协议版本号**</font>】
+> 2. <font color='red'>**首部字段**</font>：【描述<font color='#02DF82'>***客户端请求哪台主机***</font>，以及**客户端的一些环境信息**等】
+> 3. 一个空行
+
+------
+
+###&sect;  HTTP响应报文
+
+HTTP响应报文：在响应中，HTTP报文由HTTP版本、状态码（数字和原因短语）、HTTP首部字段3部分组成。
+
+![img](../PicSource/640-2711386.jpeg)
+
+> 1. 一个状态行【用于描述<font color='#02DF82'>**服务器对请求的处理结果。**</font>】
+>
+>    **状态行：**
+>
+>    - 格式： ==HTTP版本号　状态码　原因叙述==，对应下面示例。
+>
+>    - 状态行：<font color='red'>**HTTP/1.1  200   OK**</font>
+>
+>    - 状态码用于表示**服务器对请求的处理结果**，它是一个**三位的十进制数**。响应状态码分为5类
+>
+>      ![image-20200226180434036](../PicSource/image-20200226180434036.png)
+>
+> 2. 首部字段【用于描述**服务器的基本信息**，以及**数据的描述**，**服务器通过这些数据的描述信息，可以通知客户端如何处理等一会儿它回送的数据**】
+>
+> 3. 一个空行
+>
+> 4. 实体内容【**服务器向客户端回送的数据**】
+
+------
+
 
 
 ## 2、HTTPS

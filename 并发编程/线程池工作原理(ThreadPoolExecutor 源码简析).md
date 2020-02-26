@@ -70,7 +70,7 @@ private static int ctlOf(int rs, int wc) { return rs | wc; }
 > - RUNNING：最正常的状态：接受新的任务，处理等待队列中的任务
 > - SHUTDOWN：<font color='gree'>不接受新的任务提交，但是会继续处理等待队列中的任务</font>
 > - STOP：不接受新的任务提交，<font color='gree'>不再处理等待队列中的任务，中断正在执行任务的线程</font>
-> - TIDYING：所有的任务都销毁了，workCount 为 0。线程池的状态在转换为 TIDYING 状态时，==会执行钩子方法 terminated()==
+> - TIDYING：==所有的任务都销毁了==，workCount 为 0。线程池的状态在转换为 TIDYING 状态时，==会执行钩子方法 terminated()==
 > - TERMINATED：terminated() 方法结束后，线程池的状态就会变成这个
 
 
@@ -87,10 +87,11 @@ private static int ctlOf(int rs, int wc) { return rs | wc; }
 
 ### 2） 内部类Worker(线程池中任务运行的最小单元)
 
+> - 线程池中任务执行的最小单元
+> -  <font color = 'red'>**Worker 继承 AQS，具有锁功能**</font>
+> -  <font color = 'red'>**Worker 实现 Runnable，本身是一个可执行的任务**</font>
+
 ```java
-// 线程池中任务执行的最小单元
-// Worker 继承 AQS，具有锁功能
-// Worker 实现 Runnable，本身是一个可执行的任务
 private final class Worker
     extends AbstractQueuedSynchronizer
     implements Runnable
@@ -156,7 +157,7 @@ private final class Worker
 
 > 1. <font color='red'>***Worker 很像是任务的代理，在线程池中，最小的执行单位就是 Worker，所以 Worker 实现了 Runnable 接口，实现了 run 方法；Worker内部有一个线程属性用于表示任务执行的线程，见2***</font>
 > 2. <font color='red'>***在 Worker 初始化时 `this.thread = getThreadFactory ().newThread (this) `这行代码比较关键，它把当前 Worker 作为线程的构造器入参***</font>，我们在后续的实现中会发现这样的代码：`Thread t = w.thread;t.start ()`，此时的 w 是 Worker 的引用申明，此处 t.start 实际上执行的就是 Worker 的 run 方法；
-> 3. ==**Worker 本身也实现了 AQS，所以其本身也是一个锁**==，其在执行任务的时候，会锁住自己，任务执行完成之后，会释放自己。
+> 3. ==**Worker 本身也实现了 AQS，所以其本身也是一个锁**，其在执行任务的时候，会锁住自己，任务执行完成之后，会释放自己。==
 
 ------
 
@@ -212,7 +213,7 @@ public void execute(Runnable command) {
 
 > - 首先是执行了一堆==***校验***==
 > - 然后使用 new Worker (firstTask) ==***新建了 Worker***==
-> - 最后使用 ==***t.start () 执行 Worker***==，上文我们说了 Worker 在初始化时的关键代码：this.thread = getThreadFactory ().newThread (this)，Worker（this） 是作为新建线程的构造器入参的，所以 t.start () 会执行到 Worker 的 run 方法上，
+> - 最后使用 ==***t.start () 执行 Worker***==，上文我们说了 Worker 在初始化时的关键代码：`this.thread = getThreadFactory ().newThread (this)`，Worker（this） 是作为新建线程的构造器入参的，所以 t.start () 会执行到 Worker 的 run 方法上，
 
 ```java
 // 结合线程池的情况看是否可以添加新的 worker
@@ -492,13 +493,13 @@ private Runnable getTask() {
 
 - ==**FixedThreadPool：**== 该方法返回一个固定线程数量的线程池。该线程池中的线程数量始终不变。当有一个新的任务提交时，线程池中若有空闲线程，则立即执行。若没有，则新的任务会被暂存在一个任务队列中，待有线程空闲时，便处理在任务队列中的任务。
 - ==**SingleThreadExecutor：**== 方法返回一个只有一个线程的线程池。若多余一个任务被提交到该线程池，任务会被保存在一个任务队列中，待线程空闲，按先入先出的顺序执行队列中的任务。
-- ==**CachedThreadPool：**== 该方法返回一个可根据实际情况调整线程数量的线程池。线程池的线程数量不确定，<font color='red'>但若有空闲线程可以复用，则会优先使用可复用的线程。若所有线程均在工作，又有新的任务提交，则会创建新的线程处理任务。所有线程在当前任务执行完毕后，将返回线程池进行复用。</font>
+- ==**CachedThreadPool：**== 该方法返回一个可根据实际情况调整线程数量的线程池。线程池的线程数量不确定，<font color='red'>但若有空闲线程可以复用，则会==**优先使用可复用的线程**==。若所有线程均在工作，又有新的任务提交，则会创建新的线程处理任务。所有线程在当前任务执行完毕后，将返回线程池进行复用。</font>
 - ==**ScheduledThreadPoolExecutor：**== 主要用来在给定的延迟后运行任务，或者定期执行任务。ScheduledThreadPoolExecutor 又分为：ScheduledThreadPoolExecutor（包含多个线程）和 SingleThreadScheduledExecutor （只包含一个线程）两种。
 
 #### 各种线程池的适用场景介绍
 
 - **FixedThreadPool：** 适用于为了满足资源管理需求，而需要限制当前线程数量的应用场景。它适用于负载比较重的服务器；
-- **SingleThreadExecutor：** 适用于需要保证顺序地执行各个任务并且在任意时间点，不会有多个线程是活动的应用场景；
+- **SingleThreadExecutor：** 适用于需要保证==***顺序地执行各个任务***==并且在任意时间点，不会有多个线程是活动的应用场景；
 - **CachedThreadPool：** 适用于执行很多的短期异步任务的小程序，或者是负载较轻的服务器；
 - **ScheduledThreadPoolExecutor：** 适用于需要多个后台执行周期任务，同时为了满足资源管理需求而需要限制后台线程的数量的应用场景；
 - **SingleThreadScheduledExecutor：** 适用于需要单个后台线程执行周期任务，同时保证顺序地执行各个任务的应用场景。

@@ -470,7 +470,7 @@ private void doSignal(Node first) {
 }  
 ```
 
-> <font color='red' size=4>***唤醒条件队列中的节点，实际上就是把条件队列中的节点转移到同步队列中，并把其前置节点状态置为 SIGNAL。***</font>
+> <font color='red' size=4>***唤醒条件队列中的节点，实际上就是把条件队列中的节点转移到同步队列中，==并把其前置节点状态置为 SIGNAL。==***</font>
 
 ------
 
@@ -510,7 +510,7 @@ public final void signalAll() {
 
 ## 6. AQS与ReentantLock的关联
 
-==ReentrantLock 类本身是不继承 AQS 的==，实现了 Lock 接口，如下：
+==**ReentrantLock 类本身是不继承 AQS 的**==，实现了 Lock 接口，如下：
 
 ```java
 public class ReentrantLock implements Lock, java.io.Serializable {}
@@ -533,7 +533,7 @@ void unlock();
 Condition newCondition();
 ```
 
-ReentrantLock 就负责实现这些接口，我们使用时，直接面对的也是这些方法，这些方法的==底层实现都是交给 Sync 内部类去实现的==，Sync 类的定义如下：
+ReentrantLock 就负责实现这些接口，我们使用时，直接面对的也是这些方法，这些方法的==***底层实现都是交给 Sync 内部类去实现***的==，Sync 类的定义如下：
 
 ```java
 abstract static class Sync extends AbstractQueuedSynchronizer {}

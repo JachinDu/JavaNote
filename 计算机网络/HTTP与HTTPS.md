@@ -6,6 +6,8 @@ https://blog.csdn.net/qq_32998153/article/details/80022489
 
 ## 1、HTTP
 
+！！！！https://blog.csdn.net/u010256388/article/details/68491509
+
 超文本传输协议HTTP协议被用于在**<font color='red'>Web浏览器和网站服务器之间传递信息</font>**，HTTP协议以明文方式发送内容，不提供任何方式的数据加密。
 
 ------

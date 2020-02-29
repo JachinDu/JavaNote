@@ -101,7 +101,9 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > -   [数组中的第K个最大元素](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)：快速选择（利用快排的partition，因为归位的元素便已知是第几大）/或用最小堆
 >
-> -   [较小的三数之和]([较小的三数之和](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/))：遍历+双指针
+> - [较小的三数之和]([较小的三数之和](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/))：遍历+双指针
+>
+> -  [接雨水](https://leetcode-cn.com/problems/trapping-rain-water/)：每个点能储水的高度等于其与左右两边最大值中的较小者之差。
 >
 > -  数组中重复的数字：
 >

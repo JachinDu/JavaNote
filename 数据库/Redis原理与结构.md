@@ -1,8 +1,14 @@
-# Redis
+# Redis原理与结构
 
 参考：https://juejin.im/post/5b70dfcf518825610f1f5c16
 
 https://snailclimb.gitee.io/javaguide/#/docs/database/Redis/Redis
+
+<font color='red'>！！！！必看https://mp.weixin.qq.com/s/t2kFvvSKuz8wU08juT30bA</font>
+
+------
+
+
 
 ## 1、简介
 
@@ -32,7 +38,7 @@ https://juejin.im/post/5b53ee7e5188251aaa2d2e16
 
 ### &sect; string
 
-> Redis的字符串是==动态字符串==，是可以修改的字符串，**<font color='red'>内部结构实现上类似于Java的ArrayList，采用预分配冗余空间的方式来减少内存的频繁分配，</font>**如图中所示，内部为当前字符串实际分配的空间capacity一般要高于实际字符串长度len。当字符串长度小于1M时，扩容都是==加倍==现有的空间，如果超过1M，扩容时一次只会多扩1M的空间。需要注意的是字符串最大长度为512M。
+> Redis的字符串是==**动态字符串**==，是可以修改的字符串，**<font color='red'>内部结构实现上类似于Java的ArrayList，采用预分配冗余空间的方式来减少内存的频繁分配，</font>**如图中所示，内部为当前字符串实际分配的空间capacity一般要高于实际字符串长度len。当字符串长度小于1M时，扩容都是==加倍==现有的空间，如果超过1M，扩容时一次只会多扩1M的空间。需要注意的是==**字符串最大长度为512M。**==
 
 
 
@@ -42,6 +48,45 @@ https://juejin.im/post/5b53ee7e5188251aaa2d2e16
 
 
 
+底层结构：c语言：
+
+```c
+/* Note: sdshdr5 is never used, we just access the flags byte directly.
+ * However is here to document the layout of type 5 SDS strings. */
+struct __attribute__ ((__packed__)) sdshdr5 {
+    unsignedchar flags; /* 3 lsb of type, and 5 msb of string length */
+    char buf[];
+};
+struct __attribute__ ((__packed__)) sdshdr8 {
+    uint8_t len; /* used */
+    uint8_t alloc; /* excluding the header and null terminator */
+    unsignedchar flags; /* 3 lsb of type, 5 unused bits */
+    char buf[];
+};
+struct __attribute__ ((__packed__)) sdshdr16 {
+    uint16_t len; /* used */
+    uint16_t alloc; /* excluding the header and null terminator */
+    unsignedchar flags; /* 3 lsb of type, 5 unused bits */
+    char buf[];
+};
+struct __attribute__ ((__packed__)) sdshdr32 {
+    uint32_t len; /* used */
+    uint32_t alloc; /* excluding the header and null terminator */
+    unsignedchar flags; /* 3 lsb of type, 5 unused bits */
+    char buf[];
+};
+struct __attribute__ ((__packed__)) sdshdr64 {
+    uint64_t len; /* used */
+    uint64_t alloc; /* excluding the header and null terminator */
+    unsignedchar flags; /* 3 lsb of type, 5 unused bits */
+    char buf[];
+};
+```
+
+> 你会发现同样一组结构 Redis 使用泛型定义了好多次，**为什么不直接使用 int 类型呢？**
+>
+> 因为当字符串比较短的时候，len 和 alloc 可以使用 byte 和 short 来表示，<font color='red'>***Redis 为了对内存做极致的优化，不同长度的字符串使用不同的结构体来表示。***</font>
+
 ------
 
 ### &sect; list
@@ -50,24 +95,124 @@ https://juejin.im/post/5b53ee7e5188251aaa2d2e16
 
 ------
 
+关于链表节点与链表总体的定义：
+
+```c
+/* Node, List, and Iterator are the only data structures used currently. */
+// 定义链表节点
+typedefstruct listNode {
+    struct listNode *prev;
+    struct listNode *next;
+    void *value;
+} listNode;
+
+typedefstruct listIter {
+    listNode *next;
+    int direction;
+} listIter;
+
+// 定义链表
+typedefstruct list {
+    listNode *head; // 头
+    listNode *tail; // 尾
+    void *(*dup)(void *ptr);
+    void (*free)(void *ptr);
+    int (*match)(void *ptr, void *key);
+    unsignedlong len; // 长度
+} list;
+```
+
+![img](../PicSource/640-3035380.png)
 
 
-> - **==负下标==** 链表元素的位置使用自然数`0,1,2,....n-1`表示，还可以使用负数`-1,-2,...-n`来表示，==`-1`表示「倒数第一」，`-2`表示「倒数第二」，那么`-n`就表示第一个元素，对应的下标为`0`。==
-> - **==队列／堆栈==** 链表可以从表头和表尾追加和移除元素，结合使用rpush/rpop/lpush/lpop四条指令，<font color='red'>**可以将链表作为队列或堆栈使用，左向右向进行都可以**</font>
+
+![img](../PicSource/640-20200301120303653.jpeg)
+
+> <font color='red'>***虽然仅仅使用多个 listNode 结构就可以组成链表，但是使用 `adlist.h/list` 结构来持有链表的话，操作起来会更加方便***</font>
 
 ------
 
 
 
-### &sect; hash
+> - **==负下标==** 链表元素的位置使用自然数`0,1,2,....n-1`表示，还可以使用负数`-1,-2,...-n`来表示，==`-1`表示「倒数第一」，`-2`表示「倒数第二」，那么`-n`就表示第一个元素，对应的下标为`0`。==
+> - **==队列／堆栈==** 链表可以从表头和表尾追加和移除元素，<font color='red'>结合使用==**rpush/rpop/lpush/lpop**==四条指令，**可以将链表作为队列或堆栈使用，左向右向进行都可以**</font>
 
-同hashmap，<font color='red'>除扩容外还可以“缩容”</font>。![image-20200206175758298](../PicSource/image-20200206175758298.png)
+------
+
+
+
+### &sect; 字典hash
+
+![image-20200206175758298](../PicSource/image-20200206175758298.png)
+
+> Redis 中的字典相当于 Java 中的 **HashMap**，内部实现也差不多类似，都是通过 <font color='red'>**"数组 + 链表"** </font>的链地址法来解决部分 **哈希冲突**，同时这样的结构也吸收了两种不同数据结构的优点。源码定义：
+
+```c
+// 数组上元素的定义，相当于hashmap中的Node
+typedef struct dictEntry {
+    // 键
+    void *key;
+    // 值
+    union {
+        void *val;
+        uint64_t u64;
+        int64_t s64;
+        double d;
+    } v;
+    // 指向下个哈希表节点，形成链表！！！
+    struct dictEntry *next;
+} dictEntry;
+
+// 相当于hashmap中的table[]数组
+typedef struct dictht {
+    // 哈希表数组元素
+    dictEntry **table; 
+    // 哈希表大小
+    unsigned long size;
+    // 哈希表大小掩码，用于计算索引值，总是等于 size - 1
+    unsigned long sizemask;
+    // 该哈希表已有节点的数量
+    unsigned long used;
+} dictht;
+
+// 字典的整体定义，相当于hashmap的定义
+typedef struct dict {
+    dictType *type;
+    void *privdata;
+    // ！！！！！内部有两个 dictht 结构
+    dictht ht[2]; // 相当于有两个table[]数组
+    long rehashidx; /* rehashing not in progress if rehashidx == -1 */
+    unsigned long iterators; /* number of iterators currently running */
+} dict;
+
+```
+
+------
+
+#### &sect; 渐进式rehash
+
+> 1. <font color='gree'>**为 `ht[1]` 分配空间(扩容)**</font>， 让字典同时持有 `ht[0]` 和 `ht[1]` 两个哈希表。
+> 2. <font color='gree'>在字典中维持一个**索引计数器变量 `rehashidx`** ， 并将它的值设置为 `0` ， 表示 rehash 工作正式开始。</font>
+> 3. 在 rehash 进行期间， <font color='red'>***每次对字典执行添加、删除、查找或者更新操作时， 程序除了执行指定的操作以外， 还会顺带将 `ht[0]` 哈希表在 `rehashidx` 索引上的所有键值对 rehash 到 `ht[1]` ， 当 rehash 工作完成之后， 程序将 `rehashidx` 属性的值增一。***</font>
+> 4. 随着字典操作的不断执行， 最终在某个时间点上， `ht[0]` 的所有键值对都会被 rehash 至 `ht[1]` ，<font color='purple'>***然后再将ht[1]赋给ht[0]，把ht[1]置为null 。***</font>这时程序将 `rehashidx` 属性的值设为 `-1` ， 表示 rehash 操作已完成。
+
+图例见：http://redisbook.com/preview/dict/incremental_rehashing.html
+
+
+
+<font size = 5>**注意：**</font>
+
+> - 因为在进行渐进式 rehash 的过程中， 字典会同时使用 `ht[0]` 和 `ht[1]` 两个哈希表， <font color='red'>***所以在渐进式 rehash 进行期间， 字典的删除（delete）、查找（find）、更新（update）等操作会在两个哈希表上进行***</font>： 比如说， 要在字典里面查找一个键的话， ==程序会先在 `ht[0]` 里面进行查找， 如果没找到的话， 就会继续到 `ht[1]` 里面进行查找==， 诸如此类。
+>
+> - 另外， 在渐进式 rehash 执行期间， <font color='red'>**新添加到字典的键值对一律会被保存到 `ht[1]` 里面， 而 `ht[0]` 则不再进行任何添加操作： 这一措施保证了 `ht[0]` 包含的键值对数量会只减不增， 并随着 rehash 操作的执行而最终变成空表。**</font>
 
 ------
 
 ### &sect; set
 
-同hashset
+> Redis 的集合相当于 Java 语言中的 **HashSet**，它内部的键值对是无序、唯一的。==***它的内部实现相当于一个特殊的字典，字典中所有的 value 都是一个值 NULL。***==
+
+------
 
 
 
@@ -91,6 +236,10 @@ https://juejin.im/post/57fa935b0e3dd90057c50fbc
 因为zset要**==支持随机的插入和删除，所以它不好使用数组来表示。==**
 
 ​	
+
+------
+
+
 
 ## 4、redis过期时间
 

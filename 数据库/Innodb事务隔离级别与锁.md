@@ -106,7 +106,7 @@
 
 <font color='red'>多版本并发控制</font>(Multi-Version Concurrency Control, MVCC)是MySQL中基于==乐观锁==理论实现隔离级别的方式，用于实现<font color='red'>读已提交和可重复读取</font>隔离级别的实现。
 
-
+<font color='gree' size = 5>***该思想可用在分布式事务中！！！***</font>
 
 > - **系统版本号：**一个递增的数字，==每开始一个新的事务，系统版本号就会自动递增。==
 > - **事务版本号：**事务开始时的系统版本号。

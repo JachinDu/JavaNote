@@ -191,6 +191,12 @@ typedef struct dict {
 
 #### &sect; 渐进式rehash
 
+<font color='yellow' size=5>***在分布式系统的日志技术中也有用到类似两份table的技术：Check Point技术***</font>
+
+------
+
+
+
 > 1. <font color='gree'>**为 `ht[1]` 分配空间(扩容)**</font>， 让字典同时持有 `ht[0]` 和 `ht[1]` 两个哈希表。
 > 2. <font color='gree'>在字典中维持一个**索引计数器变量 `rehashidx`** ， 并将它的值设置为 `0` ， 表示 rehash 工作正式开始。</font>
 > 3. 在 rehash 进行期间， <font color='red'>***每次对字典执行添加、删除、查找或者更新操作时， 程序除了执行指定的操作以外， 还会顺带将 `ht[0]` 哈希表在 `rehashidx` 索引上的所有键值对 rehash 到 `ht[1]` ， 当 rehash 工作完成之后， 程序将 `rehashidx` 属性的值增一。***</font>

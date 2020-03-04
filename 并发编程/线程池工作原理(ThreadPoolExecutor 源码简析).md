@@ -504,3 +504,12 @@ private Runnable getTask() {
 - **ScheduledThreadPoolExecutor：** 适用于需要多个后台执行周期任务，同时为了满足资源管理需求而需要限制后台线程的数量的应用场景；
 - **SingleThreadScheduledExecutor：** 适用于需要单个后台线程执行周期任务，同时保证顺序地执行各个任务的应用场景。
 
+------
+
+## 4、拒绝策略
+
+- ==**CallerRunsPolicy**== ：当触发拒绝策略，只要线程池没有关闭的话，则<font color='gree'>**使用调用线程直接运行任务。**</font>一般并发比较小，性能要求不高，不允许失败。但是，由于调用者自己运行任务，如果任务提交速度过快，可能导致程序阻塞，性能效率上必然的损失较大
+- ==**AbortPolicy**== ： <font color='gree'>***丢弃任务，并抛出拒绝执行 RejectedExecutionException 异常信息。线程池默认的拒绝策略。==必须处理好抛出的异常==，否则会打断当前的执行流程，影响后续的任务执行。***</font>
+-  ==**DiscardPolicy**== - 直接丢弃，其他啥都没有
+- ==**DiscardOldestPolicy**== - 当触发拒绝策略，只要线程池没有关闭的话，<font color='gree'>**丢弃阻塞队列 workQueue 中最老的一个任务，并将新任务加入**</font>
+

@@ -11,7 +11,7 @@
 分类，常用三种：
 
 > - 启动类加载器(Bootstrap ClassLoader): 加载目录 `<JAVA_HOME>\lib`
-> - 扩展类加载器(Extension CLassLoader): `<JAVA_HOME>\lib\ext`
+> - ==扩展类加载器==(Extension CLassLoader): `<JAVA_HOME>\lib\ext`
 > - 应用程序类加载器(Application ClassLoader): `用户目录classpath`,==用户可以直接使用的类加载器，程序中若没有自定义的加载器则默认使用这个。==
 >
 > 
@@ -252,6 +252,22 @@ public class Main {
 
 或者重写`loadClass()`方法。
 
+------
 
+### &sect; 双亲委派的缺陷
+
+<font color='red'>双亲委派模型很好地解决了各个类加载器的基础类统一问题(越基础的类由越上层的加载器进行加载)，基础类之所以被称为“基础”，是因为它们总是作为被调用代码调用的API。但是，如果基础类又要调用用户的代码，那该怎么办呢。</font>
+ 这并非是不可能的事情，一个典型的例子便是JNDI服务，它的代码由启动类加载器去加载(在JDK1.3时放进rt.jar)，但JNDI的目的就是对资源进行集中管理和查找，它需要调用独立厂商实现部部署在应用程序的classpath下的JNDI接口提供者(SPI, Service Provider Interface)的代码，但启动类加载器不可能“认识”之些代码，该怎么办？
+ 为了解决这个困境，Java设计团队只好引入了一个不太优雅的设计：==**线程上下文件类加载器(Thread Context ClassLoader)**==。这个类加载器可以通过java.lang.Thread类的setContextClassLoader()方法进行设置，如果创建线程时还未设置，它将会从父线程中继承一个；如果在应用程序的全局范围内都没有设置过，那么这个类加载器默认就是应用程序类加载器。了有线程上下文类加载器，JNDI服务使用这个线程上下文类加载器去加载所需要的SPI代码，<font color='red'>**也就是父类加载器请求子类加载器去完成类加载动作**</font>，这种行为实际上就是打通了双亲委派模型的层次结构来逆向使用类加载器，已经违背了双亲委派模型，但这也是无可奈何的事情。Java中所有涉及SPI的加载动作基本上都采用这种方式，例如JNDI,JDBC,JCE,JAXB和JBI等。
+
+------
+
+### &sect; JDBC破坏双亲委派
+
+首先，理解一下为什么JDBC需要破坏双亲委派模式，<font color='red'>原因是原生的JDBC中==Driver驱动本身只是一个接口==，并没有具体的实现，具体的实现是由不同数据库类型去实现的。例如，==MySQL的`mysql-connector-*.jar`中的Driver类具体实现的。== 原生的JDBC中的类是放在rt.jar包的，是由启动类加载器进行类加载的，在JDBC中的Driver类中需要动态去加载不同数据库类型的Driver类，而`mysql-connector-*.jar`中的Driver类是用户自己写的代码，那启动类加载器肯定是不能进行加载的，既然是自己编写的代码，那就需要由应用程序启动类去进行类加载。于是乎，这个时候就引入线程上下文件类加载器(Thread Context ClassLoader)。有了这个东西之后，程序就可以把原本需要由启动类加载器进行加载的类，由应用程序类加载器去进行加载了。</font>
+
+
+
+------
 
 参考：https://juejin.im/post/5a810b0e5188257a5c606a85

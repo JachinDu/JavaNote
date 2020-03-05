@@ -22,7 +22,7 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
 }
 ```
 
-所有dao层都会继承***<font color='red'>`JpaRepository<实体类,主键类型>`</font>***接口。
+所有dao层都会继承***<font color='red' size=5>`JpaRepository<实体类,主键类型>`</font>***接口。
 
 ------
 
@@ -32,7 +32,9 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
 
 ![image-20191231171238791](../PicSource/image-20191231171238791.png)
 
-其中重要的就是`CrudRepository`和`PagingAndSortingRepository`接口
+<font color='red' size=5>***其中重要的就是继承`CrudRepository`和`PagingAndSortingRepository`接口***</font>
+
+------
 
 
 
@@ -70,7 +72,7 @@ public interface CrudRepository<T, ID> extends Repository<T, ID> {
 
 ### 2）PagingAndSortingRepository接口
 
-**<font color='red'>这是用来实现分页接口</font>**
+**<font color='red' size=5>这是用来实现分页接口</font>**
 
 ```java
 public interface PagingAndSortingRepository<T, ID> extends CrudRepository<T, ID> {
@@ -79,6 +81,10 @@ public interface PagingAndSortingRepository<T, ID> extends CrudRepository<T, ID>
     Page<T> findAll(Pageable var1);
 }
 ```
+
+> ***<font color='red' size=5>`Page<T> findAll(Pageable var1);`</font>***
+
+------
 
 
 
@@ -91,7 +97,7 @@ a）Controller层：
     public ModelAndView list(@RequestParam(value = "page" ,defaultValue="1") Integer page,
                              @RequestParam(value = "size",defaultValue = "10") Integer size,
                              Map<String,Object> map){
-        PageRequest request=new PageRequest(page-1,size);
+        Pageable pageable = PageRequest.of(page-1, size);
         Page<ProductInfo> productInfoPage=productService.findAll(request);
         map.put("productInfoPage",productInfoPage);
         map.put("currentPage",page);
@@ -100,7 +106,39 @@ a）Controller层：
     }
 ```
 
+> - <font color='red' size = 4>***其中：PageRequest类继承于AbstractPageRequest类，该类实现了Pageable接口，故可以有上面5、6行***</font>
+>
+> - <font color='red' size = 4>***而且还要把page参数（从几页开始）和size参数（一页几个）传给模版引擎中***</font>
+>
+>   ```html
+>   <div class="col-md-12 column">
+>       <ul class="pagination pull-right">
+>   
+>           <#if currentPage lte 1>
+>               <li class="disabled"><a href="#">上一页</a></li>
+>           <#else>
+>               <li><a href="/sell/buyer/product/list?page=${currentPage-1}&size=${size}">上一页</a></li>
+>           </#if>
+>   
+>           <#list 1..productInfoList.getTotalPages() as index>
+>               <#if currentPage == index>
+>                   <li class="disabled"><a href="#">${index}</a> </li>
+>               <#else>
+>                   <li><a href="/sell/buyer/product/list?page=${index}&size=${size}">${index}</a></li>
+>               </#if>
+>           </#list>
+>   
+>           <#if currentPage gte productInfoList.getTotalPages()>
+>               <li class="disabled"><a href="#">下一页</a></li>
+>           <#else>
+>               <li><a href="/sell/buyer/product/list?page=${currentPage+1}&size=${size}">下一页</a></li>
+>           </#if>
+>   
+>       </ul>
+>   </div>
+>   ```
 
+------
 
 b）Service层：
 

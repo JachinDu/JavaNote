@@ -49,10 +49,6 @@ CookieUtil.set(response, CookieConstant.TOKEN,token,expire);
 
 这样就把`（CookeiConstant.TOKEN,token）`这样的key、value对保存的了用户的cookie中了。
 
-
-
-
-
 ```java
 package com.jachin.sell.aspect;
 

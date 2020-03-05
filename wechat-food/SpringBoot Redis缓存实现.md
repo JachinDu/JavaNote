@@ -70,7 +70,7 @@ yml配置文件：
 
 
 
-***<font color='red'>启动类加`@EnableCaching`注解：</font>***
+***<font color='red' size=6>启动类加`@EnableCaching`注解：</font>***
 
 ```java
 package com.jachin.sell;
@@ -104,17 +104,15 @@ public class ProductServiceImpl implements ProductService {
     private ProductInfoDao dao;
   
     @Override
-    @Cacheable(key = "123")
+    @Cacheable(key = "#productId")
     public ProductInfo findById(String productId) {
         return dao.findById(productId).get();
     }
   
     @Override
-    @CachePut(key = "123")
+    @CachePut(key = "#productInfo.getProductId()")
     public ProductInfo save(ProductInfo productInfo) {
-
         return dao.save(productInfo);
-    }
     }
 }
 ```
@@ -131,7 +129,7 @@ public class ProductServiceImpl implements ProductService {
 >
 > 5. @CacheConfig：用来配置一些作用域相关的东西，简化上述注解中相同属性的编写。
 >
-> 6. **<font color='red' size=4>key：key值必须要写，cacheNames + key 唯一标示缓存，而==key默认值是函数入参==，所以防止不统一，建议必须给出该属性值。</font>**
+> 6. **<font color='red' size=4>key：key值必须要写，cacheNames + key 唯一标示缓存，而==key默认值是函数入参==，所以防止不统一，建议必须给出该属性值。可以使用spel表达式动态注入key值，如上述两方法的key值设置相匹配，可保证操作的是同一缓存对象</font>**
 >
 > 7. 更丰富的语法：
 >

@@ -25,8 +25,8 @@
 
 消息一般由 2 部分组成：
 
-> - **消息头**（**标签 Label**）：由一系列的可选属性组成，这些属性包括 **<font color='red'>routing-key（路由键）</font>**、**priority（相对于其他消息的优先权）**、**delivery-mode（指出该消息可能需要持久性存储）**等。生产者把消息交由 RabbitMQ 后，RabbitMQ 会根据消息头把消息发送给感兴趣的 Consumer(消费者)。
-> -  **消息体（payLoad）**：不透明的
+> - <font color='gree'>**消息头**（**标签 Label**）</font>：由一系列的可选属性组成，这些属性包括 **<font color='red'>routing-key（路由键）</font>**、**priority（相对于其他消息的优先权）**、**delivery-mode（指出该消息可能需要持久性存储）**等。生产者把消息交由 RabbitMQ 后，RabbitMQ 会根据消息头把消息发送给感兴趣的 Consumer(消费者)。
+> -  <font color='gree'>**消息体（payLoad）**</font>：不透明的
 
 
 

@@ -1,4 +1,4 @@
-#  Java内存区域详解
+#  JVM内存区域详解
 
 参考：https://segmentfault.com/a/1190000021424972
 

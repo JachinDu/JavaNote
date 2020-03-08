@@ -22,5 +22,5 @@ public final void wait(long timeout, int nanos) throws InterruptedException//多
 
 public final void wait() throws InterruptedException//跟之前的2个wait方法一样，只不过该方法一直等待，没有超时时间这个概念
 
-protected void finalize() throws Throwable { }//实例被垃圾回收器回收的时候触发的操作
+protected void finalize() throws Throwable { }// 实例被垃圾回收器回收的时候触发的操作
 ```

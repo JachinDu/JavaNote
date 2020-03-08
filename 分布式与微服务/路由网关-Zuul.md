@@ -236,7 +236,7 @@ public class RateLimitFilter extends ZuulFilter {
 
 ## 6、负载均衡和熔断
 
-Zuul中默认就已经集成了Ribbon负载均衡和Hystix熔断机制。但是所有的超时策略都是走的默认值，比如熔断超时时间只有1S，很容易就触发了。因此建议我们手动进行配置：
+<font color='red'>***Zuul中默认就已经集成了Ribbon负载均衡和Hystix熔断机制。***</font>但是所有的超时策略都是走的默认值，比如熔断超时时间只有1S，很容易就触发了。因此建议我们手动进行配置：
 
 ```java
 zuul:

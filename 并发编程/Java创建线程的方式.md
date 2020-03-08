@@ -8,7 +8,7 @@
 >
 > 3. 使用Callable和Future
 
-***<font color='red'>2、3方法都要调用`new Thread(Runnable args)`，将接口实现类作为参数传入，注意，`Thread`只接收Runnable对象，而Callable不是Runnable子接口，需要包装为FutureTask对象才可。</font>***
+***<font color='red'>2、3方法都要调用`new Thread(Runnable args)`，将接口实现类作为参数传入，注意，==`Thread`只接收Runnable对象==，而Callable不是Runnable子接口，需要包装为FutureTask对象才可。</font>***
 
 ------
 
@@ -158,7 +158,7 @@ class CallableTest implements Callable{
 
 （3）增加程序的健壮性，代码和数据独立
 
-（4）***<font color='red'>线程池只能放入Runable或Callable接口实现类，不能直接放入继承Thread的类</font>***
+（4）***<font color='gree' size=5>线程池只能放入Runable或Callable接口实现类，不能直接放入继承Thread的类</font>***
 
 ## 5.Callable和Runnable的区别
 

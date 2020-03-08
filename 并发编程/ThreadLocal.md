@@ -128,7 +128,7 @@ private static final ThreadLocal<SimpleDateFormat> formatter = new ThreadLocal<S
 
 下面我们分两种情况讨论：
 
-- ***<font color='red'>key 使用强引用：引用的`ThreadLocal`的==对象==被回收了，但是==`ThreadLocalMap`还持有`ThreadLocal`的强引用==，如果没有手动删除，`ThreadLocal`不会被回收，导致`Entry`内存泄漏。</font>***（强引用必须手动置为null，GC不会回收它）
+- ***<font color='red' size=4>key 使用强引用：引用的`ThreadLocal`的==对象==被回收了，但是==`ThreadLocalMap`还持有`ThreadLocal`的强引用==，如果没有手动删除，`ThreadLocal`不会被回收，导致`Entry`内存泄漏。</font>***（强引用必须手动置为null，GC不会回收它）
 - **key 使用弱引用**：引用的`ThreadLocal`的对象被回收了，由于`ThreadLocalMap`持有`ThreadLocal`的弱引用，即使没有手动删除，`ThreadLocal`也会被回收。`value`在下一次`ThreadLocalMap`调用`set`,`get`，`remove`的时候会被清除。
 
 

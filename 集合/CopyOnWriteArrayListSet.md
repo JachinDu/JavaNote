@@ -9,8 +9,8 @@
 **新老线程安全类，总结起来就是==粒度==的问题**
 
 - **线程不安全 &rArr; synchronized(大粒度线程安全) &rArr; 优化后(细粒度)线程安全**
-- HashMap &rArr; HashTable/Collections.synchronized.. &rArr; ConcurrentHashMap
-- ArrayList &rArr; Vector/Collections.synchronized.. &rArr; CopyOnWriteArrayList
+- HashMap &rArr; HashTable/==Collections.synchronized==.. &rArr; ConcurrentHashMap
+- ArrayList &rArr; Vector/==Collections.synchronized.==. &rArr; CopyOnWriteArrayList
 
 ------
 
@@ -18,7 +18,9 @@
 
 - Hashtable、Vector加锁的粒度大(直接在方法声明处使用synchronized)
 - ConcurrentHashMap、CopyOnWriteArrayList加锁粒度小(用各种的方式来实现线程安全，比如我们知道的ConcurrentHashMap用了cas锁、volatile等方式来实现线程安全..)
-- <font color='red'>JUC下的线程安全容器在==遍历==的时候**不会**抛出`ConcurrentModificationException`异常</font>
+- <font color='red'>**JUC下的线程安全容器在==遍历==的时候不会抛出`ConcurrentModificationException`异常,这里涉及到fail-fast**</font>
+
+------
 
 
 

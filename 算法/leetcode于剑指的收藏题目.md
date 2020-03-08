@@ -203,6 +203,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 > -  【🎖🎖🎖】 [最大正方形](https://leetcode-cn.com/problems/maximal-square/)：`dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]);`
 > -  【🎖🎖🎖】 [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)：找以nums[0 -- i]结尾的最长上升子序列
 > -  【🎖🎖🎖】 [俄罗斯套娃信封问题](https://leetcode-cn.com/problems/russian-doll-envelopes/)：先按宽度升序排序，宽度相等时按高度降序排序，然后按高度用最长上升子序列的解法
+> -  【🎖🎖🎖🎖】 [最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)
 
 ------
 
@@ -262,3 +263,14 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 ### &sect; 滑动窗口
 
 > - 【🎖🎖🎖】 [无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+> - 【🎖🎖🎖🎖】 [最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/)
+
+------
+
+### &sect; 双指针
+
+> -  【🎖🎖🎖】 [无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+> -  [三数之和](https://leetcode-cn.com/problems/3sum/)
+> - [接雨水](https://leetcode-cn.com/problems/trapping-rain-water/)
+> -  [盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/)：核心是一左一右两指针，然后不停的挪动较短的那一端（因为面积已经是按短的那边算了，如果不挪短的这边，那不可能出现更大的面积）
+> -  [最接近的三数之和](https://leetcode-cn.com/problems/3sum-closest/)

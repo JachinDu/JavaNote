@@ -646,6 +646,8 @@ final boolean nonfairTryAcquire(int acquires) {
 
 ------
 
+> <font color='red' size=4>***注意：都要先判断锁的状态，如果未被获取则走各自的获取流程，若被获取，则要看一下是不是自己，即判断能否重入。***</font>
+
 ![图片描述](../PicSource/5dc38319000106d713060430.png)
 
 

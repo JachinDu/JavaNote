@@ -143,6 +143,8 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 
 ## &sect; 初始化时的线程安全：
 
+
+
 > ```java
 > private final Node<K,V>[] initTable() {
 >     Node<K,V>[] tab; int sc;
@@ -171,7 +173,7 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 > }
 > ```
 >
-> > ***<font color='red' size = 5>注意这里4、11双重check</font>***
+> > ***<font color='red' size = 5>注意这里4、11双重check，这种思想在单例模式中也有</font>***
 
 ------
 
@@ -219,7 +221,7 @@ public V get(Object key) {
 > 2. 拷贝数组的槽点时，==先把原数组槽点锁住==，保证原数组槽点不能操作，==成功拷贝到新数组时，把原数组槽点赋值为转移节点；==
 > 3. 这时如果有新数据正好需要 put 到此槽点时，==发现槽点为转移节点，就会一直自旋==，所以在扩容完成之前，该槽点对应的数据是不会发生变化的；
 > 4. 从数组的尾部拷贝到头部，每拷贝成功一次，就把原数组中的节点设置成转移节点；
-> 5. ==直到所有数组数据都拷贝到新数组时，直接把新数组整个赋值给数组容器，拷贝完成。==
+> 5. ==直到所有数组数据都拷贝到新数组时，***直接把新数组整个赋值给数组容器***，拷贝完成。==
 
 源码如下：
 
@@ -371,7 +373,7 @@ private final void transfer(Node<K,V>[] tab, Node<K,V>[] nextTab) {
 
 ## 注意：
 
-**key和value都不能为null**
+<font color='gree' size = 5>**key和value都不能为null**</font>
 
 
 

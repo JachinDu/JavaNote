@@ -24,7 +24,7 @@ HttpSession类：保存会话数据
 
 3）第二次访问的时候，浏览器带着JSESSIONID的cookie访问服务器
 
- 4）服务器得到JSESSIONID，在服务器的内存中搜索是否存放对应编号的session对象。
+ 4）<font color='red'>**服务器得到JSESSIONID，在服务器的内存中搜索是否存放对应编号的session对象。**</font>
 
 ​                                   if(找到){
 

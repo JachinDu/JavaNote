@@ -100,7 +100,7 @@ public SqlSessionFactory getSqlSessionFactory() throws IOException {
 
 **<font color="red">EmployeeMapper mapper = openSession.getMapper(EmployeeMapper.class);</font>**
 
-**<font color="Blue">SqlSession：代表和数据库的一次对话，用完必须关闭</font>**
+**<font color="gree">SqlSession：代表和数据库的一次对话，用完必须关闭</font>**
 
-**<font color="Blue">						非线程安全，每次使用都应该去获取新对象，而不是写成成员变量</font>**
+**<font color="gree">非线程安全，每次使用都应该去获取新对象，而不是写成成员变量</font>**
 

@@ -107,11 +107,12 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
           // key有可能为不同类型，所以这里用||
             e = p;
         else if (p instanceof TreeNode)
-            e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+            e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value); // 这里有一个返回值，若树中已有对应节点，则返回该节点，否则为null，和链表那里统一了。最终在外层进行判断if(e != null)!!!
         else {
             for (int binCount = 0; ; ++binCount) {
                 if ((e = p.next) == null) { 
                     p.next = newNode(hash, key, value, null); 
+                  	// 这里e依然为null，但链表已经续上了
                     if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
                         treeifyBin(tab, hash);
                     break;
@@ -122,8 +123,10 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                 p = e; // 让for继续
             }
         }
-        if (e != null) { // existing mapping for key
+      	// 如果是插入链表尾部，则不会进入该if
+        if (e != null) { // 说明在链表中找到有key相同的节点
             V oldValue = e.value;
+          	// 这里要判断是否允许修改旧值
             if (!onlyIfAbsent || oldValue == null)
                 e.value = value;
             afterNodeAccess(e);
@@ -160,17 +163,11 @@ static final int hash(Object key) {
 
 ![图片描述](../PicSource/5d5fc7e200016af809121188.jpg)
 
-![hashmap_put](../PicSource/hashmap_put.png)
-
-> 注意：
->
-> 所说的相当于，是结合最后的收尾部分代码，达到了更新旧值的目的。
-
 
 
 ### 2.2、putTreeVal函数
 
-
+> <font color='red'>**若树中包含目标key，则返回该key对应的节点，否则插入后，返回null，用于外层putVal函数判断！！！！！**</font>
 
 ```java
 /**
@@ -188,7 +185,7 @@ final TreeNode<K,V> putTreeVal(HashMap<K,V> map, Node<K,V>[] tab,
         else if (ph < h)
             dir = 1;
         else if ((pk = p.key) == k || (k != null && k.equals(pk)))
-            return p;
+            return p; // 树中已存在该key，则直接返回该节点！！！
         else if ((kc == null &&
                   (kc = comparableClassFor(k)) == null) ||
                  (dir = compareComparables(kc, k, pk)) == 0) {
@@ -217,7 +214,7 @@ final TreeNode<K,V> putTreeVal(HashMap<K,V> map, Node<K,V>[] tab,
             if (xpn != null)
                 ((TreeNode<K,V>)xpn).prev = x;
             moveRootToFront(tab, balanceInsertion(root, x));
-            return null;
+            return null; // 弄完之后返回的是null，用于putVal函数最后判断e是否为null，为null则忽略，不为null说明链表或树中间节点即有目标key，则需判断是否更新旧值来决定是否要更新。！！！！！
         }
     }
 }
@@ -269,6 +266,18 @@ final void treeifyBin(Node<K,V>[] tab, int hash) {
 >
 > 注意，==扩容是扩哈希表，与链表和红黑树无关==
 
+------
+
+参考：https://www.cnblogs.com/wskwbog/p/10907457.html
+
+> 核心：
+>
+> <font color='gree'>**在扩容时，会扩大到原来的两倍，因为使用的是2的次幂扩展，那么元素的位置要么保持不变，要么在原位置上偏移2的次幂。**</font>
+>
+> ![resize-1](../PicSource/1424165-20190522103950481-844633092.png)
+>
+> <font color='gree'>***由图可知，"节点原散列值 & oldCap"的值为0，则说明还在原位置，为1，则需要向后搬移oldCap步长。***</font>
+
 ```java
 /**
  * Initializes or doubles table size.  If null, allocates in
@@ -301,6 +310,7 @@ final Node<K,V>[] resize() {
         newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
     }
     if (newThr == 0) {
+      // 更新threshold!!!
         float ft = (float)newCap * loadFactor;
         newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?
                   (int)ft : Integer.MAX_VALUE);
@@ -317,12 +327,14 @@ final Node<K,V>[] resize() {
             if ((e = oldTab[j]) != null) {
               // 只找非空的bucket
                 oldTab[j] = null; // 在旧表中清除
-                if (e.next == null) // 旧表中只剩一个非空节点了
-                  // 插入新表
+                if (e.next == null) // 不是链表或树头
+                  // 直接插入新表
                     newTab[e.hash & (newCap - 1)] = e;
                 else if (e instanceof TreeNode)
-                    ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
+                    ((TreeNode<K,V>)e).split(this, newTab, j, oldCap); // 是树头，则对树进行拆分
                 else { // preserve order 迁移是按序的
+                  	// 对链表的操作
+                  	// 将链表拆成两个新链表，一个是在原位置，一个是在原位置+扩容前容量的位置！！！！！！
                     Node<K,V> loHead = null, loTail = null;
                     Node<K,V> hiHead = null, hiTail = null;
                     Node<K,V> next;
@@ -347,6 +359,7 @@ final Node<K,V>[] resize() {
                             hiTail = e;
                         }
                     } while ((e = next) != null);
+                  	// 拆好两个链表后，将二者头节点分别接在对应位置上即可！！！
                     if (loTail != null) {
                         loTail.next = null;
                         newTab[j] = loHead;
@@ -363,6 +376,14 @@ final Node<K,V>[] resize() {
     return newTab;
 }
 ```
+
+在重新计算链表中元素位置时，只可能得到**两个子链表**：索引不变的元素链表和有相同偏移量的元素链表。<font color='red'>**在构造子链表的过程中，使用头节点和尾节点，保证了拆分后的有序性：**</font>
+
+![resize-2](../PicSource/1424165-20190522112602867-1943744455.png)
+
+
+
+------
 
 
 

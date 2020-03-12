@@ -14,6 +14,10 @@
 
 获取对象的属性、方法
 
+> ![image-20200312104853479](PicSource/image-20200312104853479.png)
+
+------
+
 
 
 ##1、 反射的应用场景（优点）
@@ -29,13 +33,11 @@
 
 ## 2、获取Class对象的三种方法
 
-> 1. **使用Class类的static方法：`Class.forName("类的全限定名")`**
+> 1. <font color='red'>**使用==Class类的static==方法：`Class.forName("类的全限定名")`**</font>
 > 2. **直接获取某一个类的 class：`Boolean.class`**
-> 3. **==对象==调用 Object 的 `getClass` 方法：`object.getClass()`****
+> 3. <font color='red'>**==对象==调用 Object 的 `getClass` 方法：`object.getClass()`**</font>
 
-
-
-
+------
 
 举例
 
@@ -66,6 +68,11 @@ public class Admin{
 
 
 使用反射：获取对象，属性，方法
+
+> - getDeclaredConstructor
+> - getDeclaredFields
+> - getDeclaredMethod
+> - Method.invoke
 
 ```java
 public void test{

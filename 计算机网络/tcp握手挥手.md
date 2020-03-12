@@ -14,7 +14,31 @@ https://blog.csdn.net/qzcsu/article/details/72861891
 
 ## 1、三次握手建立连接
 
+tcp报文结构：
+
+![image-20200312113032562](../PicSource/image-20200312113032562.png)
+
+
+
 ![三次握手](../PicSource/SouthEast-20200114194623938.png)
+
+------
+
+### 过程
+
+> - 第一次握手：Client将SYN置1，<font color='red'>**随机产生一个初始序列号seq发送给Server，进入SYN_SENT状态；**</font>
+> - 第二次握手：Server收到Client的SYN=1之后，知道客户端请求建立连接，将自己的SYN置1，ACK置1，产生一个acknowledge number=sequence number+1，<font color='red'>**并随机产生一个自己的初始序列号，发送给客户端；进入SYN_RCVD状态；**</font>
+> - 第三次握手：<font color='red'>**客户端检查acknowledge number是否为序列号+1，ACK是否为1，检查正确之后将自己的ACK置为1，产生一个acknowledge number=服务器发的序列号+1，发送给服务器；进入ESTABLISHED状态；服务器检查ACK为1和acknowledge number为序列号+1之后，也进入ESTABLISHED状态；完成三次握手，连接建立。**</font>
+
+------
+
+### 各字段含义
+
+> - **序列号seq**：占4个字节，用来标记数据段的顺序，TCP把连接中发送的所有数据字节都编上一个序号，第一个字节的编号由本地随机产生；给字节编上序号后，就给每一个报文段指派一个序号；序列号seq就是这个报文段中的第一个字节的数据编号。
+> - **确认号ack**：占4个字节，期待收到对方下一个报文段的第一个数据字节的序号；序列号表示报文段携带数据的第一个字节的编号；而确认号指的是期望接收到下一个字节的编号；因此当前报文段最后一个字节的编号+1即为确认号。
+> - **确认ACK**：<font color='red'>**占1位，仅当ACK=1时，确认号字段才有效。ACK=0时，确认号无效**</font>
+> - **同步SYN**（synchronous）：<font color='red'>***连接建立时用于同步序号。当SYN=1，ACK=0时表示：这是一个连接请求报文段。若同意连接，则在响应报文段中使得SYN=1，ACK=1。***</font>因此，SYN=1表示这是一个连接请求，或连接接受报文。<font color='red'>***SYN这个标志位只有在TCP建产连接时才会被置1，握手完成后SYN标志位被置0。***</font>
+> - **终止FIN**（finish）：用来释放一个连接。FIN=1表示：此报文段的发送方的数据已经发送完毕，并要求释放运输连接
 
 ### 为什么要三次握手？
 

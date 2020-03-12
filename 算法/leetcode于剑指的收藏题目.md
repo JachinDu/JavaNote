@@ -322,8 +322,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   for (int i = 2; i <= n; i++) {
 >               for (int j = 1; j * j <= i; j++) {
 >                   dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
->               }
->           }
+>         }
+>   }
 >   ```
 >
 >   
@@ -345,15 +345,31 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   
 >
-> - 【🎖🎖🎖】 [二维区域和检索 - 矩阵不可变](https://leetcode-cn.com/problems/range-sum-query-2d-immutable/)
+> - 【🎖🎖】 [二维区域和检索 - 矩阵不可变](https://leetcode-cn.com/problems/range-sum-query-2d-immutable/)：先把每行元素按dp叠加，然后再对结果进行计算。
 >
 > - 【🎖🎖🎖】 [最大正方形](https://leetcode-cn.com/problems/maximal-square/)：`dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]);`
 >
-> - 【🎖🎖🎖】 [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)：找以nums[0 -- i]结尾的最长上升子序列
->
 > - 【🎖🎖🎖】 [俄罗斯套娃信封问题](https://leetcode-cn.com/problems/russian-doll-envelopes/)：先按宽度升序排序，宽度相等时按高度降序排序，然后按高度用最长上升子序列的解法
 >
-> -  【🎖🎖🎖🎖】 [最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)
+> - 【🎖🎖🎖🎖】 [最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)：
+>
+>     核心：
+>
+>   ```java
+>   for(int i = len - 2; i >= 0; i--){
+>               for(int j = i + 1; j < len; j++){
+>                   if(j - 1 >= i + 1 && dp[i+1][j-1] && s.charAt(i) == s.charAt(j)){
+>                     // 如果i，j之间还有字符串，则先看中间的是不是回文
+>                       dp[i][j] = true;
+>                   }else if( j - 1 < i + 1 && s.charAt(i) == s.charAt(j)){
+>                     // 如果i，j之间没有其他字符串了，就直接看i，j是否相同即可
+>                       dp[i][j] = true;
+>                   }
+>               }
+>           }
+>   ```
+>
+>   
 
 ------
 
@@ -364,6 +380,25 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 > - 第一个只出现一次的字符
 >
 > - 【🎖🎖】字符串的排列(固定一位，递归交换)
+>
+>   ```java
+>   public void helper(char[] strArr, int start, int end){
+>           if(start == end){
+>               res.add(String.valueOf(strArr));
+>           }
+>           HashSet<Character> set = new HashSet<>();
+>           for(int i = start; i <= end; i++){
+>               if(!set.contains(strArr[i])){
+>                   char[] curr = Arrays.copyOf(strArr,strArr.length);
+>                   swap(curr,i,start);
+>                   set.add(strArr[i]);
+>                   helper(curr,start+1,end);
+>               }
+>           }
+>       }
+>   ```
+>
+>   
 >
 > - 【🎖🎖】字符流中第一个不重复的字符：主要是LinkedHashMap/HashMap的遍历：
 >

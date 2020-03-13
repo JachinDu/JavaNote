@@ -51,3 +51,13 @@
 > - 可见，各种配置都在这里
 >
 > - <font color='red'>**免密码可将url配置为：url = git@gitee.com:jachindo/JavaNote.git即在push/pull时无需密码，因为创建ssh时我们一路回车，没设置密码**</font>
+
+------
+
+## 5、撤销commit或push
+
+<font color='red'>以好看的一行查看日志：**git log --pretty=oneline**</font>
+
+
+
+https://www.jianshu.com/p/491a14d414f6

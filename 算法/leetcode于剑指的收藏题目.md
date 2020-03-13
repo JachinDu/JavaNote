@@ -448,7 +448,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 ### &sect; 滑动窗口
 
 > - 【🎖🎖🎖】 [无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
-> - 【🎖🎖🎖🎖】 [最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/)
+> - 【🎖🎖🎖🎖】 [最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/)：// 在滑动窗口类型的问题中都会有两个指针。一个用于延伸现有窗口的 right，right指针，和一个用于收缩窗口的left，left 指针。在任意时刻，只有一个指针运动，而另一个保持静止。
+>   // 本题的解法很符合直觉。我们通过移动right指针不断扩张窗口。当窗口包含全部所需的字符后，如果能收缩，我们就收缩窗口直到得到最小窗口。
 
 ------
 

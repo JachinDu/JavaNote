@@ -158,3 +158,54 @@ public interface ProductInfoRepository extends JpaRepository<ProductInfo,String>
 
 }
 ```
+
+------
+
+## 2、JpaSpecificationExecutor
+
+参考：https://cloud.tencent.com/developer/article/1429349
+
+==完成多条件查询==，也支持分页与排序
+
+<font color='red'>***虽然只继承JpaRepository接口也可以使用多条件查询，但是不建议，因为如果条件较多的话或者需要修改的话，都要在函数名上大作文章，不好维护，不够优雅。***</font>可能会变成：==**findByOrderNoAndXxxxAndXxxxAndXxxx....**==
+
+------
+
+不能单独使用：
+
+定义DAO：
+
+```java
+public interface UserDao extends JpaRepository<Users, Integer>
+					, JpaSpecificationExecutor<Users> {
+}
+```
+
+使用其实现多条件查询：
+
+在使用的地方定义即可：
+
+```java
+// 1. 生成查询条件
+Specification<Users> spec = new Specification<Users>() {
+        @Override
+        public Predicate toPredicate(Root<Users> root,
+                                     CriteriaQuery<?> query, CriteriaBuilder cb) {
+            List<Predicate> list = new ArrayList<>();
+          	// 这里妥妥的多条件，而且便于维护！！！
+            list.add(cb.equal(root.get("username"), "王五"));
+            list.add(cb.equal(root.get("userage"), 24));
+            //此时条件之间是没有任何关系的。
+            Predicate[] arr = new Predicate[list.size()];
+            return cb.and(list.toArray(arr));
+        }
+    };
+// 2. 将上述返回的查询条件作为参数传入即可
+List<Users> list = this.usersDao.findAll(spec);
+```
+
+------
+
+## 3、总结
+
+<font color='red' size =4>***尽量使DAO层只是继承了几个接口，没有写其他东西，如继承JpaRepository提供基础的crud，继承JpaSpecificationExecutor实现特殊查询。这样符合领域设计规范。而且查询时尽量不要搞联查***</font>

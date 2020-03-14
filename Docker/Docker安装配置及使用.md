@@ -122,3 +122,11 @@ $ sudo systemctl restart docker
 
 
 ![image-20191220143914067](../PicSource/image-20191220143914067.png)
+
+如，运行mysql：
+
+```shell
+docker run -d -p 3306:3306 --name jc_mysql -e MYSQL_ROOT_PASSWORD=5774857 ed1ffcb5eff3
+```
+
+注意加上密码

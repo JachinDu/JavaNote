@@ -17,7 +17,7 @@
 
 > - **<font color='red'>底层由链表 --> 链表 + 红黑树</font>**
 >
-> - ***<font color='yellow' size=4.5>自旋(while) + CAS + synchronized 实现锁链表头/根节点（不是segment锁了）</font>***
+> - ***<font color='purple' size=4.5>自旋(while) + CAS + synchronized 实现锁链表头/根节点（不是segment锁了）</font>***
 >
 > - **元素封装为Node<K,V>，同jdk1.8的HashMap**
 >
@@ -142,8 +142,6 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 
 
 ## &sect; 初始化时的线程安全：
-
-
 
 > ```java
 > private final Node<K,V>[] initTable() {

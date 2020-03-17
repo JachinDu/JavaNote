@@ -72,7 +72,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >       }
 >   ```
 >   
->   
+> - [【🎖🎖🎖】从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
 
 ------
 
@@ -236,6 +236,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   ![img](../PicSource/841505_1472459965615_8640A8F86FB2AB3117629E2456D8C652.jpeg)
 >
 >   
+>   
+> - [【🎖🎖🎖】从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
 
 ------
 
@@ -422,7 +424,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 穷举
 
-> - 丑数
+> - 【🎖🎖🎖🎖】丑数
 > - 【🎖🎖🎖】和为S的连续正数序列：等差数列+双指针
 
 ------
@@ -453,10 +455,40 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ------
 
-### &sect; 双指针
+### &sect; 双指针/三指针
 
-> -  【🎖🎖🎖】 [无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
-> -  [三数之和](https://leetcode-cn.com/problems/3sum/)
+> - 【🎖🎖🎖】 [无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+>
+> - [三数之和](https://leetcode-cn.com/problems/3sum/)
+>
 > - [接雨水](https://leetcode-cn.com/problems/trapping-rain-water/)
-> -  [盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/)：核心是一左一右两指针，然后不停的挪动较短的那一端（因为面积已经是按短的那边算了，如果不挪短的这边，那不可能出现更大的面积）
-> -  [最接近的三数之和](https://leetcode-cn.com/problems/3sum-closest/)
+>
+> - [盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/)：核心是一左一右两指针，然后不停的挪动较短的那一端（因为面积已经是按短的那边算了，如果不挪短的这边，那不可能出现更大的面积）
+>
+> - [最接近的三数之和](https://leetcode-cn.com/problems/3sum-closest/)
+>
+> - 【🎖🎖🎖🎖】丑数：三指针
+>
+>   ```java
+>   class Solution {
+>       public int nthUglyNumber(int n) {
+>           if(n == 1) return 1;
+>           // 三指针
+>           int[] res = new int[n];
+>           int p2 = 0;
+>           int p3 = 0; 
+>           int p5 = 0;
+>           res[0] = 1;
+>           for(int i = 1; i < n; i++){
+>               res[i] = Math.min(res[p2] * 2, Math.min(res[p3] * 3, res[p5] * 5));
+>               // 哪个小，哪个下标后移
+>               if(res[i] == res[p2] * 2) p2++; 
+>               if(res[i] == res[p3] * 3) p3++;
+>               if(res[i] == res[p5] * 5) p5++;
+>           }
+>           return res[n-1];
+>       }
+>   }
+>   ```
+>
+>   

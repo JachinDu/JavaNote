@@ -366,6 +366,8 @@ public final boolean release(int arg) {
 }
 ```
 
+> <font color='red'>***排他锁只有释放锁时唤醒后续节点，共享锁在获取和释放时都会唤醒后续节点。***</font>
+
 ```java
 // 共享模式下，释放当前线程的共享锁
 public final boolean releaseShared(int arg) {
@@ -429,7 +431,7 @@ public final void await() throws InterruptedException {
 ```
 
 > 1. 上述代码标记位置 A 处，<font color='red'>***节点在准备进入条件队列之前，一定会先释放当前持有的锁***</font>，不然自己进去条件队列了，其余的线程都无法获得锁了；
-> 2. 上述代码标记位置 B 处，<font color='red'>***此时节点是被 Condition.signal 或者 signalAll 方法唤醒的，此时节点已经成功的被转移到==同步队列==中去了（整体架构图中蓝色流程），所以可以直接执行 acquireQueued 方法；***</font>s
+> 2. 上述代码标记位置 B 处，<font color='red'>***此时节点是被 Condition.signal 或者 signalAll 方法唤醒的，此时节点已经成功的被转移到==同步队列==中去了（整体架构图中蓝色流程），所以可以直接执行 acquireQueued 方法；***</font>
 > 3. Node 在条件队列中的命名，源码喜欢用 Waiter 来命名，所以我们在==条件队列中看到 Waiter，其实就是 Node。==
 
 ------
@@ -629,7 +631,7 @@ final boolean nonfairTryAcquire(int acquires) {
             return true;
         }
     }
-    // 如果当前线程已经持有锁了，同一个线程可以对同一个资源重复加锁，代码实现的是可重入锁
+    //可重入锁
     else if (current == getExclusiveOwnerThread()) {
         // 当前线程持有锁的数量 + acquires
         int nextc = c + acquires;
@@ -647,6 +649,10 @@ final boolean nonfairTryAcquire(int acquires) {
 ------
 
 > <font color='red' size=4>***注意：都要先判断锁的状态，如果未被获取则走各自的获取流程，若被获取，则要看一下是不是自己，即判断能否重入。***</font>
+>
+> - <font color='purple' size=4>***锁的获取：就是CAS修改state字段值（`compareAndSetState(0, acquires)`） + 设置独占线程为自己`setExclusiveOwnerThread(current)`***</font>
+
+------
 
 ![图片描述](../PicSource/5dc38319000106d713060430.png)
 

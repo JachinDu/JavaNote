@@ -12,13 +12,13 @@
 
 > - 启动类加载器(Bootstrap ClassLoader): 加载目录 `<JAVA_HOME>\lib`
 > - ==扩展类加载器==(Extension CLassLoader): `<JAVA_HOME>\lib\ext`
-> - 应用程序类加载器(Application ClassLoader): `用户目录classpath`,==用户可以直接使用的类加载器，程序中若没有自定义的加载器则默认使用这个。==
+> - ==**应用程序类加载器**==(Application ClassLoader): `用户目录classpath`,==用户可以直接使用的类加载器，程序中若没有自定义的加载器则默认使用这个。==
 >
 > 
 >
 > ![image-20191202210255128](../PicSource/image-20191202210255128.png)
 
-
+------
 
 
 

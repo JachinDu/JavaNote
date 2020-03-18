@@ -517,13 +517,83 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 > - 【🎖🎖🎖】 [无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
 >
-> - [三数之和](https://leetcode-cn.com/problems/3sum/)
+> - 【🎖🎖🎖】[三数之和](https://leetcode-cn.com/problems/3sum/)
+>
+>   ```java
+>   class Solution {
+>       public List<List<Integer>> threeSum(int[] nums) {
+>           Arrays.sort(nums);
+>           int len = nums.length;
+>           List<List<Integer>> res = new ArrayList<>();
+>           for(int i = 0; i < len - 2; i++){
+>               if(nums[i] > 0) break; // 关键
+>               if( i > 0 && nums[i] == nums[i-1]) continue; // 关键
+>               
+>               int p1 = i + 1;
+>               int p2 = len - 1;
+>               while(p1 < p2){
+>                   int sum = nums[i] + nums[p1] + nums[p2];
+>                   if(sum < 0){
+>                       p1++;
+>                   }else if(sum > 0){
+>                       p2--;
+>                   }else{
+>                       List<Integer> list = new ArrayList<>();
+>                       list.add(nums[i]);
+>                       list.add(nums[p1]);
+>                       list.add(nums[p2]);
+>                       res.add(list);
+>                       // 跳过重复
+>                       while(p1 < p2 && nums[p1] == nums[++p1]);
+>                       while(p1 < p2 && nums[p2] == nums[--p2]);
+>                   }
+>               }
+>           }
+>           return res;
+>       }
+>   }
+>   ```
+>
+>   
 >
 > - [接雨水](https://leetcode-cn.com/problems/trapping-rain-water/)
 >
 > - [盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/)：核心是一左一右两指针，然后不停的挪动较短的那一端（因为面积已经是按短的那边算了，如果不挪短的这边，那不可能出现更大的面积）
 >
 > - [最接近的三数之和](https://leetcode-cn.com/problems/3sum-closest/)
+>
+>   ```java
+>   class Solution {
+>       public int threeSumClosest(int[] nums, int target) {
+>           Arrays.sort(nums);
+>           int len = nums.length;
+>           int minDist = Integer.MAX_VALUE;
+>           int res = 0;
+>           for(int i = 0; i < len; i++){
+>               int subTar = target - nums[i];
+>               int p1 = i + 1;
+>               int p2 = len - 1;
+>               while(p1 < p2){
+>                   if(Math.abs(nums[p1] + nums[p2] + nums[i] - target) < minDist){
+>                       minDist = Math.abs(nums[p1] + nums[p2] + nums[i] - target);
+>                       res = nums[p1] + nums[p2] + nums[i];
+>                   }
+>   
+>                   if(nums[p1] + nums[p2] < subTar){
+>                       p1++;
+>                   }else if(nums[p1] + nums[p2] > subTar){
+>                       p2--;
+>                   }else{
+>                       return target;
+>                   }
+>               }
+>           }
+>           return res;
+>       }
+>   }
+>   ```
+>
+>   
 >
 > - 【🎖🎖🎖🎖】丑数：三指针
 >

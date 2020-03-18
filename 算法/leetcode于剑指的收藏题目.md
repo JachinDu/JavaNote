@@ -8,14 +8,40 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 链表类
 
-> - 孩子们的游戏(圆圈中最后剩下的数)（链表模拟）
+> - 孩子们的游戏(圆圈中最后剩下的数)（链表模拟）：可能会超时，可以用约瑟夫环：
+>
+>   https://blog.csdn.net/u011500062/article/details/72855826
+>
+>   ![image-20200317141046597](../PicSource/image-20200317141046597.png)
+>
+>   ```java
+>   class Solution {
+>       public int lastRemaining(int n, int m) {
+>           int p = 0;
+>           for(int i = 2; i <= n; i++){
+>               p = (p + m) % i;
+>           }
+>           return p;
+>       }
+>   }
+>   ```
+>
+>   
+>
 > - 反转链表（链表）
+>
 > - 链表中倒数第k个结点
+>
 > - 【🎖🎖🎖🎖】二叉搜索树与双向链表（递归或栈+遍历）（中序遍历的递归和非递归法https://segmentfault.com/a/1190000016674584）
+>
 > - 【🎖🎖】复杂链表的复制(注意指针满天飞，判断null)
+>
 > - 删除链表中重复的结点（注意指针处理）
+>
 > - 【🎖】链表中环的入口结点：（快慢指针，相遇于环内一点，再让一个从链表头，一个从该相遇点开始，最终相遇即为入口）
+>
 > - 从尾到头打印链表
+>
 > - 【🎖🎖🎖】 [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
 
 ------
@@ -31,6 +57,36 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 > - 重建二叉树
 >
 > - 【🎖🎖🎖🎖】二叉搜索树与双向链表
+>
+>   ```java
+>   class Solution {
+>       Node head;
+>       Node curr;
+>       public Node treeToDoublyList(Node root) {
+>           if(root == null) return null;
+>           inOrder(root);
+>           head.left = curr;
+>           curr.right = head;
+>           return head;
+>       }
+>       public void inOrder(Node root){
+>           if(root == null) return;
+>           
+>           inOrder(root.left);
+>           if(head == null){
+>               head = root;
+>               curr = root;
+>           }else{
+>               curr.right = root;
+>               root.left = curr;
+>               curr = root;
+>           }
+>           inOrder(root.right);
+>       }
+>   }
+>   ```
+>
+>   
 >
 > - 二叉树中和为某一值的路径(注意ArrayList做参数不要直接传引用)
 >
@@ -72,7 +128,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >       }
 >   ```
 >   
-> - [【🎖🎖🎖】从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+> - 【🎖🎖🎖】[从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
 
 ------
 
@@ -80,6 +136,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 数组类
 
+> - 【🎖🎖🎖】 [数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
+>
 > - 数组中的逆序对（归并排序）
 >
 > - 调整数组顺序使奇数位于偶数前面

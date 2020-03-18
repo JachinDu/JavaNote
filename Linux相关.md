@@ -19,5 +19,5 @@
 > - less：按页显示文件内容，避免cat太多
 > - head/tail：显示文件头/尾 10 行
 > - touch：创建文件
-> - mkdir：创建目录：mkdir -p one/two/three：-p：递归的创建目录
+> - mkdir：创建目录：mkdir -p one/two/three：==-p：递归的创建目录==
 

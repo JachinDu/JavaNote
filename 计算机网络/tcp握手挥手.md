@@ -1,4 +1,4 @@
-## tcp握手和挥手
+# TCP握手和挥手
 
 参考：[https://snailclimb.gitee.io/javaguide/#/docs/network/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C](https://snailclimb.gitee.io/javaguide/#/docs/network/计算机网络)
 
@@ -65,6 +65,35 @@ tcp报文结构：
 
 
 
+### SYN Flood泛洪攻击
+
+#### 背景：
+
+当开放了一个TCP端口后，该端口就处于Listening状态，不停地监视发到该端口的Syn报文，<font color='red'>**一旦接收到Client发来的Syn报文，就需要为该请求分配一个TCB（Transmission Control Block）**</font>，通常一个TCB至少需要280个字节，在某些操作系统中TCB甚至需要1300个字节，并返回一个SYN ACK命令，立即转为SYN-RECEIVED即半开连接状态，而某些操作系统在SOCK的实现上最多可开启512个半开连接（如Linux2.4.20内核）。
+
+
+
+#### 定义：
+
+> <font color='red'>***如果恶意的向某个服务器端口发送大量的SYN包，并在收到服务器的SYN+ACK报文后置之不理，则可以使服务器打开大量的半开连接，分配TCB，从而消耗大量的服务器资源，同时也使得正常的连接请求无法被响应。***</font>
+
+
+
+#### 解决：**延缓TCB分配方法**
+
+##### **==SYN Cache技术==：**
+
+　　这种技术是在收到SYN数据报文时不急于去分配TCB，而是先回应一个SYN ACK报文，<font color='red'>***并在一个专用HASH表（Cache）中保存这种半开连接信息，直到收到正确的回应ACK报文再分配TCB***</font>。在FreeBSD系统中这种Cache每个半开连接只需使用160字节，远小于TCB所需的736个字节。在发送的SYN ACK中需要使用一个己方的Sequence Number，这个数字不能被对方猜到，否则对于某些稍微智能一点的Syn Flood攻击软件来说，它们在发送Syn报文后会发送一个ACK报文，如果己方的Sequence Number被对方猜测到，则会被其建立起真正的连接。因此一般采用一些加密算法生成难于预测的Sequence Number。
+
+##### **==SYN Cookie技术==：**
+
+　　对于SYN攻击，Syn Cache虽然不分配TCB，但是为了判断后续对方发来的ACK报文中的Sequence Number的正确性，还是需要使用一些空间去保存己方生成的Sequence Number等信息，也造成了一些资源的浪费。
+ Syn Cookie技术则完全不使用任何存储资源，这种方法比较巧妙，<font color='red'>**它使用一种特殊的算法生成Sequence Number，这种算法考虑到了对方的IP、端口、己方IP、端口的固定信息，以及对方无法知道而己方比较固定的一些信息，如MSS、时间等，在收到对方的ACK报文后，重新计算一遍，看其是否与对方回应报文中的（Sequence Number-1）相同，从而决定是否分配TCB资源。**</font>
+
+------
+
+
+
 ## 2、四次挥手断开连接
 
 
@@ -96,7 +125,9 @@ MSL（Maximum Segment Lifetime），TCP允许不同的实现可以设置不同�
 
 - <font color='red'>***保证客户端发送的最后一个ACK报文能够到达服务器***</font>，因为这个ACK报文可能丢失，站在服务器的角度看来，我已经发送了FIN+ACK报文请求断开了，客户端还没有给我回应，应该是我发送的请求断开报文它没有收到，于是服务器又会重新发送一次，而客户端就能在这个2MSL时间段内收到这个重传的报文，接着给出回应报文，并且会重启2MSL计时器。
 
-- 防止类似与“三次握手”中提到了的“已经失效的连接请求报文段”出现在本连接中。客户端发送完最后一个确认报文后，在这个2MSL时间中，就可以使本连接持续的时间内所产生的所有报文段都从网络中消失。这样新的连接中不会出现旧连接的请求报文。
+- **经过 2MSL 之后，网络中与该连接相关的包都已经消失**了，不会干扰新连接。我们来看一个例子：假如客户端向服务器建立了**新的连接**，<font color='red'>**旧连接中某些延迟的数据坚持到了新连接建立完毕，而且序列号刚好还在滑动窗口内，服务器就误把它当成新连接的数据包接收**</font>
+
+  ![img](../PicSource/v2-19c6ea91a2bcbe9c168f0f2b6b81b5ed_1440w.jpg)
 
 ------
 

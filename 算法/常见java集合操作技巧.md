@@ -24,5 +24,12 @@ public class Main{
 >   Collections.addAll(arrayList, strArray);
 >   ```
 >
->   
+
+------
+
+## &sect; List转数组
+
+> ```java
+> char[] table = list.toArray(new Character[list.size()]);
+> ```
 

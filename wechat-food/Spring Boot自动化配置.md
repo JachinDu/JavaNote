@@ -159,5 +159,12 @@ public class ServerProperties {
 >   }
 >   ```
 
+------
 
+
+
+## &sect; @Bean和@Component
+
+> - <font color='red'>***@Bean是作用于方法，方法定义在@Configuration标注的类中，将方法的返回值作为bean添加到容器中，并且可设置多种参数。***</font>
+> - @Component作用于类，需要配合@ComponentScan扫描才能添加到容器
 

@@ -209,3 +209,18 @@ List<Users> list = this.usersDao.findAll(spec);
 ## 3、总结
 
 <font color='red' size =4>***尽量使DAO层只是继承了几个接口，没有写其他东西，如继承JpaRepository提供基础的crud，继承JpaSpecificationExecutor实现特殊查询。这样符合领域设计规范。而且查询时尽量不要搞联查***</font>
+
+------
+
+## 4、非持久化某字段
+
+后两种方法较多
+
+```java
+static String transient1; // not persistent because of static
+final String transient2 = “Satish”; // not persistent because of final
+transient String transient3; // not persistent because of transient
+@Transient
+String transient4; // not persistent because of @Transient
+```
+

@@ -102,7 +102,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 按之字形顺序打印二叉树：正反序迭代器：iterator/descendingIterator或者用链表的头插/尾插交替
 >
-> - 【🎖🎖🎖🎖】序列化二叉树：关键是利用前序遍历序列重构二叉树：
+> - 【🎖🎖🎖🎖】序列化二叉树：关键是利用前序遍历序列重构二叉树：(整体也可使用层序遍历)
 >
 >   ```java
 >   TreeNode Deserialize(String str) {
@@ -307,7 +307,30 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 包含min函数的栈（栈）：单有一个栈，每轮push都往里压当前min，每轮pop也都往外pop一个。
 >
-> - 【🎖🎖🎖】数据流中的中位数：***双堆法：先往大堆放，再将满足条件（数目差距大于 1 且大堆顶的值大于了小堆顶的值）的转移到小堆***
+> - 【🎖🎖🎖】数据流中的中位数：***双堆法：***
+>
+>   ```java
+>   class MedianFinder {
+>       PriorityQueue<Integer> left;//大顶
+>       PriorityQueue<Integer> right;//小顶
+>       public MedianFinder() {
+>           left=new PriorityQueue<>((n1,n2)->n2-n1);
+>           right=new PriorityQueue<>();
+>       }
+>       public void addNum(int num) {
+>           left.add(num); //先放大堆
+>           right.add(left.poll()); // 取大堆头放小堆
+>           if(left.size()+1<right.size())
+>               left.add(right.poll()); // 不平衡的话再取小堆头放大堆
+>       }
+>       public double findMedian() {
+>           if(right.size()>left.size())return right.peek();
+>           return (double)(left.peek()+right.peek())/2;
+>       }
+>   }
+>   ```
+>
+>   
 >
 > - 【🎖🎖🎖】 [简化路径](https://leetcode-cn.com/problems/simplify-path/)：
 >
@@ -474,7 +497,69 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 【🎖】表示数值的字符串：疯狂判定
 >
+>   ```java
+>   public boolean isNumeric(char[] str) {
+>           int len = str.length;
+>           // 通过多个boolean标签层层筛选
+>           boolean sign = false, decimal = false, hasE = false;
+>           for(int i = 0; i < len; i++){
+>               if(str[i] == '+' || str[i] == '-'){
+>                   if(!sign && i > 0 && str[i-1] != 'e' && str[i-1] != 'E')
+>                       return false;
+>                   if(sign && str[i-1] != 'e' && str[i-1] != 'E')
+>                       return false;
+>                   sign = true;
+>               }else if(str[i] == 'e' || str[i] == 'E'){
+>                   if(i == len - 1)
+>                       return false;
+>                   if(hasE)
+>                       return false;
+>                   hasE = true;
+>               }else if(str[i] == '.'){
+>                   if(hasE || decimal)
+>                       return false;
+>                   decimal = true;
+>               }else if(str[i] < '0' || str[i] > '9')
+>                   return false;
+>           }
+>           return true;
+>       }
+>   ```
+>
+>   
+>
 > - 【🎖🎖🎖🎖】正则表达式匹配：分清情况
+>
+>   ```java
+>   public boolean matchCore(char[] str, int strIndex, char[] pattern, int patternIndex) {
+>       //有效性检验：str到尾，pattern到尾，匹配成功
+>       if (strIndex == str.length && patternIndex == pattern.length) {
+>           return true;
+>       }
+>       //pattern先到尾，匹配失败
+>       if (strIndex != str.length && patternIndex == pattern.length) {
+>           return false;
+>       }
+>       //模式第2个是*，且字符串第1个跟模式第1个匹配,分3种匹配模式；如不匹配，模式后移2位
+>       if (patternIndex + 1 < pattern.length && pattern[patternIndex + 1] == '*') {
+>           if ((strIndex != str.length && pattern[patternIndex] == str[strIndex]) || (pattern[patternIndex] == '.' && strIndex != str.length)) {
+>               return matchCore(str, strIndex, pattern, patternIndex + 2)//模式后移2，视为x*匹配0个字符
+>                       || matchCore(str, strIndex + 1, pattern, patternIndex + 2)//视为模式匹配1个字符
+>                       || matchCore(str, strIndex + 1, pattern, patternIndex);//*匹配1个，再匹配str中的下一个，因为*可匹配多个
+>           } else {
+>               return matchCore(str, strIndex, pattern, patternIndex + 2);
+>           }
+>       }
+>       //模式第2个不是*，且字符串第1个跟模式第1个匹配，则都后移1位，否则直接返回false
+>       if ((strIndex != str.length && pattern[patternIndex] == str[strIndex]) || (pattern[patternIndex] == '.' && strIndex != str.length)) {
+>           return matchCore(str, strIndex + 1, pattern, patternIndex + 1);
+>       }
+>       return false;
+>       }
+>   }
+>   ```
+>
+>   
 >
 > - 【🎖】 [复原IP地址](https://leetcode-cn.com/problems/restore-ip-addresses/)
 
@@ -515,6 +600,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 双指针/三指针
 
+> -  [和为s的两个数字](https://leetcode-cn.com/problems/he-wei-sde-liang-ge-shu-zi-lcof/)
+>
 > - 【🎖🎖🎖】 [无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
 >
 > - 【🎖🎖🎖】[三数之和](https://leetcode-cn.com/problems/3sum/)

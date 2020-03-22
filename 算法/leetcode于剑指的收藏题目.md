@@ -169,31 +169,6 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 数组类
 
-> - 【🎖】 [数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)：将数字归位
->
->   ```java
->   class Solution {
->       public int findRepeatNumber(int[] nums) {
->           
->           for(int i = 0; i < nums.length; i++){
->               
->               while(nums[i] != i){
->                   if(nums[nums[i]] == nums[i]){
->                       return nums[i];
->                   }
->                   int temp = nums[i];
->                   nums[i] = nums[temp];
->                   nums[temp] = temp;
->               }    
->               
->           }
->           return -1;
->       }
->   }
->   ```
->
->   
->
 > - 【🎖】数组中的逆序对（归并排序）
 >
 > - 调整数组顺序使奇数位于偶数前面：双指针
@@ -239,7 +214,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   
 >
-> - 连续子数组的最大和(前面的和+当前值不可小于当前值，若小于，则起点重新从当前值开始)
+> - 连续子数组的最大和：(前面的和+当前值不可小于当前值，若小于，则起点重新从当前值开始)
 >
 > - 数组中只出现一次的数字：HashMap/ 异或
 >
@@ -271,6 +246,36 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   
 >
 > - 【🎖🎖🎖】滑动窗口的最大值：可用堆
+>
+>   ```java
+>   class Solution {
+>       public int[] maxSlidingWindow(int[] nums, int k) {
+>           int len = nums.length;
+>           int[] res = new int[len - k + 1];
+>           if(len == 0) return new int[0];
+>           Queue<Integer> maxHeap = new PriorityQueue<>(k,new Comparator<Integer>() {
+>               @Override
+>               public int compare(Integer o1, Integer o2) {
+>                   return o2 - o1;
+>               }
+>           });
+>   
+>           for (int i = 0; i < k; i++) {
+>               maxHeap.add(nums[i]);
+>           }
+>           res[0] = maxHeap.peek();
+>           int index = 1;
+>           for (int i = k; i < len; i++) {
+>               maxHeap.remove(nums[i - k]);
+>               maxHeap.add(nums[i]);
+>               res[index++] = maxHeap.peek();
+>           }
+>           return res;
+>       }
+>   }
+>   ```
+>
+>   
 >
 > - 【🎖🎖🎖】 [下一个排列](https://leetcode-cn.com/problems/next-permutation/)
 >
@@ -324,9 +329,9 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   
 >
-> -   [数组中的第K个最大元素](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)：快速选择（利用快排的partition，因为归位的元素便已知是第几大）/或用最小堆
+> -   [数组中的第K个最大元素](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)：快速选择（利用快排的partition，因为归位的元素便已知是第几大）/或用**最小堆**
 >
-> - [较小的三数之和]([较小的三数之和](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/))：先排序 + 遍历+双指针，注意去重
+> - 【🎖🎖🎖】 [较小的三数之和](https://leetcode-cn.com/problems/3sum-smaller/)：先排序 + 遍历+双指针，注意去重
 >
 > -  [接雨水](https://leetcode-cn.com/problems/trapping-rain-water/)：每个点能储水的高度等于其与左右两边最大值中的较小者之差。
 >
@@ -370,10 +375,34 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >     
 >
-> - 【🎖🎖🎖】构建乘积数组：构建二维（只用上三角，会有嵌套循环）&rArr;优化为上下三角
+> - 【🎖🎖🎖🎖】构建乘积数组：构建二维（只用上三角，会有嵌套循环）&rArr;优化为上下三角
 >
 >   ![img](../PicSource/841505_1472459965615_8640A8F86FB2AB3117629E2456D8C652.jpeg)
 >
+>   ```java
+>   //这是只用上三角的方法，对角线元素为A[i]
+>   public int[] multiply(int[] A) {
+>           int len = A.length;
+>           int[][] prod = new int[len][len];
+>           for(int i = 0; i < len; i++){
+>               prod[i][i] = A[i];
+>           }
+>            
+>           for(int i = 0; i < len; i++){
+>               for(int j = i+1; j < len; j++){
+>                   prod[i][j] = prod[i][j-1] * A[j];
+>               }
+>           }
+>           int[] B = new int[len];
+>           for(int i = 0; i < len; i++){
+>               int left = i-1 >= 0 ? prod[0][i-1] : 1;
+>               int right = i + 1 < len ? prod[i+1][len-1] : 1;
+>               B[i] = left * right;
+>           }
+>           return B;
+>       }
+>   ```
+>   
 >   
 >   
 > - 【🎖🎖🎖】[从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
@@ -489,19 +518,17 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   
 >
-> - 【🎖🎖🎖】求1+2+3+...+n
+> - 【🎖🎖】求1+2+3+...+n
 >
 >   ```java
 >   // 短路求值原理(&&前面为假后面就不计算了)
->   public class Solution {
->       public int Sum_Solution(int n) {
+>   public int sumNums(int n) {
 >           int ans = n;
->           return ans == 0 ? 0 : ans + Sum_Solution(n-1);
+>           return ans == 0 ? 0 : sumNums(n-1)+ans;
 >       }
->   }
 >   ```
 >   
-> - 【🎖🎖🎖】 [数组中数字出现的次数](https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/)
+> - 【🎖🎖🎖🎖】 [数组中数字出现的次数](https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/)
 >
 >   我们首先仍然从前向后依次异或数组中的数字，那么得到的结果是两个只出现一次的数字的异或结果，其他成对出现的数字被抵消了。由于这两个数字不同，所以异或结果肯定不为0，也就是这个异或结果一定至少有一位是1，我们在结果中找到第一个为1的位的位置，记为第n位。接下来，**以第n位是不是1为标准，将数组分为两个子数组**，第一个数组中第n位都是1，第二个数组中第n位都是0。这样，便实现了我们的目标。最后，两个子数组分别异或则可以找到只出现一次的数字。
 >
@@ -561,13 +588,29 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 矩形覆盖
 >
+>     ```java
+>     public int RectCover(int target) {
+>             if(target < 2) return target;
+>             int[] dp = new int[target+1];
+>             dp[0] = 0;
+>             dp[1] = 1;
+>             dp[2] = 2;
+>             for(int i = 3; i <= target; i++){
+>                 dp[i] = dp[i-1]+dp[i-2];
+>             }
+>             return dp[target];
+>         }
+>     ```
+>
+>     
+>
 > -  [不同路径](https://leetcode-cn.com/problems/unique-paths/)：机器人走路
 >
-> - 【🎖】 [最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/)：和上一题如出一辙
+> - 【🎖】 [最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/)：同礼物最大价值
 >
 > - 【🎖🎖🎖🎖】[编辑距离](https://leetcode-cn.com/problems/edit-distance/)
 >
-> - 【🎖🎖】[ 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)：动态规划，并维护一个历史最低price值
+> - 【🎖】[ 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)：动态规划，并维护一个历史最低price值
 >
 > - [买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
 >
@@ -575,9 +618,9 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   ```java
 >   for (int i = 2; i <= n; i++) {
->               for (int j = 1; j * j <= i; j++) {
->                   dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
->         }
+>     for (int j = 1; j * j <= i; j++) {
+>       dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
+>     }
 >   }
 >   ```
 >
@@ -587,15 +630,15 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   ```java
 >   for(int i = 1; i < len; i++){
->               int maxLen = 0;
->               for(int j = 0; j < i; j++){
->                   // 找以nums[0 -- i]结尾的最长上升子序列
->                   if(nums[i] > nums[j] && dp[j] > maxLen){
->                       maxLen = dp[j];
->                   }
->               }
->               dp[i] = maxLen + 1;
->           }
+>     int maxLen = 0;
+>     for(int j = 0; j < i; j++){
+>       // 找以nums[0 -- i]结尾的最长上升子序列
+>       if(nums[i] > nums[j] && dp[j] > maxLen){
+>         maxLen = dp[j];
+>       }
+>     }
+>     dp[i] = maxLen + 1;
+>   }
 >   ```
 >
 >   
@@ -606,11 +649,12 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 【🎖🎖🎖】 [俄罗斯套娃信封问题](https://leetcode-cn.com/problems/russian-doll-envelopes/)：先按宽度升序排序，宽度相等时按高度降序排序，然后按高度用最长上升子序列的解法
 >
-> - 【🎖🎖🎖🎖】 [最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)：
+> - 【🎖🎖🎖🎖🎖】 [最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)：
 >
 >     核心：
 >
 >   ```java
+>   // 注意遍历起点
 >   for(int i = len - 2; i >= 0; i--){
 >               for(int j = i + 1; j < len; j++){
 >                   if(j - 1 >= i + 1 && dp[i+1][j-1] && s.charAt(i) == s.charAt(j)){
@@ -622,8 +666,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >                   }
 >               }
 >           }
->   ```
->
+> ```
+>   
 >   
 
 ------
@@ -634,14 +678,14 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 > - 第一个只出现一次的字符
 >
-> - 【🎖🎖】字符串的排列(固定一位，递归交换)
+> - 【🎖🎖🎖🎖】字符串的排列(固定一位，递归交换)
 >
 >   ```java
 >   public void helper(char[] strArr, int start, int end){
 >           if(start == end){
 >               res.add(String.valueOf(strArr));
 >           }
->           HashSet<Character> set = new HashSet<>();
+>           HashSet<Character> set = new HashSet<>(); // 防重复
 >           for(int i = start; i <= end; i++){
 >               if(!set.contains(strArr[i])){
 >                   char[] curr = Arrays.copyOf(strArr,strArr.length);
@@ -655,7 +699,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   
 >
-> - 【🎖🎖】字符流中第一个不重复的字符：主要是LinkedHashMap/HashMap的遍历：
+> - 【🎖】字符流中第一个不重复的字符：主要是LinkedHashMap/HashMap的遍历：
 >
 >   ```java
 >   Iterator<Map.Entry<Character,Integer>> itr = map.entrySet().iterator();
@@ -735,6 +779,36 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 【🎖】 [复原IP地址](https://leetcode-cn.com/problems/restore-ip-addresses/)
 >
+>   ```java
+>   List<String> ret = new ArrayList<>();
+>   
+>           StringBuilder ip = new StringBuilder();
+>           
+>           for(int a = 1 ; a < 4 ; ++ a)
+>               for(int b = 1 ; b < 4 ; ++ b)
+>                   for(int c = 1 ; c < 4 ; ++ c)
+>                       for(int d = 1 ; d < 4 ; ++ d)
+>                       {
+>                           if(a + b + c + d == s.length() )
+>                           {
+>                               int n1 = Integer.parseInt(s.substring(0, a));
+>                               int n2 = Integer.parseInt(s.substring(a, a+b));
+>                               int n3 = Integer.parseInt(s.substring(a+b, a+b+c));
+>                               int n4 = Integer.parseInt(s.substring(a+b+c));
+>                               if(n1 <= 255 && n2 <= 255 && n3 <= 255 && n4 <= 255)
+>                               {
+>                                   ip.append(n1).append('.').append(n2)
+>                                           .append('.').append(n3).append('.').append(n4);
+>                                   if(ip.length() == s.length() + 3) ret.add(ip.toString());
+>                                   ip.delete(0, ip.length());
+>                               }
+>                           }
+>                       }
+>           return ret;
+>   ```
+>
+>   
+>
 > - 【🎖🎖🎖🎖】 [ Z 字形变换](https://leetcode-cn.com/problems/zigzag-conversion/)
 >
 >   ```java
@@ -762,8 +836,27 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 穷举
 
-> - 【🎖🎖🎖🎖】丑数
-> - 【🎖🎖🎖】和为S的连续正数序列：等差数列+双指针
+> - 【🎖🎖🎖🎖】[丑数](https://leetcode-cn.com/problems/chou-shu-lcof/)
+>
+>   ```java
+>   public int nthUglyNumber(int n) {
+>           if(n == 1) return 1;
+>           // 三指针
+>           int[] res = new int[n];
+>           int p2 = 0;
+>           int p3 = 0; 
+>           int p5 = 0;
+>           res[0] = 1;
+>           for(int i = 1; i < n; i++){
+>               res[i] = Math.min(res[p2] * 2, Math.min(res[p3] * 3, res[p5] * 5));
+>               // 哪个小，哪个下标后移
+>               if(res[i] == res[p2] * 2) p2++; 
+>               if(res[i] == res[p3] * 3) p3++;
+>               if(res[i] == res[p5] * 5) p5++;
+>           }
+>           return res[n-1];
+>       }
+>   ```
 
 ------
 
@@ -834,7 +927,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 【🎖🎖🎖】 [无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
 >
-> - 【🎖🎖🎖】[三数之和](https://leetcode-cn.com/problems/3sum/)
+> - 【🎖🎖🎖🎖】[三数之和](https://leetcode-cn.com/problems/3sum/)
 >
 >   ```java
 >   class Solution {
@@ -936,4 +1029,4 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   }
 >   ```
 >
->   
+> - 【🎖🎖🎖】和为S的连续正数序列：**等差数列+双指针**

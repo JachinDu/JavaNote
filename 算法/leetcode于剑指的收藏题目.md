@@ -2,9 +2,9 @@
 
 map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
+------
 
 
-### 1、剑指offer
 
 ### &sect; 链表类
 
@@ -32,9 +32,42 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 链表中倒数第k个结点
 >
-> - 【🎖🎖🎖🎖】二叉搜索树与双向链表（递归或栈+遍历）（中序遍历的递归和非递归法https://segmentfault.com/a/1190000016674584）
->
 > - 【🎖🎖】复杂链表的复制(注意指针满天飞，判断null)
+>
+>   ```java
+>   class Solution {
+>       public Node copyRandomList(Node head) {
+>           if(head == null) return null;
+>           Node curr = head;
+>           while (curr != null) {
+>               Node copy = new Node(curr.val);
+>               Node next = curr.next;
+>               curr.next = copy;
+>               copy.next = next;
+>               curr = next;
+>           }
+>   
+>           curr = head;
+>           while (curr != null) {
+>               curr.next.random = curr.random == null ? null : curr.random.next;
+>               curr = curr.next.next;
+>           }
+>   
+>           curr = head;
+>           Node resHead = curr.next;
+>           while (curr != null) {
+>               Node copy = curr.next;
+>               curr.next = copy.next;
+>               curr = curr.next;
+>               copy.next = copy.next == null ? null : copy.next.next;
+>           }
+>           return resHead;
+>   
+>       }
+>   }
+>   ```
+>
+>   
 >
 > - 删除链表中重复的结点（注意指针处理）
 >
@@ -42,7 +75,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 从尾到头打印链表
 >
-> - 【🎖🎖🎖】 [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+> - 【🎖🎖🎖🎖】 [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
 
 ------
 
@@ -56,7 +89,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 重建二叉树
 >
-> - 【🎖🎖🎖🎖】二叉搜索树与双向链表
+> - 【🎖🎖🎖🎖】二叉搜索树与双向链表（递归或栈+遍历）（中序遍历的递归和非递归法https://segmentfault.com/a/1190000016674584）
 >
 >   ```java
 >   class Solution {
@@ -90,7 +123,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 二叉树中和为某一值的路径(注意ArrayList做参数不要直接传引用)
 >
-> - 【🎖🎖🎖】二叉搜索树的后序遍历序列(判断某序列是否为一个二叉搜索树的后续遍历)：
+> - 【🎖🎖】二叉搜索树的后序遍历序列(判断某序列是否为一个二叉搜索树的后续遍历)：
 >
 >   ​	数组分界递归，每次末尾就是根，在前面找到左右子树分界点，并验证左右子树是否严格小于/大于根，然后递归验证左右子树序列。
 >   
@@ -100,7 +133,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 【🎖🎖🎖🎖】二叉树的下一个结点：***若有右子树，则递归找到右子树最左叶子节点即可。若无则向父节点递归，直到找到当前节点是父节点的左子树，则返回父节点。***
 >
-> - 按之字形顺序打印二叉树：正反序迭代器：iterator/descendingIterator或者用链表的头插/尾插交替
+> - 按之字形顺序打印二叉树：正反序迭代器：iterator/descendingIterator或者用链表的头插/尾插交替（迭代器是对queue的，头插尾插是对当前层遍历的结果的）
 >
 > - 【🎖🎖🎖🎖】序列化二叉树：关键是利用前序遍历序列重构二叉树：(整体也可使用层序遍历)
 >
@@ -128,7 +161,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >       }
 >   ```
 >   
-> - 【🎖🎖🎖】[从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+> - 【🎖🎖】[从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
 
 ------
 
@@ -136,13 +169,61 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 数组类
 
-> - 【🎖🎖🎖】 [数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
+> - 【🎖】 [数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)：将数字归位
 >
-> - 数组中的逆序对（归并排序）
+>   ```java
+>   class Solution {
+>       public int findRepeatNumber(int[] nums) {
+>           
+>           for(int i = 0; i < nums.length; i++){
+>               
+>               while(nums[i] != i){
+>                   if(nums[nums[i]] == nums[i]){
+>                       return nums[i];
+>                   }
+>                   int temp = nums[i];
+>                   nums[i] = nums[temp];
+>                   nums[temp] = temp;
+>               }    
+>               
+>           }
+>           return -1;
+>       }
+>   }
+>   ```
 >
-> - 调整数组顺序使奇数位于偶数前面
+>   
 >
-> - 数字在排序数组中出现的次数（***二分查找***）：见到排序就可以想到二分
+> - 【🎖】数组中的逆序对（归并排序）
+>
+> - 调整数组顺序使奇数位于偶数前面：双指针
+>
+> - 【🎖🎖🎖】 [在排序数组中查找数字 I](https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/)（***二分查找***）：见到排序就可以想到二分
+>
+>   以找左边界为例：
+>
+>   ```java
+>   public int searchLeft(int[] nums, int start, int end, int target){
+>           if(start <= end){
+>               int mid = start + ((end - start) >> 1);
+>               if(nums[mid] > target){
+>                   return searchLeft(nums,start,mid-1,target);
+>               }
+>               if(nums[mid] < target){
+>                   return searchLeft(nums,mid+1,end,target);
+>               }
+>               if(mid == start || nums[mid - 1] < target){
+>                   return mid;
+>               }else{
+>                   return searchLeft(nums,start,mid-1,target);
+>               }
+>               
+>           }
+>           return -1;
+>       }
+>   ```
+>
+>   
 >
 > - 【🎖🎖🎖】把数组排成最小的数(自定义Comparator)：核心如下：
 >
@@ -295,7 +376,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   
 >   
-> - [【🎖🎖🎖】从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+> - 【🎖🎖🎖】[从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
 
 ------
 
@@ -306,6 +387,47 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 > - 栈的压入、弹出序列（栈）
 >
 > - 包含min函数的栈（栈）：单有一个栈，每轮push都往里压当前min，每轮pop也都往外pop一个。
+>
+> - 【🎖🎖🎖🎖】 [队列的最大值](https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof/)：类似上面那题：
+>
+>   ```java
+>   class MaxQueue {
+>       
+>       Deque<Integer> maxQ = new LinkedList<>();
+>       Queue<Integer> queue = new LinkedList<>();
+>   
+>       public MaxQueue() {
+>   
+>       }
+>   
+>       public int max_value() {
+>           return maxQ.isEmpty() ? -1 : maxQ.peek();
+>       }
+>   
+>       public void push_back(int value) {
+>           queue.add(value);
+>           while (!maxQ.isEmpty() && value > maxQ.peekLast()) {
+>               maxQ.pollLast(); // ！！！！
+>           }
+>           maxQ.add(value);
+>   
+>       }
+>   
+>       public int pop_front() {
+>           if (queue.isEmpty()) {
+>               return -1;
+>           }
+>           // ！！！！
+>           int val = queue.poll();
+>           if (val == maxQ.peek()) {
+>               maxQ.poll();
+>           }
+>           return val;
+>       }
+>   }
+>   ```
+>
+>   
 >
 > - 【🎖🎖🎖】数据流中的中位数：***双堆法：***
 >
@@ -379,6 +501,54 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   }
 >   ```
 >   
+> - 【🎖🎖🎖】 [数组中数字出现的次数](https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/)
+>
+>   我们首先仍然从前向后依次异或数组中的数字，那么得到的结果是两个只出现一次的数字的异或结果，其他成对出现的数字被抵消了。由于这两个数字不同，所以异或结果肯定不为0，也就是这个异或结果一定至少有一位是1，我们在结果中找到第一个为1的位的位置，记为第n位。接下来，**以第n位是不是1为标准，将数组分为两个子数组**，第一个数组中第n位都是1，第二个数组中第n位都是0。这样，便实现了我们的目标。最后，两个子数组分别异或则可以找到只出现一次的数字。
+>
+>   ```java
+>   class Solution {
+>       public int[] singleNumbers(int[] nums) {
+>           int sum = 0;
+>           for(int num : nums){
+>               sum ^= num;
+>           }
+>           int offset = 0;
+>           while(offset < 32 && ((sum >> offset) & 1) != 1){
+>               offset++;
+>           }
+>           int[] res = new int[2];
+>           for(int i = 0; i < nums.length; i++){
+>               if(((nums[i] >> offset) & 1) == 1){
+>                   res[0] = (res[0] ^ nums[i]);
+>               }else{
+>                   res[1] = (res[1] ^ nums[i]);
+>               }
+>           }
+>           return res;
+>       }
+>   }
+>   ```
+>
+> - 【🎖🎖🎖】 [数组中数字出现的次数 II](https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/)
+>
+>   现将数组排序，用到函数`Arrays.sort(nums)`;然后从第二个元素遍历到倒数第二个元素，比较它与左右两边元素是否相等。若都不相等，则说明只出现了一次。遍历完后，没有找到的话，则对第一个元素和最后一个元素进行判断。
+>
+>   ```java
+>   class Solution {
+>       public int singleNumber(int[] nums) {
+>           Arrays.sort(nums);
+>           for(int i = 1; i < nums.length - 1; i++){
+>               if(nums[i] != nums[i-1] && nums[i] != nums[i+1]){
+>                   return nums[i];
+>               }
+>           }
+>           if(nums[0] == nums[1]) return nums[nums.length - 1];
+>           return nums[0];
+>       }
+>   }
+>   ```
+>
+>   
 >
 
 ------
@@ -387,6 +557,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 动态规划
 
+> -  [礼物的最大价值](https://leetcode-cn.com/problems/li-wu-de-zui-da-jie-zhi-lcof/)
+>
 > - 矩形覆盖
 >
 > -  [不同路径](https://leetcode-cn.com/problems/unique-paths/)：机器人走路
@@ -562,6 +734,29 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   
 >
 > - 【🎖】 [复原IP地址](https://leetcode-cn.com/problems/restore-ip-addresses/)
+>
+> - 【🎖🎖🎖🎖】 [ Z 字形变换](https://leetcode-cn.com/problems/zigzag-conversion/)
+>
+>   ```java
+>   class Solution {
+>       public String convert(String s, int numRows) {
+>           if(numRows < 2) return s;
+>           List<StringBuilder> rows = new ArrayList<StringBuilder>();
+>           for(int i = 0; i < numRows; i++) rows.add(new StringBuilder());
+>           int i = 0, flag = -1;
+>           for(char c : s.toCharArray()) {
+>               rows.get(i).append(c);
+>               if(i == 0 || i == numRows -1) flag = - flag;
+>               i += flag;
+>           }
+>           StringBuilder res = new StringBuilder();
+>           for(StringBuilder row : rows) res.append(row);
+>           return res.toString();
+>       }
+>   }
+>   ```
+>
+>   
 
 
 

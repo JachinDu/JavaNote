@@ -490,6 +490,72 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   // 3.遍历数组,当s[i].equals("..")并且栈不空时pop,当!s[i].equals("") && !s[i].equals(".") && !s[i].equals(".."),即s[i]是路径入栈;
 >   // 4.栈空,返回"/",栈非空,用StringBuffer做一个连接返回即可;
 >   // 5完结。
+>   
+> -  [有效的括号字符串](https://leetcode-cn.com/problems/valid-parenthesis-string/)
+>
+>   ```java
+>   class Solution {
+>       // 两个栈，一个存左括号，一个存*号，
+>       // 存的是下标，避免错序匹配了，如*(
+>       public boolean checkValidString(String s) {
+>           int len = s.length();
+>           if(len == 0) return true;
+>           Stack<Integer> stackL = new Stack<>();
+>           Stack<Integer> stackStar = new Stack<>();
+>           
+>           for(int i = 0; i < len; i++){
+>               if(s.charAt(i) == '('){
+>                   stackL.push(i);
+>               }else if(s.charAt(i) == '*'){
+>                   stackStar.push(i);
+>               }else{
+>                   if(!stackL.empty()){
+>                       stackL.pop();
+>                   }else if(!stackStar.empty()){
+>                       stackStar.pop();
+>                   }else{
+>                       return false;
+>                   }
+>               }
+>           }
+>           if(stackL.size() > stackStar.size()) return false;
+>           while(!stackL.empty() && !stackStar.empty()){
+>               
+>               if(stackL.peek() < stackStar.peek()){
+>                   stackL.pop();
+>                   stackStar.pop();
+>               }else{
+>                   return false;
+>               }
+>           }
+>           return stackL.empty() ? true : false;
+>       }
+>   }
+>   ```
+>
+>   
+>
+> - 【🎖🎖🎖🎖】 [最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/)
+>
+>   ```java
+>   Stack<Integer> stack = new Stack<>();
+>           stack.push(-1); // !!!!
+>           for (int i = 0; i < s.length(); i++) {
+>               if (s.charAt(i) == '(') {
+>                   stack.push(i);
+>               } else {
+>                   stack.pop();
+>                   if (stack.size() == 0) {
+>                       stack.push(i); // !!!!!
+>                   } else {
+>                       maxLen = Math.max(maxLen, i - stack.peek());
+>                   }
+>               }
+>           }
+>           return maxLen;
+>   ```
+>
+>   
 
 ------
 
@@ -666,9 +732,11 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >                   }
 >               }
 >           }
+>   ```
 > ```
 >   
 >   
+> ```
 
 ------
 

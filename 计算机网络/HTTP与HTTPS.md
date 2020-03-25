@@ -56,7 +56,13 @@ HTTP响应报文：在响应中，HTTP报文由HTTP版本、状态码（数字�
 
 ## 2、HTTPS
 
-![img](../PicSource/70-20200114195731820.png)
+==`传输层安全性(TLS)`，`安全套接字层(SSL)`==
+
+![img](../PicSource/640-5117794.jpeg)
+
+
+
+![img](../PicSource/640-5117976.png)
 
 
 

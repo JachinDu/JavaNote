@@ -933,6 +933,53 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 ### &sect; 回溯法
 
 > - 【🎖🎖🎖🎖】 [N皇后](https://leetcode-cn.com/problems/n-queens/)
+>
+> -  [全排列](https://leetcode-cn.com/problems/permutations/)
+>
+> - 【🎖🎖】 [括号生成](https://leetcode-cn.com/problems/generate-parentheses/)：模拟生成
+>
+>   ```java
+>   class Solution {
+>       List<String> res = new ArrayList<>();
+>       public List<String> generateParenthesis(int n) {
+>           int leftC = n;
+>           int rightC = n;
+>   
+>           LinkedList<String> list = new LinkedList<>();
+>           putKuohao(list, leftC, rightC, new StringBuilder());
+>           return res;
+>       }
+>       
+>       public void putKuohao(LinkedList<String> list, int leftC, int rightC,StringBuilder sb) {
+>           if (leftC == 0 && rightC == 0) {
+>               if (list.isEmpty()) {
+>                   res.add(sb.toString());
+>               }
+>               return;
+>           }
+>           if (leftC != 0) {
+>               LinkedList list1 = new LinkedList(list);
+>               StringBuilder sb1 = new StringBuilder(sb);
+>               list1.add("(");
+>               sb1.append("(");
+>               putKuohao(list1, leftC-1, rightC, sb1);
+>           }
+>           if (rightC != 0) {
+>               if (!list.isEmpty() && list.getLast().equals("(")) {
+>                   LinkedList list2 = new LinkedList(list);
+>                   StringBuilder sb2 = new StringBuilder(sb);
+>                   list2.removeLast();
+>                   sb2.append(")");
+>                   putKuohao(list2, leftC, rightC-1, sb2);
+>               } else {
+>                   return;
+>               }
+>           }
+>       }
+>   }
+>   ```
+>
+> -  [单词搜索](https://leetcode-cn.com/problems/word-search/)
 
 ------
 

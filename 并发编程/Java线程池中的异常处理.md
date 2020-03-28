@@ -67,7 +67,9 @@
 
 ## &sect; 默认情况存在的问题
 
-> 由前置知识可知，`runWorker()`方法内，若`task.run()`出现异常，会抛出，然后进入`afterExecute(task, thrown)`方法，而该方法默认为空，所以默认情况下我们无法得到想要的异常信息。针对submit和execute提交的有返回值和无返回值的任务，有两种解决方向如下。
+> 由前置知识可知，`runWorker()`方法内，若`task.run()`出现异常，会抛出，然后进入`afterExecute(task, thrown)`方法，而该方法默认为空，<font color='red'>***所以默认情况下我们无法得到想要的异常信息。***</font>针对submit和execute提交的有返回值和无返回值的任务，有两种解决方向如下。
+
+------
 
 
 
@@ -112,7 +114,7 @@
 
 【法1】
 
-> 从前面所讲可以知道，无返回值的任务，即原生Runnable，在执行`task.run()`时若有异常则会抛出，并只能在`afterExecute(task, thrown)`中进行自定义的处理，<font color='red'>***所以可以自定义线程池，继承ThreadPoolExecutor并复写其afterExecute(Runnable r, Throwable t)方法。***</font>
+> 从前面所讲可以知道，无返回值的任务，即原生Runnable，在执行`task.run()`时若有异常则会抛出，并只能在`afterExecute(task, thrown)`中进行自定义的处理，<font color='red'>***所以可以==自定义线程池==，继承ThreadPoolExecutor并复写其afterExecute(Runnable r, Throwable t)方法。***</font>
 
 ------
 

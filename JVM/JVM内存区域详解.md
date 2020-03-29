@@ -157,6 +157,18 @@ jdk1.8之前的堆内存示意图：
 
 ------
 
+## 5、线程共享
+
+JVM中有两块内存区域可以被所有线程共享：
+
+> <font color='red'>**堆，上面存放着所有对象**</font>
+>
+> <font color='red'>**方法区，上面存放着静态变量**</font>
+
+
+
+
+
 参考：
 
 https://blog.csdn.net/qq_37141773/article/details/103138476#comments

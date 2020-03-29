@@ -105,3 +105,11 @@ https://yemengying.com/2016/07/14/spring-bean-life-cycle/
 
 ![img](../PicSource/1188352-20200114192052236.jpg)
 
+------
+
+## &sect; ApplicationContext 和 BeanFactory
+
+> <font color='red' size = 4>***ApplicationContext 继承自 BeanFactory，但是它不应该被理解为 BeanFactory 的实现类，而是说其内部持有一个实例化的 BeanFactory（==DefaultListableBeanFactory，由下图可知，为最全==）。以后所有的 BeanFactory 相关的操作其实是委托给这个实例来处理的。***</font>
+
+![3](../PicSource/3-5449931.png)
+

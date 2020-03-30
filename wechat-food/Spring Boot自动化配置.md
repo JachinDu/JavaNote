@@ -1,10 +1,54 @@
 # Spring Boot自动化配置
 
-<font color='red' size = 4>**@SpringBootApplication &rArr; @EnableAutoConfiguration &rArr; @Import &rArr; AutoConfigurationImportSelector类 &rArr; 筛选XXXAutoConfiguration &rArr; @ConfigurationProperties结合配置文件完成配置**</font>
+## &sect; Spring Boot的显著优势
+
+> - <font color='#02C874' size = 5>**使用starter简化依赖配置**</font>
+> - <font color='#02C874' size = 5>**Spring的自动配置**</font>
 
 ------
 
-## &sect; @EnableAutoConfiguration注解
+## &sect; starter简化依赖的配置
+
+>  Spring提供了一系列starter来简化Maven配置。<font color='#02C874'>**当我们在我们的pom文件中增加对某个starter的依赖时，该==starter的依赖==也会自动的传递性被依赖进来。**</font>
+
+------
+
+## &sect; 自动配置
+
+> Spring Boot会根据==**类路径中的jar包、类，为jar包里的类自动配置**==，这样可以极大的减少配置的数量。简单点说就是它会根据定义在classpath下的类，<font color='#02C874'>**自动的给你生成一些Bean，并加载到Spring的Context中。**</font>
+
+------
+
+### &sect; 自动配置流程
+
+#### &sect; @SpringBootApplication
+
+> ```java
+> @Target({ElementType.TYPE})
+> @Retention(RetentionPolicy.RUNTIME)
+> @Documented
+> @Inherited
+> @SpringBootConfiguration
+> @EnableAutoConfiguration
+> @ComponentScan(
+>     excludeFilters = {@Filter(
+>     type = FilterType.CUSTOM,
+>     classes = {TypeExcludeFilter.class}
+> ), @Filter(
+>     type = FilterType.CUSTOM,
+>     classes = {AutoConfigurationExcludeFilter.class}
+> )}
+> )
+> // .....
+> ```
+
+------
+
+
+
+#### &sect; @EnableAutoConfiguration注解
+
+> <font color='red' size = 4>**借助`@Import`的帮助，将所有符合自动配置条件的bean定义加载到IoC容器。**</font>
 
 ```java
 @Target({ElementType.TYPE})
@@ -29,54 +73,63 @@ public @interface EnableAutoConfiguration {
 @Import({AutoConfigurationImportSelector.class})
 ```
 
-<font color='red'>导入了`AutoConfigurationImportSelector`自动配置的选择器的类</font>
+------
 
-其中的一些方法会筛选出要自动配置的类开启自动配置：<font color='yellow' size = 4>***XXXAutoConfiguration，这些都在引入的依赖jar中***</font>
+#### &sect; AutoConfigurationImportSelector
 
-以`ServletWebServerFactoryAutoConfiguration`为例：
-
-```java
-@Configuration // 配置类
-@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
-//判断当前项目有没有这个类
-//CharacterEncodingFilter；SpringMVC中进行乱码解决的过滤器；
-@ConditionalOnClass(ServletRequest.class)
-//Spring底层@Conditional注解（Spring注解版），根据不同的条件，如果
-//满足指定的条件，整个配置类里面的配置就会生效； 判断当前应用是否是web应用，如果是，当前配置类生效
-@ConditionalOnWebApplication(type = Type.SERVLET)
-@EnableConfigurationProperties(ServerProperties.class)
-@Import({ ServletWebServerFactoryAutoConfiguration.BeanPostProcessorsRegistrar.class,
-        ServletWebServerFactoryConfiguration.EmbeddedTomcat.class,
-        ServletWebServerFactoryConfiguration.EmbeddedJetty.class,
-        ServletWebServerFactoryConfiguration.EmbeddedUndertow.class })
-public class ServletWebServerFactoryAutoConfiguration {
-```
-
-需要注意的是 `@EnableConfigurationProperties(ServerProperties.class)`.他的意思是启动指定类的`ConfigurationProperties`功能；将配置文件中对应的值和 `ServerProperties` 绑定起来；并把`ServerProperties` 加入到 IOC 容器中。
-
-再来看一下 `ServerProperties` .
-
-```java
-@ConfigurationProperties(prefix = "server", ignoreUnknownFields = true)
-public class ServerProperties {
-    /**
-     * Server HTTP port.
-     */
-    private Integer port;
-```
-
-显而易见了，<font color='yellow' size = 4>***这里使用 ConfigurationProperties 绑定属性映射文件中的 server 开头的属性。***</font>
+> - 该类读取了ClassPath下面的`META-INF/spring.factories`文件，该文件的配置格式为“Key=Value”。（搜索一下就可以看到各种依赖的spring.factories文件）
+>
+>   ![image-20200330114604804](../PicSource/image-20200330114604804.png)
+>
+> - <font color='red' size = 4>***该类读取`spring.factories`文件中以`org.springframework.boot.autoconfigure.EnableAutoConfiguration`为key的值，这些值都对应着`XXXAutoConfiguration`类，然后这些类用来配置生成Bean。***</font>
+>
+> - 任意选取一个spring.factories文件来看：这里选了一个hystrix相关的
+>
+>   ```properties
+>   org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+>   org.springframework.cloud.netflix.hystrix.HystrixAutoConfiguration,\
+>   org.springframework.cloud.netflix.hystrix.security.HystrixSecurityAutoConfiguration
+>   
+>   org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker=\
+>   org.springframework.cloud.netflix.hystrix.HystrixCircuitBreakerConfiguration
+>   ```
+>
+>   ***可以看到key `org.springframework.boot.autoconfigure.EnableAutoConfiguration`的值有两个，分别是`HystrixAutoConfiguration`类和`HystrixSecurityAutoConfiguration`***
+>
+> - 再选择`HystrixAutoConfiguration`类进去看一下：
+>
+>   ```java
+>   @Configuration
+>   @ConditionalOnClass({Hystrix.class, HealthIndicator.class, HealthIndicatorAutoConfiguration.class})
+>   @AutoConfigureAfter({HealthIndicatorAutoConfiguration.class})
+>   public class HystrixAutoConfiguration {
+>       public HystrixAutoConfiguration() {
+>       }
+>   
+>       @Bean
+>       @ConditionalOnEnabledHealthIndicator("hystrix")
+>       public HystrixHealthIndicator hystrixHealthIndicator() {
+>           return new HystrixHealthIndicator();
+>       }
+>     // .......
+>   }
+>   ```
+>
+>   这里就走了@Configuration和@Bean去进行Bean的配置了。
+>
+>   > <font color='red'>***还有一点，条件配置，如类中的`@ConditionalOnClass`和`@ConditionalOnEnabledHealthIndicator("hystrix")`注解，这些都是用来筛选是否装配该Bean用的。***</font>
 
 ------
 
-### 自动配置总结
+#### &sect; 附上流程图
 
-1. SpringBoot 启动的时候加载主配置类，开启了自动配置功能 @EnableAutoConfiguration 。
-2. <font color='red'>***@EnableAutoConfiguration 给容器导入META-INF/spring.factories 里定义的自动配置类。***</font>
-3. ==筛选有效的自动配置类。==
-4. <font color='red'>***每一个自动配置类结合对应的 xxxProperties.java 读取配置文件进行自动配置功能 。***</font>
+图片来源于：http://www.hollischuang.com/archives/1791
+
+![r](../PicSource/r.png)
 
 ------
+
+
 
 ## &sect; @Configuration和@Component注解区别
 

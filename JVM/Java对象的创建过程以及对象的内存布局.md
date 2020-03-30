@@ -56,7 +56,7 @@ https://mp.weixin.qq.com/s/BPQKu5UcpnoT3vVLmhCDRg
 
   并且，在TLAB分配之后，并不影响对象的移动和回收，也就是说，虽然对象刚开始可能通过TLAB分配内存，存放在Eden区，但是还是会被垃圾回收或者被移到Survivor Space、Old Gen等。
 
-  ![img](../PicSource/tlab2.png)
+  ![img](../PicSource/15648190915670.jpg)
 
 ------
 

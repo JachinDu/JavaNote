@@ -75,7 +75,7 @@
 
 ## &sect; submit提交的有返回值的任务
 
-> 由于任务是FutureTask类的，所以在执行`task.run()`时，执行的是FutureTask中重写的run()方法，截取关键部分如下：
+> 由于任务是FutureTask类的，所以在执行`task.run()`时，执行的是==FutureTask中重写的run()方法==，截取关键部分如下：
 >
 > ```java
 > try {

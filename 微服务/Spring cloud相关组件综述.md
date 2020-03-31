@@ -49,38 +49,32 @@
 
 ![img](../PicSource/640-20200318213205402.jpeg)
 
-如上图所示，库存服务、仓储服务、积分服务中都有一个<font color='#02C874'>**Eureka Client组件，这个组件专门负责将这个服务的信息注册到Eureka Server中。说白了，就是告诉Eureka Server，自己在哪台机器上，监听着哪个端口。而Eureka Server是一个注册中心，里面有一个注册表，保存了各服务所在的机器和端口号**</font>
+如上图所示，库存服务、仓储服务、积分服务中都有一个<font color='#02C874'>**Eureka Client组件，这个组件专门负责将这个服务的信息注册到Eureka Server中。说白了，就是告诉Eureka Server，自己在哪台机器上，监听着哪个端口。而Eureka Server是一个注册中心，里面有一个注册表，保存了==各服务所在的机器(地址)和端口号==**</font>
 
- 
+------
 
-> 订单服务里也有一个Eureka Client组件，这个Eureka Client组件会找Eureka Server问一下：库存服务在哪台机器啊？监听着哪个端口啊？仓储服务呢？积分服务呢？<font color='#02C874'>***然后就可以把这些相关信息从Eureka Server的注册表中拉取到自己本地缓存起来。***</font>
 
- 
 
- 这时如果订单服务想要调用库存服务，不就可以找自己本地的Eureka Client问一下库存服务在哪台机器？监听哪个端口吗？收到响应后，紧接着就可以发送一个请求过去，调用库存服务扣减库存的那个接口！同理，如果订单服务要调用仓储服务、积分服务，也是如法炮制。
-
- 
+> 订单服务里也有一个Eureka Client组件，这个Eureka Client组件会找Eureka Server问一下：库存服务在哪台机器啊？监听着哪个端口啊？仓储服务呢？积分服务呢？<font color='#02C874'>***然后就可以把这些相关信息从Eureka Server的注册表中拉取到自己==本地缓存起来==。***</font>
 
 ------
 
  总结一下：
 
-- **Eureka** **Client：**负责将这个服务的信息注册到Eureka Server中
-- **Eureka Server：**注册中心，里面有一个注册表，保存了各个服务所在的机器和端口号
-
- 
+- <font color='red'>**Eureka** **Client：**负责将这个服务的信息注册到Eureka Server中，将Eureka Server中注册的服务信息拉取到本地缓存中。</font>
+- <font color='red'>**Eureka Server：**注册中心，里面有一个注册表，保存了各个服务所在的机器和端口号</font>
 
 ------
 
 ### Eureka注册发现原理（二级缓存）
 
-> - <font color='#02C874'>**Eureka 做了二级缓存，第一级叫做 ReadOnly 缓存，二级叫做 ReadWrite 缓存。**</font>
+> - <font color='#02C874'>**Eureka 做了二级缓存，第一级叫做==ReadOnly==缓存，二级叫做 ==ReadWrite== 缓存。**</font>
 >
 > - <font color='#02C874'>**客户端会直接从ReadOnly 缓存中读取注册表信息。**</font>
 >
 > - <font color='#02C874'>**当服务在进行注册的时候，先往服务注册表中写入注册信息，服务注册表更新了，立马会同步一份数据到 ReadWrite 缓存中去。**</font>
 >
-> - <font color='#02C874'>**有一个定时任务会定时去检查 ReadWrite 是否跟 ReadOnly 不一致,不一致就把数据同步到 ReadOnly 中去。**</font>这个定时任务也默认是 30S。也可以自己配置。
+> - <font color='red'>***有一个定时任务会定时去检查 ReadWrite 是否跟 ReadOnly 不一致,不一致就把数据同步到 ReadOnly 中去。***</font>这个定时任务也默认是 30S。也可以自己配置。
 
 
 

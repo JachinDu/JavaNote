@@ -26,7 +26,9 @@ https://mp.weixin.qq.com/s/BPQKu5UcpnoT3vVLmhCDRg
 
 ### &sect; 内存分配
 
-**<font color='red'>分配的内存包括本类和父类的所有==实例变量==，但不包括任何静态变量，因为静态变量在类加载中已经分配过了</font>**
+> **<font color='red'>分配的内存包括本类和父类的所有==实例变量==，但不包括任何静态变量，因为静态变量在类加载中已经分配过了</font>**
+
+
 
 #### &sect; 内存分配的流程
 
@@ -56,6 +58,10 @@ https://mp.weixin.qq.com/s/BPQKu5UcpnoT3vVLmhCDRg
 
   并且，在TLAB分配之后，并不影响对象的移动和回收，也就是说，虽然对象刚开始可能通过TLAB分配内存，存放在Eden区，但是还是会被垃圾回收或者被移到Survivor Space、Old Gen等。
 
+  ------
+  
+  <font color='red' size = 5 >***最终流程：***</font>
+  
   ![img](../PicSource/15648190915670.jpg)
 
 ------
@@ -320,7 +326,7 @@ public class ConstructorExample {
 
 ## 3、对象的内存布局
 
-**<font color='red'>注意：对上除了有普通对象外，还会存放数组对象</font>**
+**<font color='red'>注意：堆上除了有普通对象外，还会存放数组对象</font>**
 
 ![image-20191218170013304](../PicSource/image-20191218170013304.png)
 

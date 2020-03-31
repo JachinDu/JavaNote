@@ -98,7 +98,7 @@ a）Controller层：
                              @RequestParam(value = "size",defaultValue = "10") Integer size,
                              Map<String,Object> map){
         Pageable pageable = PageRequest.of(page-1, size);
-        Page<ProductInfo> productInfoPage=productService.findAll(request);
+        Page<ProductInfo> productInfoPage=productService.findAll(pageable);
         map.put("productInfoPage",productInfoPage);
         map.put("currentPage",page);
         map.put("size",size);
@@ -155,7 +155,6 @@ c）Dao层：
 
 ```java
 public interface ProductInfoRepository extends JpaRepository<ProductInfo,String>{
-
 }
 ```
 

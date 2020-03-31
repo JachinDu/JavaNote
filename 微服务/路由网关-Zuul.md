@@ -2,10 +2,10 @@
 
 ## 1、为什么需要网关
 
-**<font color='gree' size = 5>*一个处理非业务类服务的绝佳场所*</font>**
+**<font color='#02C874' size=5>*一个处理非业务类服务的绝佳场所*</font>**
 
-> 1. 身份认证和安全:识别每一个资源的验证要求 审查和监控
-> 2. 动态路由：动态将请求路由到不同后端集群
+> 1. **身份认证**和安全:识别每一个资源的验证要求 审查和监控
+> 2. **动态路由**：动态将请求路由到不同后端集群
 > 3. 压力测试：组建增加指定集群流量，检测性能
 > 4. 负载分配：为不同负载类型分配对应容量
 > 5. 静态响应处理：边缘位置响应，避免转发到内部集群
@@ -20,15 +20,15 @@
 
 ## 2、Zuul特点
 
-> - 就是一系列过滤器Filter：<font color='red'>***前置(Pre)、后置(Post)、路由(Route)、错误(Error)四种类型的过滤器API***</font>
-> - **<font color='red'>路由器(Router) + 过滤器(Filter) = Zuul</font>**
-> - **<font color='red'>注册多实例到eureka实现高可用</font>**
+> - 就是一系列过滤器Filter：<font color='#02C874'>***前置(Pre)、后置(Post)、路由(Route)、错误(Error)四种类型的过滤器API***</font>
+> - **<font color='#02C874'>路由器(Router) + 过滤器(Filter) = Zuul</font>**
+> - **<font color='#02C874'>注册多实例到eureka实现高可用</font>**
 
-
+------
 
 过滤器：每种类型的过滤器都有很多种实现
 
-> - **<font color='gree' size=4.5>Pre：限流、鉴权、参数校验调整</font>**
+> - **<font color='#02C874' size=4.5>Pre：限流、鉴权、参数校验调整</font>**
 > - Post：统计、日志
 
 ------
@@ -112,9 +112,7 @@ zuul:
 ```
 
 > - 配置1：可以通过问`http://localhost:9000/myProduct/product/list`接口就可以实现对product应用的/product/list接口的调用。
-> - <font color='red'>配置2：配置要对客户端屏蔽的应用接口，因为配置1，所以现在对网关有两种请求方式都可以访问到应用的listForOrder接口，故要将两个访问路径都屏蔽，所以可以通过通配符写法，更加简洁。客户端访问被屏蔽的路径，会**==返回404==**。</font>
-
-
+> - <font color='red'>配置2：==**ignored-pattern**==：配置要对客户端屏蔽的应用接口，因为配置1，所以现在对网关有两种请求方式都可以访问到应用的listForOrder接口，故要将两个访问路径都屏蔽，所以可以通过通配符写法，更加简洁。客户端访问被屏蔽的路径，会**==返回404==**。</font>
 
 ------
 
@@ -124,9 +122,9 @@ zuul:
 
 
 
-创建一个过滤器类，继承`ZuulFilter`类，并实现其所有方法，如下：
+创建一个过滤器类，<font color='#02C874' size=4>**继承`ZuulFilter`类，并实现其所有方法**</font>，如下：
 
-> 注意一定要加上@Component!!!
+> <font color='#02C874' size=4>**注意一定要加上@Component！！！**</font>
 
 ```java
 package com.jachincloud.apigateway.filter;
@@ -177,7 +175,7 @@ public class TokenFilter extends ZuulFilter {
 
 > **<font color='red'>这里是配置的前置过滤器，所以通过`RequestContext`获得请求，若是后置过滤器，可以通过`RequestContext`获得响应，进行相关加工。</font>**
 
-
+------
 
 
 
@@ -272,7 +270,7 @@ hystrix:
 
 定义重定向过滤器：
 
-通过设置filterType和filterOrder来保证该过滤器要在自带的`RibbonRoutingFilter`和`SendForwardFilter`之前运行。
+<font color='red'>**通过设置filterType和filterOrder来保证该过滤器要在自带的`RibbonRoutingFilter`和`SendForwardFilter`之前运行。**</font>
 
 ```java
 package com.jachincloud.apigateway.filter;
@@ -340,5 +338,8 @@ public class ReturnUrlFilter extends ZuulFilter {
 
 由图可见一个请求的生命周期：
 
-外部http请求到达api网关服务的时候，首先它会进入第一个阶段pre，在这里它会被pre类型的过滤器进行处理。该类型过滤器的主要目的是在进行请求路由之前做一些前置加工，比如请求的校验等。在完成了pre类型的过滤器处理之后，请求进入第二个阶段routing，也就是之前说的路由请求转发阶段，请求将会被routing类型的处理器处理。这里的具体处理内容就是将外部请求转发到具体服务实例上去的过程，当服务实例请求结果都返回之后，routing阶段完成，请求进入第三个阶段post。此时请求将会被post类型的过滤器处理，这些过滤器在处理的时候不仅可以获取到请求信息，还能获取到服务实例的返回信息，所以在post类型的过滤器中，我们可以对处理结果进行一些加工或转换等内容。另外，还有一个特殊的阶段error，该阶段只有在上述三个阶段中发生异常的时候才会触发，但是它的最后流向还是post类型的过滤器，因为它需要通过post过滤器将最终结果返回给请求客户端（对于error过滤器的处理，在spring cloud zuul的过滤链中实际上有一些不同）
+> - 外部http请求到达api网关服务的时候，首先它会进入第一个阶段pre，在这里它会被pre类型的过滤器进行处理。<font color='#02C874'>**该类型过滤器的主要目的是在进行请求路由之前做一些前置加工，比如请求的校验等。**</font>
+> - 在完成了pre类型的过滤器处理之后，请求进入第二个阶段routing，也就是之前说的路由请求转发阶段，请求将会被routing类型的处理器处理。<font color='#02C874'>**这里的具体处理内容就是将外部请求转发到具体==服务实例==上去的过程，当服务实例请求结果都返回之后，routing阶段完成**.</font>
+> - 请求进入第三个阶段post。此时请求将会被post类型的过滤器处理，这些过滤器在处理的时候不仅可以获取到请求信息，还能获取到服务实例的返回信息，所以在post类型的过滤器中，<font color='#02C874'>**我们可以对处理结果进行一些加工或转换等内容。**</font>
+> - 另外，还有一个特殊的阶段error，<font color='#02C874'>**该阶段只有在上述三个阶段中发生异常的时候才会触发，但是它的最后流向还是post类型的过滤器**</font>，因为它需要通过post过滤器将最终结果返回给请求客户端（对于error过滤器的处理，在spring cloud zuul的过滤链中实际上有一些不同）
 

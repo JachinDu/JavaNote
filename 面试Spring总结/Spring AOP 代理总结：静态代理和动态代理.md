@@ -274,17 +274,15 @@ public class TestCglib {
 }
 ```
 
-
-
 结果与jdk动态代理相同
 
 ------
 
 ## 3、底层流程
 
-<font color='red'>Spring AOP 需要做的是生成这么一个代理类，然后**==替换掉==**真实实现类来对外提供服务。替换的过程怎么理解呢？在 Spring IOC 容器中非常容易实现，就是在 getBean(…) 的时候返回的实际上是代理类的实例，而这个代理类我们自己没写代码，它是 Spring 采用 JDK Proxy 或 CGLIB 动态生成的。</font>
+<font color='red'>**Spring AOP 需要做的是生成这么一个代理类，然后==替换掉==真实实现类来对外提供服务。替换的过程怎么理解呢？在 Spring IOC 容器中非常容易实现，就是在 getBean(…) 的时候返回的实际上是代理类的实例，而这个代理类我们自己没写代码，它是 Spring 采用 JDK Proxy 或 CGLIB 动态生成的。**</font>
 
-> getBean(…) 方法用于查找或实例化容器中的 bean，这也是为什么 ==Spring AOP 只能作用于 Spring 容器中的 bean 的原因，对于不是使用 IOC 容器管理的对象，Spring AOP 是无能为力的。==
+> getBean(…) 方法用于查找或实例化容器中的 bean，这也是为什么 ==**Spring AOP 只能作用于 Spring 容器中的 bean 的原因，对于不是使用 IOC 容器管理的对象，Spring AOP 是无能为力的。**==
 
 ------
 

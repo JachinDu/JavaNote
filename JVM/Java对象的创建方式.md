@@ -9,6 +9,8 @@
 > - clone方法
 > - 反序列化
 
+------
+
 
 
 ## 1、new关键字
@@ -35,7 +37,7 @@ Student stu = Student.class.newInstance();
 
 ==注意：若手动添加了有参构造函数，需手动再添加无参构造函数，否则报错：==
 
-```
+```java
 Exception in thread "main" java.lang.InstantiationException: Student
 	at java.lang.Class.newInstance(Class.java:427)
 	at CreateInstance.main(CreateInstance.java:16)

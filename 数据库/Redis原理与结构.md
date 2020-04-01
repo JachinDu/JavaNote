@@ -243,6 +243,8 @@ zset是Redis提供的一个非常特别的数据结构，*<font color='red'>一�
 
 https://juejin.im/post/57fa935b0e3dd90057c50fbc
 
+https://mp.weixin.qq.com/s/NOsXdrMrWwq4NTm180a6vw
+
 因为zset要**==支持随机的插入和删除，所以它不好使用数组来表示。==**
 
 ------

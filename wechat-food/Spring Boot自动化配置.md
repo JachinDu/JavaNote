@@ -2,8 +2,11 @@
 
 ## &sect; Spring Boot的显著优势
 
+> https://mp.weixin.qq.com/s/jWCa8qQv2E2uCrLZMs7vcg
+>
 > - <font color='#02C874' size = 5>**使用starter简化依赖配置**</font>
 > - <font color='#02C874' size = 5>**Spring的自动配置**</font>
+> - <font color='#02C874' size = 5>**打包部署运行简单（内嵌tomcat，java -jar独立运行jar）**</font>
 
 ------
 

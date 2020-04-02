@@ -62,6 +62,8 @@ https://mp.weixin.qq.com/s/BPQKu5UcpnoT3vVLmhCDRg
   
   <font color='red' size = 5 >***最终流程：***</font>
   
+  > <font color='red'>**其中栈上分配设计逃逸分析+标量替换（是把对象的成员变量拆出来存在栈上，其实已经不是一个对象了的感觉）**</font>
+  
   ![img](../PicSource/15648190915670.jpg)
 
 ------

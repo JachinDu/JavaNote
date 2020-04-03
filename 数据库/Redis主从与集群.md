@@ -1,16 +1,22 @@
 # Redis主从与集群
 
-## 1、主从
+## 1、普通主从
 
 ![img](../PicSource/Center.png)
 
-> 优点：<font color='#02C874'>**读写分离，通过增加*Slaver*可以提高并发读的能力。**</font>
+> 优点：
 >
-> 缺点：<font color='#02C874'>***Master*写能力是瓶颈。**</font>
+> - <font color='#02C874'>**读写分离，通过增加*Slaver*可以提高并发读的能力。**</font>
+> - <font color='#02C874'>**提供了master的备份容灾能力**</font>
 >
-> ​     虽然理论上对*Slaver*没有限制但是维护*Slaver*开销总将会变成瓶颈。
+> 缺点：
 >
-> ​     *Master*的*Disk*大小也将会成为整个*Redis*集群存储容量的瓶颈。
+> - <font color='#02C874'>***Master*写能力是瓶颈。**</font>
+> - <font color='#02C874'>**Master的存储能力受到单机的限制。**</font>
+> - 虽然理论上对*Slaver*没有限制但是<font color='#02C874'>**维护*Slaver*开销总将会变成瓶颈。**</font>
+> - <font color='#02C874'>**一旦 Master宕机，Slaver 晋升成 Master，同时需要修改 应用方 的 Master地址，还需要命令所有 Slaver 去 复制 新的Master，整个过程需要 人工干预。**</font>
+>
+> 
 
 ------
 
@@ -35,4 +41,6 @@
 ## 3、集群
 
 ![img](../PicSource/Center-20200402230232365.png)
+
+------
 

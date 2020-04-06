@@ -18,7 +18,7 @@
 
 ### &sect; 队列概述
 
-***<font color='gree'>AQS包含两种队列：同步队列和条件队列，实现都如下：</font>***
+***<font color='#02C874'>AQS包含两种队列：同步队列和条件队列，实现都如下：</font>***
 
 ![image-20191217114957123](../PicSource/image-20191217114957123.png)
 
@@ -131,7 +131,7 @@ static final class Node {
 ## 3. AQS维护核心变量--state和waitStatus
 
 > 1. <font color='red'>**state 是锁的状态**</font>，是 int 类型，子类继承 AQS 时，都是要根据 state 字段来判断有无得到锁，比如当前同步器状态是 0，表示可以获得锁，当前同步器状态是 1，表示锁已经被其他线程持有，当前线程无法获得锁；
-> 2. <font color='red'>**waitStatus 是节点（Node，可以理解为线程）的状态**</font>，种类很多，一共有初始化 (0)、CANCELLED (1)、SIGNAL (-1)、CONDITION (-2)、PROPAGATE (-3)，各个状态的含义可以见上文。
+> 2. <font color='red'>**waitStatus 是节点（Node，可以理解为线程）的状态**</font>，种类很多，***一共有初始化 (0)、CANCELLED (1)、SIGNAL (-1)、CONDITION (-2)、PROPAGATE (-3)***，各个状态的含义可以见上文。
 
 ------
 
@@ -366,7 +366,7 @@ public final boolean release(int arg) {
 }
 ```
 
-> <font color='red'>***排他锁只有释放锁时唤醒后续节点，共享锁在获取和释放时都会唤醒后续节点。***</font>
+> <font color='red' size = 4>***排他锁只有释放锁时唤醒后续节点，共享锁在获取和释放时都会唤醒后续节点。***</font>
 
 ```java
 // 共享模式下，释放当前线程的共享锁
@@ -609,7 +609,7 @@ protected final boolean tryAcquire(int acquires) {
 final void lock() {
   					// 一上来先尝试获取锁，“插队”
             if (compareAndSetState(0, 1))
-                setExclusiveOwnerThread(Thread.currentThread());
+                setExclusiveOwnerThread(Thread.currentThread()); // cas成功，则设置独占线程（说明获取到了锁）
             else
               // 插队失败才调用，注意该方法内部调用了重写过的tryAcquire()方法
                 acquire(1);
@@ -650,7 +650,7 @@ final boolean nonfairTryAcquire(int acquires) {
 
 > <font color='red' size=4>***注意：都要先判断锁的状态，如果未被获取则走各自的获取流程，若被获取，则要看一下是不是自己，即判断能否重入。***</font>
 >
-> - <font color='purple' size=4>***锁的获取：就是CAS修改state字段值（`compareAndSetState(0, acquires)`） + 设置独占线程为自己`setExclusiveOwnerThread(current)`***</font>
+> - <font color='#02C874' size=4>***锁的获取：就是CAS修改state字段值（`compareAndSetState(0, acquires)`） + 设置独占线程为自己`setExclusiveOwnerThread(current)`***</font>
 
 ------
 

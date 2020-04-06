@@ -46,7 +46,7 @@
 
 ### &sect; 基本结构
 
-**<font color='gree' size=4.5>*Object数组 拷贝 + ReentrantLock + volatile*</font>**
+> **<font color='#02C874' size=4.5>*Object数组 拷贝 + ReentrantLock + volatile*</font>**
 
 ```java
 public class CopyOnWriteArrayList<E>
@@ -101,8 +101,6 @@ public boolean add(E e) {
 ```
 
 > ***<font color='red'>其中10行改变了array，又因为array是volatile的，所以，保证了可见性。所以这一步将array指向新数组是同步的关键。</font>***
-
-
 
 ------
 
@@ -196,7 +194,7 @@ static final class COWIterator<E> implements ListIterator<E> {
 
 #### **为什么使用iterator遍历不用额外加锁？**
 
-> ​	<font color='green'>**因为构造迭代器时，将array传了进去，相当于把旧array传了进去，所以遍历的是旧的array，期间其他线程若要对数组进行修改，要额外复制副本，不影响旧array的遍历。故不会抛出任何异常，==但缺点是，遍历的数据是非实时的，即读的实效性不保障。==**</font>
+> ​	<font color='#02C874'>**因为构造迭代器时，将array传了进去，相当于把旧array传了进去，所以遍历的是旧的array，期间其他线程若要对数组进行修改，要额外复制副本，不影响旧array的遍历。故不会抛出任何异常，==但缺点是，遍历的数据是非实时的，即读的实效性不保障。==**</font>
 
 
 

@@ -272,22 +272,13 @@ final void treeifyBin(Node<K,V>[] tab, int hash) {
 
 > 核心：
 >
-> <font color='gree'>**在扩容时，会扩大到原来的两倍，因为使用的是2的次幂扩展，那么元素的位置要么保持不变，要么在原位置上偏移2的次幂。**</font>
+> <font color='#02C874'>**在扩容时，会扩大到原来的两倍，因为使用的是2的次幂扩展，那么元素的位置要么保持不变，要么在原位置上偏移2的次幂。**</font>
 >
 > ![resize-1](../PicSource/1424165-20190522103950481-844633092.png)
 >
-> <font color='gree'>***由图可知，"节点原散列值 & oldCap"的值为0，则说明还在原位置，为1，则需要向后搬移oldCap步长。***</font>
+> <font color='#02C874'>***由图可知，"节点原散列值 & oldCap"的值为0，则说明还在原位置，为1，则需要向后搬移oldCap步长。***</font>
 
 ```java
-/**
- * Initializes or doubles table size.  If null, allocates in
- * accord with initial capacity target held in field threshold.
- * Otherwise, because we are using power-of-two expansion, the
- * elements from each bin must either stay at same index, or move
- * with a power of two offset in the new table.
- *
- * @return the table
- */
 final Node<K,V>[] resize() {
   // 1. 扩容
     Node<K,V>[] oldTab = table;
@@ -433,13 +424,13 @@ final Node<K,V> getNode(int hash, Object key) {
 
 ### 4.1、多线程put元素丢失
 
-假设有两个线程t1,t2，它们都执行完了2.1中putVal函数的28行，此时t1挂起，t2执行29行，t2执行完后t1再执行。这样会导致t2所插入的节点被抹掉了。
+> 假设有两个线程t1,t2，它们都执行完了2.1中putVal函数的28行，此时t1挂起，t2执行29行，t2执行完后t1再执行。这样会导致t2所插入的节点被抹掉了。
 
 
 
 ### 4.2、put和get并发，可能导致get到null
 
-当put中执行resize时，由resize的实现可见，在完成扩容后，==还未转移元素之前，就将新哈希表赋值给了旧表==，即旧表为空了。所以，若这个时候get，则为null。***<font color='red'>所以在ConcurrentHashMap中的put操作中对数组是否正在进行扩容进行了判断从而保证线程安全。</font>***
+> 当put中执行resize时，由resize的实现可见，在完成扩容后，==还未转移元素之前，就将新哈希表赋值给了旧表==，即旧表为空了。所以，若这个时候get，则为null。***<font color='red'>所以在ConcurrentHashMap中的put操作中对数组是否正在进行扩容进行了判断从而保证线程安全。</font>***
 
 
 

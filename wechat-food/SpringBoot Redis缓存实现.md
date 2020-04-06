@@ -121,7 +121,7 @@ public class ProductServiceImpl implements ProductService {
 
 > 1. @Cacheable：第一次进入会执行其标注的方法，执行后，将==返回值类型的数据==进行缓存，之后则不会执行方法，直接从缓存中获取数据。
 >
-> 2. @CachePut：**<font color='green'>每一次都会执行其标注的方法，每一次都将执行后的新返回值用于更新缓存。</font>**
+> 2. @CachePut：**<font color='#02C874'>每一次都会执行其标注的方法，每一次都将执行后的新返回值用于更新缓存。</font>**
 >
 > 3. <font color='red' size=4>**注意：上述两个注解标注的方法的返回值必须相同才行。**</font>
 >
@@ -143,5 +143,5 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-**<font color='gree'>注意：三个缓存注解是将方法的==“返回值”==作为value存入redis，所以，通常注解不加在Controller层的方法上，因为Controller层的方法通常返回ModelAndView，通常加在Service层。总之，我们通常是要缓存自己定义的数据对象吧。</font>**
+**<font color='#02C874'>注意：三个缓存注解是将方法的==“返回值”==作为value存入redis，所以，通常注解不加在Controller层的方法上，因为Controller层的方法通常返回ModelAndView，通常加在Service层。总之，我们通常是要缓存自己定义的数据对象吧。</font>**
 

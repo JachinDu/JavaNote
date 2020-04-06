@@ -14,7 +14,7 @@
 
 ![image-20200106195830754](../PicSource/image-20200106195830754.png)
 
-**<font color='red'>统一接收前端请求，并配置到后端各服务的转发规则</font>**
+**<font color='#02C874' size=4>统一接收前端请求，并配置到后端各服务的转发规则</font>**
 
 ![【微服务】Zuul的必要性](../PicSource/java10-1560850998.jpg)
 
@@ -193,7 +193,7 @@ public class TokenFilter extends ZuulFilter {
 
 实现：
 
-> ==直接用google的组件 RateLimiter==
+> ==**直接用google的组件 RateLimiter**==
 
 ```java
 package com.jachincloud.apigateway.filter;
@@ -238,7 +238,7 @@ public class RateLimitFilter extends ZuulFilter {
 
 ### &sect; 漏桶限流与令牌桶限流的区别
 
-**漏桶只能以==固定的速率==去处理请求，而令牌桶可以以桶子==最大的令牌数去处理请求==**
+> **漏桶只能以==固定的速率==去处理请求，而令牌桶可以以桶子==最大的令牌数去处理请求==**
 
 
 
@@ -270,7 +270,7 @@ hystrix:
 
 定义重定向过滤器：
 
-<font color='red'>**通过设置filterType和filterOrder来保证该过滤器要在自带的`RibbonRoutingFilter`和`SendForwardFilter`之前运行。**</font>
+> <font color='red'>**通过设置filterType和filterOrder来保证该过滤器要在自带的`RibbonRoutingFilter`和`SendForwardFilter`之前运行。**</font>
 
 ```java
 package com.jachincloud.apigateway.filter;
@@ -328,7 +328,7 @@ public class ReturnUrlFilter extends ZuulFilter {
 
 
 
-## 8、核心：过滤器
+## 8、核心：Filter
 
 各种过滤器详解：https://www.jianshu.com/p/ff863d532767
 
@@ -336,7 +336,7 @@ public class ReturnUrlFilter extends ZuulFilter {
 
 ------
 
-由图可见一个请求的生命周期：
+由图可见一个==**请求的生命周期：**==
 
 > - 外部http请求到达api网关服务的时候，首先它会进入第一个阶段pre，在这里它会被pre类型的过滤器进行处理。<font color='#02C874'>**该类型过滤器的主要目的是在进行请求路由之前做一些前置加工，比如请求的校验等。**</font>
 > - 在完成了pre类型的过滤器处理之后，请求进入第二个阶段routing，也就是之前说的路由请求转发阶段，请求将会被routing类型的处理器处理。<font color='#02C874'>**这里的具体处理内容就是将外部请求转发到具体==服务实例==上去的过程，当服务实例请求结果都返回之后，routing阶段完成**.</font>

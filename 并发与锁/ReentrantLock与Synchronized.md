@@ -24,7 +24,7 @@
 
 - **<font color='red'>在==竞争不是很激烈==的情况下，Synchronized的性能要优于ReetrantLock（因为优化出了偏向锁、自旋、轻量级锁等）</font>**，但是在资源竞争很激烈的情况下，Synchronized的性能会下降几十倍，但是ReetrantLock的性能能维持常态；
 
-- ReetrantLock 提供了多样化的同步，比如有时间限制的同步，**<font color='gree' size=4>*可以被Interrupt的同步（synchronized的同步是不能Interrupt的*</font>**）等
+- ReetrantLock 提供了多样化的同步，比如有时间限制的同步，**<font color='#02C874' size=4>*可以被Interrupt的同步（synchronized的同步是不能Interrupt的*</font>**）等
 
 
 
@@ -38,15 +38,17 @@
 
 ### **2、 synchronized 依赖于 JVM 而 ReentrantLock 依赖于 API**
 
-synchronized 是依赖于 JVM 实现的，前面我们也讲到了 虚拟机团队在 JDK1.6 为 synchronized 关键字进行了很多优化，**<font color='gree'>但是这些优化都是在虚拟机层面实现的</font>**，并没有直接暴露给我们。**<font color='gree'>ReentrantLock 是 JDK 层面实现的（也就是 API 层面，需要 lock() 和 unlock() 方法配合 try/finally 语句块来完成）</font>**，所以我们可以通过查看它的源代码，来看它是如何实现的。
+synchronized 是依赖于 JVM 实现的，前面我们也讲到了 虚拟机团队在 JDK1.6 为 synchronized 关键字进行了很多优化，**<font color='#02C874'>但是这些优化都是在虚拟机层面实现的</font>**，并没有直接暴露给我们。**<font color='#02C874'>ReentrantLock 是 JDK 层面实现的（也就是 API 层面，需要 lock() 和 unlock() 方法配合 try/finally 语句块来完成）</font>**，所以我们可以通过查看它的源代码，来看它是如何实现的。
 
 ### **3、 ReentrantLock 比 synchronized 增加了一些高级功能**
 
 相比 synchronized，ReentrantLock 增加了一些高级功能。主要来说主要有三点：
 
-**① <font color='green'>等待可中断；</font>**
+**① <font color='#02C874'>等待可中断；</font>**
 
 **② 可实现公平锁；**
+
+------
 
 
 

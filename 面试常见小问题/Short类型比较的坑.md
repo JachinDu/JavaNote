@@ -22,7 +22,7 @@ if (s1.equals(x - 1)) {
 >
 > - 而在运算中编译器不会做上述转换，**<font color='red'>即: x - 1 变为了int 类型</font>**，而Short类型重写的equals方法如下：
 >
->   - ***<font color='gree'>!!!目标不是Short类型，直接会返回false</font>***
+>   - ***<font color='#02DF82'>!!!目标不是Short类型，直接会返回false</font>***
 >
 >   ```java
 >   public boolean equals(Object obj) {

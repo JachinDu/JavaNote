@@ -11,6 +11,8 @@
 - **易用的管理界面：** RabbitMQ提供了一个易用的用户界面，使得用户可以监控和管理消息、集群中的节点等。在安装 RabbitMQ 的时候会介绍到，安装好 RabbitMQ 就自带管理界面。
 - **插件机制：** RabbitMQ 提供了许多插件，以实现从多方面进行扩展，当然也可以编写自己的插件。感觉这个有点类似 Dubbo 的 SPI机制。
 
+------
+
 
 
 ## <font color='red'>2、整体模型架构</font>
@@ -25,8 +27,10 @@
 
 消息一般由 2 部分组成：
 
-> - <font color='gree'>**消息头**（**标签 Label**）</font>：由一系列的可选属性组成，这些属性包括 **<font color='red'>routing-key（路由键）</font>**、**priority（相对于其他消息的优先权）**、**delivery-mode（指出该消息可能需要持久性存储）**等。生产者把消息交由 RabbitMQ 后，RabbitMQ 会根据消息头把消息发送给感兴趣的 Consumer(消费者)。
-> -  <font color='gree'>**消息体（payLoad）**</font>：不透明的
+> - <font color='#02C874'>**消息头**（**标签 Label**）</font>：由一系列的可选属性组成，这些属性包括 **<font color='red'>routing-key（路由键）</font>**、**priority（相对于其他消息的优先权）**、**delivery-mode（指出该消息可能需要持久性存储）**等。生产者把消息交由 RabbitMQ 后，RabbitMQ 会根据消息头把消息发送给感兴趣的 Consumer(消费者)。
+> -  <font color='#02C874'>**消息体（payLoad）**</font>：不透明的
+
+------
 
 
 

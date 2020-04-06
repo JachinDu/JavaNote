@@ -28,6 +28,8 @@ https://mp.weixin.qq.com/s/BPQKu5UcpnoT3vVLmhCDRg
 
 > **<font color='red'>分配的内存包括本类和父类的所有==实例变量==，但不包括任何静态变量，因为静态变量在类加载中已经分配过了</font>**
 
+------
+
 
 
 #### &sect; 内存分配的流程
@@ -50,11 +52,11 @@ https://mp.weixin.qq.com/s/BPQKu5UcpnoT3vVLmhCDRg
 
 - <font color='red'>**CAS+失败重试：**</font> CAS 是乐观锁的一种实现方式。所谓乐观锁就是，每次不加锁而是假设没有冲突而去完成某项操作，如果因为冲突失败就重试，直到成功为止。**虚拟机采用 CAS 配上失败重试的方式保证更新操作的原子性。**
 
-- <font color='red'>**TLAB：**</font> 为<font color='gree'>***每一个线程预先在 Eden 区分配一块儿内存***</font>，JVM 在给线程中的对象分配内存时，首先在 TLAB 分配，当对象大于 TLAB 中的剩余内存或 TLAB 的内存已用尽时，再采用上述的 CAS 进行内存分配
+- <font color='red'>**TLAB：**</font> 为<font color='#02C874'>***每一个线程预先在 Eden 区分配一块儿内存***</font>，JVM 在给线程中的对象分配内存时，首先在 TLAB 分配，当对象大于 TLAB 中的剩余内存或 TLAB 的内存已用尽时，再采用上述的 CAS 进行内存分配
 
   ![img](../PicSource/tlab.png)
 
-  也就是说，虽然每个线程在初始化时都会去堆内存中申请一块TLAB，<font color='gree'>并不是说这个TLAB区域的内存其他线程就完全无法访问了，其他线程的读取还是可以的，只不过无法在这个区域中分配内存而已。</font>
+  也就是说，虽然每个线程在初始化时都会去堆内存中申请一块TLAB，<font color='#02C874'>**并不是说这个TLAB区域的内存其他线程就完全无法访问了，其他线程的读取还是可以的，只不过无法在这个区域中分配内存而已。**</font>
 
   并且，在TLAB分配之后，并不影响对象的移动和回收，也就是说，虽然对象刚开始可能通过TLAB分配内存，存放在Eden区，但是还是会被垃圾回收或者被移到Survivor Space、Old Gen等。
 
@@ -72,7 +74,11 @@ https://mp.weixin.qq.com/s/BPQKu5UcpnoT3vVLmhCDRg
 
 ### &sect; 初始化零值
 
-<font color='gree' size=4>**将方法区内对实例变量的定义拷贝一份到堆区，然后赋默认值**</font>
+<font color='#02C874' size=4>**将方法区内对实例变量的定义拷贝一份到堆区，然后赋默认值**</font>
+
+------
+
+
 
 ### &sect; 设置对象头
 
@@ -94,9 +100,9 @@ https://mp.weixin.qq.com/s/BPQKu5UcpnoT3vVLmhCDRg
 
 按以下顺序执行：
 
-> 1. ==实例变量==初始化
-> 2. ==实例代码块==初始化
-> 3. ==构造函数==初始化
+> 1. ==**实例变量**==初始化
+> 2. ==**实例代码块**==初始化
+> 3. ==**构造函数**==初始化
 
 ------
 

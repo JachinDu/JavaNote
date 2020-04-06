@@ -32,7 +32,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 链表中倒数第k个结点
 >
-> - 【🎖🎖】复杂链表的复制(注意指针满天飞，判断null)
+> - 【🎖🎖】复杂链表的复制(注意指针满天飞，***判断null***)
 >
 >   ```java
 >   class Solution {
@@ -62,20 +62,19 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >               copy.next = copy.next == null ? null : copy.next.next;
 >           }
 >           return resHead;
->   
 >       }
 >   }
 >   ```
->
 >   
 >
-> - 删除链表中重复的结点（注意指针处理）
->
-> - 【🎖】链表中环的入口结点：（快慢指针，相遇于环内一点，再让一个从链表头，一个从该相遇点开始，最终相遇即为入口）
->
-> - 从尾到头打印链表
->
-> - 【🎖🎖🎖🎖】 [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+>   
+>- **删除链表中重复的结点（注意指针处理）**
+> 
+>- 链表中环的入口结点：（快慢指针，相遇于环内一点，再让一个从链表头，一个从该相遇点开始，最终相遇即为入口）
+> 
+>- 从尾到头打印链表
+> 
+>- 【🎖🎖🎖🎖】 [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
 
 ------
 
@@ -83,11 +82,67 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 树类
 
-> - 平衡二叉树（树）
+> - 【🎖🎖】平衡二叉树（树）
 >
-> - 树的子结构（树）
+>   ```java
+>   class Solution {
+>       public boolean isBalanced(TreeNode root) {
+>           return lenOfTree(root) == -1 ? false : true;
+>       }    
+>       public int lenOfTree(TreeNode node){
+>           if(node == null) return 0;
+>           
+>           int left = lenOfTree(node.left);
+>           int right = lenOfTree(node.right);
+>           if(left == -1 || right == -1){
+>               return -1;
+>           }else if(Math.abs(left - right) > 1){
+>               return -1;
+>           }else{
+>               return Math.max(left,right) + 1;
+>           }  
+>       }
+>   }
+>   ```
 >
-> - 重建二叉树
+>   
+>
+> - 【🎖🎖】树的子结构（树）
+>
+>   ```java
+>   class Solution {
+>       public boolean isSubStructure(TreeNode A, TreeNode B) {
+>           if(B == null) return false;
+>           Queue<TreeNode> queue = new LinkedList<>();
+>           queue.add(A);
+>           while(queue.size() > 0){
+>               int size = queue.size();
+>               while(size > 0){
+>                   TreeNode node = queue.poll();
+>                   if(node.val == B.val && hasB(node,B)){
+>                       return true;
+>                   }
+>                   if(node.left != null){
+>                       queue.add(node.left);
+>                   }
+>                   if(node.right != null){
+>                       queue.add(node.right);
+>                   }
+>                   size--;
+>               }
+>           }
+>           return false;
+>       }
+>       
+>       public boolean hasB(TreeNode a, TreeNode b){
+>           if(b == null) return true;
+>           if(a == null || (a.val != b.val)) return false;
+>           return hasB(a.left,b.left) && hasB(a.right,b.right);
+>       }
+>   }
+>   ```
+>
+>   
 >
 > - 【🎖🎖🎖🎖】二叉搜索树与双向链表（递归或栈+遍历）（中序遍历的递归和非递归法https://segmentfault.com/a/1190000016674584）
 >
@@ -131,7 +186,50 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 对称的二叉树：左子树==右子树
 >
+>   ```java
+>   public class Solution {
+>       boolean isSymmetrical(TreeNode pRoot)
+>       {
+>           if(pRoot == null) return true;
+>           return isSameTree(pRoot.left,pRoot.right);
+>       }
+>       public boolean isSameTree(TreeNode LTree, TreeNode RTree){
+>           if(LTree == null && RTree == null) return true;
+>           if(LTree == null && RTree != null) return false;
+>           if(LTree != null && RTree == null) return false;
+>           if(LTree.val != RTree.val) return false;
+>           return isSameTree(LTree.left,RTree.right) && isSameTree(LTree.right,RTree.left);
+>       }
+>   }
+>   ```
+>
+>   
+>
 > - 【🎖🎖🎖🎖】二叉树的下一个结点：***若有右子树，则递归找到右子树最左叶子节点即可。若无则向父节点递归，直到找到当前节点是父节点的左子树，则返回父节点。***
+>
+>   ```java
+>   public class Solution {
+>       public TreeLinkNode GetNext(TreeLinkNode pNode)
+>       {
+>           if(pNode.right != null){
+>               TreeLinkNode node = pNode.right;
+>               while(node.left != null){
+>                   node = node.left;
+>               }
+>               return node;
+>           }else{
+>               TreeLinkNode node = pNode;
+>               while(node.next != null && (node.next.left == null ||
+>                     node.next.left.val != node.val)){
+>                   node = node.next;
+>               }
+>               return node.next;
+>           }
+>       }
+>   }
+>   ```
+>
+>   
 >
 > - 按之字形顺序打印二叉树：正反序迭代器：iterator/descendingIterator或者用链表的头插/尾插交替（迭代器是对queue的，头插尾插是对当前层遍历的结果的）
 >
@@ -216,8 +314,6 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 连续子数组的最大和：(前面的和+当前值不可小于当前值，若小于，则起点重新从当前值开始)
 >
-> - 数组中只出现一次的数字：HashMap/ 异或
->
 > - 【🎖】机器人的运动范围：dfs/bfs 
 >
 > - 【🎖🎖🎖】矩阵中的路径：dfs+记忆矩阵***（注意走过的路若不对要恢复记忆矩阵(回溯的感觉))***
@@ -245,7 +341,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   
 >
-> - 【🎖🎖🎖】滑动窗口的最大值：可用堆
+> - 【🎖🎖🎖】滑动窗口的最大值：**可用堆**
 >
 >   ```java
 >   class Solution {
@@ -401,6 +497,31 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >           }
 >           return B;
 >       }
+>   ```
+>   
+>   更简单做法：
+>   
+>   ```java
+>   public class Solution {
+>       public int[] multiply(int[] A) {
+>           int length = A.length;
+>           int[] B = new int[length];
+>           if(length != 0 ){
+>               B[0] = 1;
+>               //计算下三角连乘
+>               for(int i = 1; i < length; i++){
+>                   B[i] = B[i-1] * A[i-1];
+>               }
+>               int temp = 1;
+>               //计算上三角
+>               for(int j = length-2; j >= 0; j--){
+>                   temp *= A[j+1];
+>                   B[j] *= temp;
+>               }
+>           }
+>           return B;
+>       }
+>   }
 >   ```
 >   
 >   
@@ -724,21 +845,17 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >   ```java
 >   // 注意遍历起点
 >   for(int i = len - 2; i >= 0; i--){
->               for(int j = i + 1; j < len; j++){
->                   if(j - 1 >= i + 1 && dp[i+1][j-1] && s.charAt(i) == s.charAt(j)){
->                     // 如果i，j之间还有字符串，则先看中间的是不是回文
->                       dp[i][j] = true;
->                   }else if( j - 1 < i + 1 && s.charAt(i) == s.charAt(j)){
->                     // 如果i，j之间没有其他字符串了，就直接看i，j是否相同即可
->                       dp[i][j] = true;
->                   }
->               }
->           }
+>     for(int j = i + 1; j < len; j++){
+>       if(j - 1 >= i + 1 && dp[i+1][j-1] && s.charAt(i) == s.charAt(j)){
+>         // 如果i，j之间还有字符串，则先看中间的是不是回文
+>         dp[i][j] = true;
+>       }else if( j - 1 < i + 1 && s.charAt(i) == s.charAt(j)){
+>         // 如果i，j之间没有其他字符串了，就直接看i，j是否相同即可
+>         dp[i][j] = true;
+>       }
+>     }
+>   }
 >   ```
-> ```
->   
->   
-> ```
 
 ------
 
@@ -1147,3 +1264,33 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >   ```
 >
 > - 【🎖🎖🎖】和为S的连续正数序列：**等差数列+双指针**
+
+------
+
+### &sect; 其他
+
+### 快速幂
+
+> - #### [数值的整数次方](https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/)
+>
+> ```java
+> class Solution {
+>     public double myPow(double x, int n) {
+>         if(x == 0) return 0;
+>         long b = n;
+>         double res = 1.0;
+>         if(b < 0) {
+>             x = 1 / x;
+>             b = -b;
+>         }
+>         while(b > 0) {
+>             if((b & 1) == 1) res *= x;
+>             x *= x;
+>             b >>= 1;
+>         }
+>         return res;
+>     }
+> }
+> ```
+>
+> 

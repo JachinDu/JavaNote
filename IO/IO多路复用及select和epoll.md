@@ -4,7 +4,7 @@
 
 https://blog.csdn.net/sehanlingfeng/article/details/78920423
 
-**<font color='blue' size=5>注意，这不是多线程，可以说是单线程的“多路复用”</font>**
+**<font color='#02C874' size=4>注意，这不是多线程，可以说是单线程的“多路复用”</font>**
 
 ------
 
@@ -18,7 +18,7 @@ https://blog.csdn.net/sehanlingfeng/article/details/78920423
 
 ------
 
-## Select、epoll
+## select、epoll
 
 - select：
   - **将文件描述符放入一个集合中，调用select时，将这个集合从==用户空间拷贝到内核空间==（缺点1：每次都要复制，开销大）**；

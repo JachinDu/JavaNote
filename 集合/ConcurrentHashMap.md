@@ -4,7 +4,7 @@
 
 ![img](../PicSource/5cd1d2c5ce95c.jpg)
 
-> - <font color='red'>**元素封装为HashEntry，同jdk1.7的HashMap**</font>
+> - **元素封装为HashEntry，同jdk1.7的HashMap**
 > - <font color='red'>**分段锁+链表**</font>
 
 ------
@@ -17,7 +17,7 @@
 
 > - **<font color='red'>底层由链表 --> 链表 + 红黑树</font>**
 >
-> - ***<font color='purple' size=4.5>自旋(while) + CAS + synchronized 实现锁链表头/根节点（不是segment锁了）</font>***
+> - ***<font color='#02C874' size=4.5>自旋(while) + CAS + synchronized 实现锁链表头/根节点（不是segment锁了）</font>***
 >
 > - **元素封装为Node<K,V>，同jdk1.8的HashMap**
 >
@@ -371,7 +371,7 @@ private final void transfer(Node<K,V>[] tab, Node<K,V>[] nextTab) {
 
 ## 注意：
 
-<font color='gree' size = 5>**key和value都不能为null**</font>
+<font color='red' size = 5>**key和value都不能为null**</font>
 
 
 

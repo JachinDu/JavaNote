@@ -115,8 +115,8 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 方式：
 
-> 1. <font color='gree'>继承`java.lang.ClassLoader`类</font>
-> 2. <font color='gree'>重写`findClass()`方法，返回值即为`java.lang.Class`类的实例，不建议重写`loadClass()`方法(破坏了双亲委派机制)。</font>
+> 1. <font color='#02C874'>**继承`java.lang.ClassLoader`类**</font>
+> 2. <font color='#02C874'>**重写`findClass()`方法，返回值即为`java.lang.Class`类的实例，不建议重写`loadClass()`方法(破坏了双亲委派机制)。**</font>
 
 **<font color='red'>*java.lang.ClassLoader 类的基本职责就是根据一个指定的类的名称，找到或者生成其对应的==字节码==，然后从这些字节码中定义出一个 Java 类，即 java.lang.Class 类的一个实例。*</font>**
 
@@ -236,6 +236,8 @@ public class Main {
 
 > 注意：第14行为查看加载该实例对象的类的类加载器，结果为：`sun.misc.Launcher$AppClassLoader@18b4aac2`
 
+------
+
 
 
 ## 4、ClassLoader隔离
@@ -258,7 +260,7 @@ public class Main {
 
 <font color='red'>双亲委派模型很好地解决了各个类加载器的基础类统一问题(越基础的类由越上层的加载器进行加载)，基础类之所以被称为“基础”，是因为它们总是作为被调用代码调用的API。但是，如果基础类又要调用用户的代码，那该怎么办呢。</font>
  这并非是不可能的事情，一个典型的例子便是JNDI服务，它的代码由启动类加载器去加载(在JDK1.3时放进rt.jar)，但JNDI的目的就是对资源进行集中管理和查找，它需要调用独立厂商实现部部署在应用程序的classpath下的JNDI接口提供者(SPI, Service Provider Interface)的代码，但启动类加载器不可能“认识”之些代码，该怎么办？
- 为了解决这个困境，Java设计团队只好引入了一个不太优雅的设计：==**线程上下文件类加载器(Thread Context ClassLoader)**==。这个类加载器可以通过java.lang.Thread类的setContextClassLoader()方法进行设置，如果创建线程时还未设置，它将会从父线程中继承一个；如果在应用程序的全局范围内都没有设置过，那么这个类加载器默认就是应用程序类加载器。了有线程上下文类加载器，JNDI服务使用这个线程上下文类加载器去加载所需要的SPI代码，<font color='red'>**也就是父类加载器请求子类加载器去完成类加载动作**</font>，这种行为实际上就是打通了双亲委派模型的层次结构来逆向使用类加载器，已经违背了双亲委派模型，但这也是无可奈何的事情。Java中所有涉及SPI的加载动作基本上都采用这种方式，例如JNDI,JDBC,JCE,JAXB和JBI等。
+ 为了解决这个困境，Java设计团队只好引入了一个不太优雅的设计：==**线程上下文件类加载器(Thread Context ClassLoader)**==。这个类加载器可以通过java.lang.Thread类的setContextClassLoader()方法进行设置，如果创建线程时还未设置，它将会从父线程中继承一个；如果在应用程序的全局范围内都没有设置过，那么这个类加载器默认就是应用程序类加载器。了有线程上下文类加载器，JNDI服务使用这个线程上下文类加载器去加载所需要的SPI代码，<font color='red'>***也就是父类加载器请求子类加载器去完成类加载动作***</font>，这种行为实际上就是打通了双亲委派模型的层次结构来逆向使用类加载器，已经违背了双亲委派模型，但这也是无可奈何的事情。Java中所有涉及SPI的加载动作基本上都采用这种方式，例如JNDI,JDBC,JCE,JAXB和JBI等。
 
 ------
 

@@ -75,8 +75,6 @@ public synchronized void orderProductMockDiffUser(String productId)
 > - **<font color='red'>无法做到细粒度控制。</font>**当有许多商品时，每个商品id不同，但这里对每个商品的抢购都会加锁，假如秒杀A商品的人很多，秒杀B商品的人很少，一旦进入这个方法都会造成一样的慢，这就是说无法做到细粒度的控制。
 > - 只适合单点的情况。只能跑在单机上。***<font color='red' size=4.5>因为`synchronized`锁基于jvm，当应用集群化后，相当于有多个jvm，这种锁自然就失效了。</font>***
 
-
-
 ------
 
 
@@ -118,8 +116,6 @@ public synchronized void orderProductMockDiffUser(String productId)
 
 **<font color='red' size=5>需要手动加锁/解锁</font>**
 
-
-
 引入依赖：
 
 ```xml
@@ -136,9 +132,9 @@ public synchronized void orderProductMockDiffUser(String productId)
 
 > 重点基于：redis的两个命令，具体见http://www.redis.cn/commands.html
 >
->  1. <font color='gree'>redis的 [**SETNX key value**] 对应java代码中的 `setIfAbsent`</font>
+>  1. <font color='#02C874'>redis的 [**SETNX key value**] 对应java代码中的 `setIfAbsent`</font>
 >
-> 2. <font color='gree'>[**GETSET key value**] 对应java代码中的 `getAndSet`</font>
+> 2. <font color='#02C874'>[**GETSET key value**] 对应java代码中的 `getAndSet`</font>
 >
 
 ------
@@ -168,7 +164,7 @@ public class RedisLock {
         if(redisTemplate.opsForValue().setIfAbsent(key, value)) {
             return true;
         }
-
+				
         // 重点：以下代码加入过期判断防止死锁(忘记手动解锁）！！！！
         // currentValue是旧值
         String currentValue = redisTemplate.opsForValue().get(key);
@@ -207,13 +203,15 @@ public class RedisLock {
 
 > **<font color='red'>上面的32行由于，getAndSet相当于原子操作，同时只能有一个线程执行。所以，就算当前锁过期后，有多个线程同时到达30行，也只有一个线程能成功获取锁。</font>**
 
+------
+
 
 
 ### 使用：
 
 Service层代码截取
 
-**<font color='green'>用商品id作为key，可以更细粒度控制代码</font>**
+**<font color='#02C874'>用商品id作为key，可以更细粒度控制代码</font>**
 
 ```java
 @Override

@@ -114,7 +114,7 @@
 
 【法1】
 
-> 从前面所讲可以知道，无返回值的任务，即原生Runnable，在执行`task.run()`时若有异常则会抛出，并只能在`afterExecute(task, thrown)`中进行自定义的处理，<font color='red'>***所以可以==自定义线程池==，继承ThreadPoolExecutor并复写其afterExecute(Runnable r, Throwable t)方法。***</font>
+> 从前面所讲可以知道，无返回值的任务，即原生Runnable，在执行`task.run()`时若有异常则会抛出，并只能在`afterExecute(task, thrown)`中进行自定义的处理，<font color='red'>***所以可以==自定义线程池==，继承ThreadPoolExecutor并覆写其afterExecute(Runnable r, Throwable t)方法。***</font>
 
 ------
 
@@ -123,3 +123,4 @@
 > <font color='red'>***实现`Thread.UncaughtExceptionHandler`接口，并重写实现`void uncaughtException(Thread t, Throwable e);`方法，在该方法中处理异常。并将该handler传递给线程池的ThreadFactory。***</font>
 >
 > 具体可参考：https://juejin.im/post/5d27c3e6518825451f65ee15
+

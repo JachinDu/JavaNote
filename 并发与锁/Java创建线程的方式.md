@@ -8,7 +8,7 @@
 >
 > 3. 使用Callable和Future
 
-***<font color='red'>2、3方法都要调用`new Thread(Runnable args)`，将接口实现类作为参数传入，注意，==`Thread`只接收Runnable对象==，而Callable不是Runnable子接口，需要包装为FutureTask对象才可。</font>***
+***<font color='#02C874'>2、3方法都要调用`new Thread(Runnable args)`，将接口实现类作为参数传入，注意，==`Thread`只接收Runnable对象==，而Callable不是Runnable子接口，需要包装为FutureTask对象才可。</font>***
 
 ------
 
@@ -90,7 +90,7 @@ public interface Callable<V> {
 
 
 
-Java5提供了Future接口来接收Callable接口中call()方法的返回值。**<font color='blue'> Callable接口是 Java5 新增的接口，不是Runnable接口的子接口，所以Callable对象不能直接作为Thread对象的target</font>**。针对这个问题，引入了RunnableFuture接口，**<font color='red'>RunnableFuture接口是Runnable接口和Future接口的子接口，可以作为Thread对象的target </font>**。同时，Java5提供了一个RunnableFuture接口的实现类：FutureTask ，<font color='red'>FutureTask可以作为Thread对象的target。</font>
+Java5提供了Future接口来接收Callable接口中call()方法的返回值。**<font color='#02C874'> Callable接口是 Java5 新增的接口，不是Runnable接口的子接口，所以Callable对象不能直接作为Thread对象的target</font>**。针对这个问题，引入了RunnableFuture接口，**<font color='red'>RunnableFuture接口是Runnable接口和Future接口的子接口，可以作为Thread对象的target </font>**。同时，Java5提供了一个RunnableFuture接口的实现类：FutureTask ，<font color='red'>FutureTask可以作为Thread对象的target。</font>
 
 
 
@@ -158,7 +158,7 @@ class CallableTest implements Callable{
 
 （3）增加程序的健壮性，代码和数据独立
 
-（4）***<font color='gree' size=5>线程池只能放入Runable或Callable接口实现类，不能直接放入继承Thread的类</font>***
+（4）***<font color='#02C874' size=5>线程池只能放入Runable或Callable接口实现类，不能直接放入继承Thread的类</font>***
 
 ## 5.Callable和Runnable的区别
 

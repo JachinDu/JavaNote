@@ -4,9 +4,9 @@
 
 > `BeanFactory`是一个接口，它是Spring中工厂的顶层规范，是SpringIoc容器的核心接口，它定义了`getBean()`、`containsBean()`等管理Bean的通用方法。Spring的容器都是它的具体实现如：
 
-- DefaultListableBeanFactory
-- XmlBeanFactory
-- ApplicationContext
+- <font color='#02C874'>**DefaultListableBeanFactory**</font>
+- <font color='#02C874'>**XmlBeanFactory**</font>
+- <font color='#02C874'>**ApplicationContext**</font>
 
 这些实现类又从不同的维度分别有不同的扩展。
 
@@ -51,7 +51,7 @@ public interface FactoryBean<T> {
 
 <font color='red' size=4>**FactoryBean在Spring中最为典型的一个应用就是用来创建AOP的代理对象。**</font>
 
-我们知道AOP实际上是Spring在运行时创建了一个代理对象，也就是说这个对象，是我们在运行时创建的，而不是一开始就定义好的，这很符合工厂方法模式。更形象地说，AOP代理对象通过Java的反射机制，在运行时创建了一个代理对象，在代理对象的目标方法中根据业务要求织入了相应的方法。这个对象在Spring中就是——<font color='red' size=4>**`ProxyFactoryBean`。**</font>
+我们知道AOP实际上是Spring在运行时创建了一个代理对象，也就是说这个对象，是我们在运行时创建的，而不是一开始就定义好的，这很符合工厂方法模式。更形象地说，AOP代理对象通过Java的反射机制，在运行时创建了一个代理对象，在代理对象的目标方法中根据业务要求织入了相应的方法。这个对象在Spring中就是——**==`ProxyFactoryBean`。==**
 
 <font color='red' size=4>***所以，FactoryBean为我们实例化Bean提供了一个更为灵活的方式，我们可以通过FactoryBean创建出更为复杂的Bean实例。***</font>
 

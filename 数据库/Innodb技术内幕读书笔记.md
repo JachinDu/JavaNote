@@ -25,6 +25,6 @@
 ## &sect; 事务实现（存储引擎层面的日志）
 
 > - Redo log + CheckPoint 实现持久性，redo log是物理日志，直接记录数据的改变，恢复更快。（binlog是数据库层面的日志，是逻辑日志，恢复慢）
-> - Undo log实现回滚（一致性，和原子性），undo log是逻辑日志，在没执行一个命令时，undo log记录一个相反的命令操作，如执行insert，则undo记录对应的delete。
-> - undo log会产生redo log，因为undo log也需要持久性保护。
+> - Undo log实现回滚（一致性，和原子性），<font color='#02C874'>**undo log是逻辑日志，在每执行一个命令时，undo log记录一个相反的命令操作，如执行insert，则undo记录对应的delete。**</font>
+> - **undo log会产生redo log，因为undo log也需要持久性保护。**
 

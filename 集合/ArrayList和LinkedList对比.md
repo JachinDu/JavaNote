@@ -63,7 +63,7 @@ ArraysList 实现了 RandomAccess 接口， 而 LinkedList 没有实现。为什
 
 
 
-### **下面再总结一下 list 的遍历方式选择：**
+### **<font color='red'>下面再总结一下 list 的遍历方式选择：</font>**
 
 - <font color='red'>**实现了 RandomAccess 接口的 list，优先选择普通 for 循环，因为for循环中按索引去get，而如ArrayList支持随机访问 。**</font>
 - <font color='red'>**未实现 RandomAccess 接口的 ist， 优先选择 iterator 遍历（foreach 遍历底层也是通过 iterator 实现的）因为普通for循环中按索引get，这样每一个元素都要遍历到自己为止，开销较大。大 size 的数据，千万不要使用普通 for 循环**</font>

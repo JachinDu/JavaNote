@@ -2,7 +2,7 @@
 
 ## 1、BeanFactory
 
-> `BeanFactory`是一个接口，它是Spring中工厂的顶层规范，是SpringIoc容器的核心接口，它定义了`getBean()`、`containsBean()`等管理Bean的通用方法。Spring的容器都是它的具体实现如：
+> `BeanFactory`是一个接口，***它是Spring中工厂的顶层规范***，是SpringIoc容器的核心接口，它定义了`getBean()`、`containsBean()`等管理Bean的通用方法。Spring的容器都是它的具体实现如：
 
 - <font color='#02C874'>**DefaultListableBeanFactory**</font>
 - <font color='#02C874'>**XmlBeanFactory**</font>

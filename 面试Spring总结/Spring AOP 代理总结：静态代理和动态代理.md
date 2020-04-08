@@ -24,6 +24,8 @@
 
 ## 2、动态代理 - JDK、Cglib
 
+https://mp.weixin.qq.com/s/lcrRSFqR3cDwSy4Ns4hNBQ
+
 **<font color='red'>==运行时增强==：动态代理就是说AOP框架==不会去修改字节码==，而是在==内存中临时为方法生成一个AOP对象==，这个AOP对象包含了目标对象的全部方法，并且在特定的切点做了增强处理，并回调原对象的方法。</font>**
 
 动态代理主要包含：

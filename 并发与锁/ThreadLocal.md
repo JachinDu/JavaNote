@@ -8,6 +8,8 @@
 
 https://blog.csdn.net/coslay/article/details/38293689
 
+**！！！！！https://mp.weixin.qq.com/s/OfAq25eEpA_QEoL2ykU4Dg**
+
 > <font color='#02C874' size=4.1>**ThreadLocal 适用于每个线程需要自己独立的实例且该实例需要在多个方法中被使用（相同线程数据共享），也就是变量在线程间隔离（不同的线程数据隔离）而在方法或类间共享的场景。**</font>
 
 > - <font color='#02C874' size=4.1>**应用场景：Spring事务管理中底层的数据库连接，保证“线程单例”**</font>

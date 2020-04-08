@@ -198,7 +198,7 @@ static final class COWIterator<E> implements ListIterator<E> {
 
 
 
-### &sect; 缺点
+### &sect; ==缺点==
 
 > - <font color='red'>**内存占用**</font>：如果`CopyOnWriteArrayList`经常要增删改里面的数据，经常要执行`add()、set()、remove()`的话，那是比较耗费内存的。
 >

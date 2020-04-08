@@ -190,6 +190,6 @@ select时读取数据的规则为：(==insert/update/delete不用此规则，它
 如何完美解决幻读：
 
 - 使用==串行化读==的隔离级别
-- <font color='#02C874' size=4>***MVCC+==next-key locks==：next-key locks由record locks(索引加锁) 和 gap locks(间隙锁，每次锁住的不光是需要使用的数据，还会锁住这些数据附近的数据)***</font>
+- <font color='#02C874' size=4>***MVCC+==next-key locks==：next-key locks由record locks(索引加锁) 和 gap locks(间隙锁)组成，每次锁住的不光是需要使用的数据，还会锁住这些数据附近的数据)***</font>
 
 实际上很多的项目中是不会使用到上面的两种方法的，串行化读的性能太差，而且其实幻读很多时候是我们完全可以接受的。

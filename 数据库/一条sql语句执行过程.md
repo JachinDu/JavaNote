@@ -18,7 +18,7 @@ mysql主要分为<font color='red'>**Server层和存储引擎层**</font>
 
 ### &sect; 存储引擎
 
-**主要负责数据的存储和读取**，采用可以替换的插件式架构，支持InnoDB、MyISAM、Memory等多个存储引擎，其中InnoDB引擎有自有的日志模块redolog 模块。
+**主要负责数据的存储和读取**，采用可以替换的插件式架构，支持InnoDB、MyISAM、Memory等多个存储引擎，其中InnoDB引擎有自有的日志模块redo log 模块。
 
 
 

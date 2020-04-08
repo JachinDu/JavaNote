@@ -1,5 +1,11 @@
 ## JVM调优
 
+<font color='#02C874' size=5>**常用参数：https://www.cnblogs.com/anyehome/p/9071619.html**</font>
+
+------
+
+
+
 ## JVM参数示例
 
 配置： -Xmx4g –Xms4g –Xmn1200m –Xss512k -XX:NewRatio=4 -XX:SurvivorRatio=8 -XX:PermSize=100m

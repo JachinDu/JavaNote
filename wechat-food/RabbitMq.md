@@ -186,3 +186,7 @@ public void sendOrder() {
 ## 5、==保证数据一致性==
 
 ![image-20200308211239505](../PicSource/image-20200308211239505.png)
+
+------
+
+更高级的一些实现：https://mp.weixin.qq.com/s/IWFZBfyHaSsQFjX7oMa_Bg

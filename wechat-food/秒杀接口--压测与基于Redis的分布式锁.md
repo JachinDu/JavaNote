@@ -254,6 +254,12 @@ public void orderProductMockDiffUser(String productId)
 
 https://juejin.im/post/5bbb0d8df265da0abd3533a5
 
+其中讲到的redis分布式锁存在的问题：
+
+> - <font color='#02C874' size=4>***设置了超时（注意，这里的超时是一个属性，而不是value值），但服务运行时间大于超时时间，这样时间一到，锁相当于释放了，这就尴尬了。通过将value字段当作一个版本号，再释放锁前先判断版本号是否一致，这里版本号采用随机数实现。***</font>
+
+------
+
 
 
 ## 5、易错点难点

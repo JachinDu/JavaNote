@@ -43,6 +43,7 @@ redis 内部使用==**文件事件处理器**== `file event handler`，这个文
 
 ## redis异步后台线程
 
->  <font color='red' size=5>***将一些耗时的后台任务放入对应的任务队列并由对应的后台线程去执行***</font>
+>  <font color='red' size=5>***将一些耗时的后台任务放入对应的任务队列并由对应的后台线程去执行，如AOF。***</font>
 
 ![image-20200410001912478](../PicSource/image-20200410001912478.png)
+

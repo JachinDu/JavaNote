@@ -29,9 +29,19 @@ Nginx 是一款轻量级的 Web 服务器/反向代理服务器及电子邮件�
 
 在高并发情况下需要使用，其原理就是**<font color='red'>将并发请求分摊到多个服务器执行，减轻每台服务器的压力，==多台服务器(集群)==共同完成工作任务，从而提高了数据的吞吐量。</font>**
 
-Nginx 支持的 **weight 轮询（默认）、ip_hash、fair、url_hash 这四种负载均衡调度算法**，感兴趣的可以自行查阅。
+> - <font color='#02C874' size = 4>**weight 轮询（默认）**</font>
+>
+> - <font color='#02C874' size = 4>**ip_hash：相同ip会被负载均衡到同一个upstream server。**</font>
+>
+>   在nginx.conf中配置
+>
+>   ![image-20200410225334101](PicSource/image-20200410225334101.png)
+
+<font color='#02C874'>**Nginx 支持的 weight 轮询（默认）、ip_hash、fair、url_hash 这四种负载均衡调度算法，感兴趣的可以自行查阅。**</font>
 
 负载均衡相比于反向代理更侧重的是将请求分担到多台服务器上去，所以谈论负载均衡只有在提供某服务的服务器大于两台时才有意义。
+
+------
 
 
 

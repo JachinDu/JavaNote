@@ -21,7 +21,7 @@ https://mp.weixin.qq.com/s/7XGD-Z3wrThv5HyoK3B8AQ
   >   -XX:HeapDumpPath=/Users/jc/Desktop/hello.dump // 指定dump文件生成路径
   >   ```
   >
-  > - 当程序出现oom后可拿dump文件利用MAT工具进行分析，定位问题。
+  > - **当程序出现oom后可拿dump文件利用MAT工具进行分析，定位问题。**
   >
   > - ![image-20200408163918491](../PicSource/image-20200408163918491.png)
 

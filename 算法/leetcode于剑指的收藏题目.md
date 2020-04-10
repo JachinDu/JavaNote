@@ -301,11 +301,11 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 > - 【🎖🎖🎖】把数组排成最小的数(自定义Comparator)：核心如下：
 >
 >   ```java
->   Collections.sort(list,new Comparator<Integer>(){
->     public int compare(Integer i1, Integer i2){
->       int i12 = Integer.parseInt(i1 + "" + i2);
->       int i21 = Integer.parseInt(i2 + "" + i1);
->       return i12 - i21;
+>   Collections.sort(list,new Comparator<String>(){
+>     public int compare(String s1, String s2){
+>       String s12 = s1 + "" + s2;
+>       String s21 = s2 + "" + s1;
+>       return s12.compareTo(s21); // 利用String的比较方法，避免转换Integer来比的开销
 >     }
 >   });
 >   ```
@@ -1271,24 +1271,24 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 
 ### 快速幂
 
-> - #### [数值的整数次方](https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/)
+> - ####【🎖🎖🎖🎖】 [数值的整数次方](https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/)
 >
 > ```java
 > class Solution {
 >     public double myPow(double x, int n) {
->         if(x == 0) return 0;
->         long b = n;
->         double res = 1.0;
->         if(b < 0) {
->             x = 1 / x;
->             b = -b;
+>         double res = 1;
+>         double base = x;
+>         boolean flag = n > 0 ? true : false;
+>         long exp = n;
+>         exp = Math.abs(exp);
+>         while(exp > 0){
+>             if((exp & 1) != 0){
+>                 res *= base; // 奇数时计算结果
+>             }
+>             base *= base; // 权值增加
+>             exp >>= 1;
 >         }
->         while(b > 0) {
->             if((b & 1) == 1) res *= x;
->             x *= x;
->             b >>= 1;
->         }
->         return res;
+>         return flag ? res : 1/res;
 >     }
 > }
 > ```

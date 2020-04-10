@@ -17,6 +17,8 @@
 > - <font color='#02C874'>**一旦 Master宕机，Slaver 晋升成 Master，同时需要修改 应用方 的 Master地址，还需要命令所有 Slaver 去 复制 新的Master，整个过程需要 人工干预。**</font>
 >
 
+<font color='red' size=4>***主从复制不要用图状结构，用单向链表结构更为稳定，即：Master <- Slave1 <- Slave2 <- Slave3...。这样的结构==方便解决单点故障问题，实现Slave对Master的替换。如果Master挂了，可以立刻启用Slave1做Master，其他不变==。***</font>
+
 ------
 
 ## 2、hash slot

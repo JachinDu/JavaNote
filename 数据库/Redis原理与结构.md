@@ -97,7 +97,7 @@ struct __attribute__ ((__packed__)) sdshdr64 {
 >
 > ![image-20200409221511040](../PicSource/image-20200409221511040.png)
 >
-> <font color='#02C874' size = 4>**上述lpush/rpop命令无法实现带阻塞的模式，使用==blpop/brpop==命令即可实现。阻塞读在队列没有数据的时候，会立即进入休眠状态，一旦数据到来，则立刻醒过来。消息的延迟几乎为零**</font>
+> <font color='#02C874' size = 4>**上述lpush/rpop命令无法实现带阻塞的模式，使用==blpop/brpop(blocking)==命令即可实现。阻塞读在队列没有数据的时候，会立即进入休眠状态，一旦数据到来，则立刻醒过来。消息的延迟几乎为零**</font>
 
 ------
 
@@ -197,7 +197,7 @@ typedef struct dict {
 
 ------
 
-#### &sect; 渐进式rehash
+#### &sect; <font color='red'>渐进式rehash,解决一次性rehash开销太大</font>
 
 <font color='yellow' size=5>***在分布式系统的日志技术中也有用到类似两份table的技术：Check Point技术***</font>
 
@@ -212,7 +212,7 @@ typedef struct dict {
 
 图例见：http://redisbook.com/preview/dict/incremental_rehashing.html
 
-
+------
 
 <font size = 5>**注意：**</font>
 
@@ -245,15 +245,15 @@ zset是Redis提供的一个非常特别的数据结构，*<font color='red'>一�
 
 ------
 
-> <font color='#02C874' size = 5>***可用来实现延时队列：value为消息，score为到期处理的时间，然后用多线程去轮询到期任务然后去执行。***</font>
+> <font color='#02C874' size = 5>***可用来实现==延时队列==：value为消息，score为到期处理的时间，然后用多线程去轮询到期任务然后去执行。***</font>
 
 ------
 
-### &sect; 位图
+### &sect; <font color='red'>位图</font>
 
 ![image-20200409222603102](../PicSource/image-20200409222603102.png)
 
-> <font color='#02C874' size = 5>**为了节约空间，如统计签到，可以用1代表到，0代表缺，这样很节约空间。然后可以通过位图的命令如bitcount来统计为1的个数，或者bitpos来找到第一个为1/0的位置（注意这两个命令可以指定范围执行，但以8字节为单位）。**</font>
+> <font color='#02C874' size = 5>**为了节约空间，如统计签到，可以用1代表到，0代表缺，这样很节约空间。然后可以通过位图的命令如==bitcount==来统计为1的个数，或者==bitpos==来找到第一个为1/0的位置（注意这两个命令可以指定范围执行，但以8字节为单位）。**</font>
 
 ------
 
@@ -286,7 +286,7 @@ https://mp.weixin.qq.com/s/NOsXdrMrWwq4NTm180a6vw
 
 
 
-> <font color='#02C874' size = 4>***当 Redis 内存超出物理内存限制时，内存的数据会开始和磁盘产生频繁的交换 (swap)***</font>。 交换会让 Redis 的性能急剧下降，对于访问量比较频繁的 Redis 来说，这样龟速的存取效率 基本上等于不可用。
+> <font color='#02C874' size = 4>***当 Redis 内存超出物理内存限制时，==内存的数据会开始和磁盘产生频繁的交换 (swap)==***</font>。 交换会让 Redis 的性能急剧下降，对于访问量比较频繁的 Redis 来说，这样龟速的存取效率 基本上等于不可用。
 
 ------
 
@@ -337,7 +337,7 @@ Redis支持持久化，而且支持两种不同的持久化操作。
 >    save 60 10000        #在60秒(1分钟)之后，如果至少有10000个key发生变化，Redis就会自动触发BGSAVE命令创建快照。
 >    ```
 >
-> 2. **只追加文件(append-only file)持久化(AOF**)：**<font color='red'>记录对内存进行修改的指令记录。并且是先记录aof日志，再执行指令（有点redo log的意思）。宕机后通过回放aof恢复。</font>**
+> 2. **只追加文件(append-only file)持久化(AOF**)：**<font color='red' size = 4>记录对内存进行修改的指令记录。==*并且是先记录aof日志，再执行指令（有点redo log的意思）*==。宕机后通过回放aof恢复。</font>**
 >
 >    在Redis的配置文件中存在三种不同的 AOF 持久化方式，它们分别是：
 >
@@ -612,7 +612,7 @@ Redis 通过 **<font color='red'>MULTI、EXEC、WATCH</font>** 等命令来实�
 >
 > - <font color='#02C874' size=4>**我们可以将 Redis Sentinel 集群看成是一个==Eureka/Zookeeper 集群==。它负责持续监控主从节点的健康，当主节点挂掉时，自动选择一个最优的从节点切换为 主节点。**</font>
 >
-> - <font color='red' size=4>**客户端来连接集群时，==会首先连接 sentinel，通过 sentinel 来查询主节点的地址， 然后再去连接主节点进行数据交互（很想eureka服务注册发现）==。当主节点发生故障时，客户端会重新向 sentinel 要地 址，sentinel 会将最新的主节点地址告诉客户端。如此应用程序将无需重启即可自动完成节 点切换。**</font>
+> - <font color='red' size=4>**客户端来连接集群时，==会首先连接 sentinel，通过 sentinel 来查询主节点的地址， 然后再去连接主节点进行数据交互（很想eureka服务注册发现）==。当主节点发生故障时，客户端会重新向 sentinel 要地址，sentinel 会将最新的主节点地址告诉客户端。如此应用程序将无需重启即可自动完成节 点切换。**</font>
 >
 >   比如上图的主节点挂掉后，集群将可能自动调整为下图所示结构。
 >

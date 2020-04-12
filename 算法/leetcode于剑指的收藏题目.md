@@ -260,6 +260,13 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   ```
 >   
 > - 【🎖🎖】[从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+>
+> - 【🎖🎖🎖】  [二叉树中的最大路径和](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
+>
+>   对于任意一个节点, 如果最大和路径包含该节点, 那么只可能是两种情况:
+>   1. 其左右子树中所构成的和路径值较大的那个加上该节点的值后向父节点回溯构成最大路径
+>   2. 左右子树都在最大路径中, 加上该节点的值构成了最终的最大路径
+>   3. 返回给上层时只能选某一子树，或不选，因为要返回给上层，所以不能返回left + node + right，这样无法与上层节点构成路径
 
 ------
 

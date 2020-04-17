@@ -61,6 +61,10 @@ https://blog.csdn.net/qq_18433441/article/details/81866142
 > **当对象实例化完成并且相关属性以及依赖设置完成之后，Spring容器会检查当前对象实例是否实**
 >
 > **现了一系列的以Aware命名结尾的接口定义。如果是，则将这些Aware接口定义中规定的依赖注入给当前对象实例。**
+>
+> > <font color='#02C874'>**比如想在Bean被加载的过程中获取Spring的应用上下文ApplicationContext，如何实现？**</font>
+>
+> <font color='red'>***Spring框架中有一个ApplicationContextAware接口，接口有一个setApplicationContext方法，只要Bean实现了ApplicationContextAware接口，就可以在该Bean被加载的过程中获取Spring的应用上下文ApplicationContext，在在Bean实例化后，Setter方法之前调用setApplicationContext方法，通过ApplicationContext可以获取Spring容器内的很多信息。***</font>
 
 ------
 

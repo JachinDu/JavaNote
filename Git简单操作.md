@@ -61,3 +61,11 @@
 
 
 https://www.jianshu.com/p/491a14d414f6
+
+------
+
+## 6、常用命令
+
+> - git branch < branch name>：创建分支
+> - git checktout < branch name>：切换分支
+> - git checkout -b \<branch name>：创建新分支并切换到该分支

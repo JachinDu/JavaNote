@@ -98,7 +98,13 @@ public void methodA(){
 
 > Spring Framework 默认使用 AOP 代理，<font color='red'>***在代码运行时生成一个代理对象，根据@Transactional 的属性配置信息，这个代理对象决定该声明@Transactional 的目标方法是否由==拦截器 TransactionInterceptor 来使用拦截==，在 TransactionInterceptor 拦截时，会在在目标方法开始执行之前创建并加入事务，并执行目标方法的逻辑, 最后根据执行情况是否出现异常，利用抽象==事务管理器AbstractPlatformTransactionManager 操作数据源 DataSource 提交或回滚事务。==***</font>
 
+
+
+<font color='#02C874' size=4>**@Transactional 尽量不要加在类上，因为日后可能会为该类添加非事务方法。**</font>
+
 ------
 
 ![img](../PicSource/image001.jpg)
+
+------
 

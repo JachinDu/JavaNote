@@ -798,6 +798,21 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >         }
 >     ```
 >
+> -  【🎖🎖🎖🎖】[01背包问题（有价值）](https://www.lintcode.com/problem/backpack-ii/description)
+>
+> -  【🎖🎖🎖】 [最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/)
+>
+>     ```java
+>     for (int i = 1; i <= len1; i++) {
+>       for (int j = 1; j <= len2; j++) {
+>         dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]); // 无须dp[i-1][j-1]，因为他必然最小，所以取max不会取到的
+>         if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+>           dp[i][j] = dp[i - 1][j - 1] + 1;
+>         }
+>       }
+>     }
+>     ```
+>
 >     
 >
 > -  [不同路径](https://leetcode-cn.com/problems/unique-paths/)：机器人走路
@@ -805,6 +820,39 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 > - 【🎖】 [最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/)：同礼物最大价值
 >
 > - 【🎖🎖🎖🎖】[编辑距离](https://leetcode-cn.com/problems/edit-distance/)
+>
+>     ```java
+>     class Solution {
+>         public int minDistance(String word1, String word2) {
+>             int len1 = word1.length();
+>             int len2 = word2.length();
+>     
+>             int[][] dp = new int[len1 + 1][len2 + 1];
+>     
+>             for (int i = 1; i <= len1; i++) {
+>                 dp[i][0] = i;
+>             }
+>             for (int j = 1; j <= len2; j++) {
+>                 dp[0][j] = j;
+>             }
+>     
+>             for (int i = 1; i <= len1; i++) {
+>                 for (int j = 1; j <= len2; j++) {
+>                     if (word1.charAt(i-1) == word2.charAt(j-1)) {
+>                         dp[i][j] = dp[i - 1][j - 1]; // 无需与dp[i][j-1] dp[i-1][j]做比较，因为他就是最短的
+>                     } else {
+>                         int temp = Math.min(dp[i - 1][j], dp[i][j - 1]);
+>                         temp = Math.min(temp, dp[i - 1][j - 1]);
+>                         dp[i][j] = temp + 1;
+>                     }
+>                 }
+>             }
+>             return dp[len1][len2];
+>         }
+>     }
+>     ```
+>
+>     
 >
 > - 【🎖】[ 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)：动态规划，并维护一个历史最低price值
 >
@@ -822,23 +870,20 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >
 >   
 >
-> - 【🎖🎖🎖🎖】 [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)：找出前面最大dp[i]
+> - 【🎖🎖🎖】 [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)：找出前面最大dp[j]，最终遍历所有dp[i]取最大
 >
 >   ```java
->   for(int i = 1; i < len; i++){
->     int maxLen = 0;
->     for(int j = 0; j < i; j++){
->       // 找以nums[0 -- i]结尾的最长上升子序列
->       if(nums[i] > nums[j] && dp[j] > maxLen){
->         maxLen = dp[j];
+>   for (int i = 1; i < len; i++) {
+>     for (int j = 0; j < i; j++) {
+>       if (nums[j] < nums[i]) {
+>         dp[i] = Math.max(dp[i], dp[j] + 1);
 >       }
 >     }
->     dp[i] = maxLen + 1;
 >   }
 >   ```
->
 >   
->
+>   
+>   
 > - 【🎖🎖】 [二维区域和检索 - 矩阵不可变](https://leetcode-cn.com/problems/range-sum-query-2d-immutable/)：先把每行元素按dp叠加，然后再对结果进行计算。
 >
 > - 【🎖🎖🎖】 [最大正方形](https://leetcode-cn.com/problems/maximal-square/)：`dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]);`

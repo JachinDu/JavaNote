@@ -300,3 +300,5 @@ public class TestCglib {
 
 所以，代理的生成，即上述的jdk以及cglib动态代理都是在postProcessAfterInitialization中
 
+------
+

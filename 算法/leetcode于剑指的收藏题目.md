@@ -890,7 +890,23 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >
 > - 【🎖🎖🎖】 [俄罗斯套娃信封问题](https://leetcode-cn.com/problems/russian-doll-envelopes/)：先按宽度升序排序，宽度相等时按高度降序排序，然后按高度用最长上升子序列的解法
 >
-> - 【🎖🎖🎖🎖🎖】 [最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)：
+> - 【🎖🎖🎖】 [最长回文子序列](https://leetcode-cn.com/problems/longest-palindromic-subsequence/):
+>
+>     ```java
+>     for (int i = len - 1; i >= 0; i--) {
+>       for (int j = i + 1; j < len; j++) {
+>         if (s.charAt(i) == s.charAt(j)) {
+>           dp[i][j] = dp[i + 1][j - 1] + 2;
+>         } else {
+>           dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+>         }
+>       }
+>     }
+>     ```
+>
+>     
+>
+> - 【🎖🎖🎖🎖】 [最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)：
 >
 >     核心：
 >

@@ -1335,6 +1335,67 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 
 ------
 
+### &sect; 贪心
+
+> - 【🎖🎖🎖】 [无重叠区间](https://leetcode-cn.com/problems/non-overlapping-intervals/)：按end排序：
+>
+>   ```java
+>   class Solution {
+>       public int eraseOverlapIntervals(int[][] intervals) {
+>           if(intervals.length == 0) return 0;
+>           Arrays.sort(intervals, new Comparator<int[]>() {
+>               @Override
+>               public int compare(int[] o1, int[] o2) {
+>                   return o1[1] - o2[1];
+>               }
+>           });
+>   
+>           int count = 1; // 至少有一个不重叠区间
+>           int end = intervals[0][1];
+>           for (int[] arr : intervals) {
+>               if (arr[0] >= end) {
+>                   count++;
+>                   end = arr[1];
+>               }
+>           }
+>           return intervals.length - count;
+>       }
+>   }
+>   ```
+>
+> - 【🎖🎖】 [用最少数量的箭引爆气球](https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/)：将>= 改为>，边界也算重叠
+>
+>   ```java
+>   class Solution {
+>       public int findMinArrowShots(int[][] points) {
+>           if(points.length == 0) return 0;
+>           Arrays.sort(points, new Comparator<int[]>() {
+>               @Override
+>               public int compare(int[] o1, int[] o2) {
+>                   return o1[1] - o2[1];
+>               }
+>           });
+>   
+>           int count = 1;
+>           int end = points[0][1];
+>   
+>           for (int[] point : points) {
+>               if (point[0] > end) {
+>                   count++;
+>                   end = point[1];
+>               }
+>           }
+>           return count;
+>       }
+>   }
+>   ```
+>
+>   
+
+------
+
+
+
 ### &sect; 其他
 
 ### 快速幂

@@ -68,13 +68,43 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   
 >
 >   
->- **删除链表中重复的结点（注意指针处理）**
-> 
->- 链表中环的入口结点：（快慢指针，相遇于环内一点，再让一个从链表头，一个从该相遇点开始，最终相遇即为入口）
-> 
->- 从尾到头打印链表
-> 
->- 【🎖🎖🎖🎖】 [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+> - **删除链表中重复的结点（注意指针处理）**
+>
+>   ```java
+>   public ListNode deleteDuplication(ListNode pHead)
+>   {
+>     ListNode dummy = new ListNode(-1);
+>     dummy.next = pHead;
+>     ListNode curr = pHead;
+>     ListNode pre = dummy;
+>     int rm = -1;
+>     while(curr!= null){
+>       if(curr.next == null) { // 防止没删干净
+>         if(curr.val == rm){
+>           pre.next = null;
+>         }
+>         break;
+>       }
+>       if(curr.val == curr.next.val){
+>         rm = curr.val;
+>         pre.next = curr.next.next;
+>         curr = pre.next;
+>       }else{
+>         pre = curr;
+>         curr = curr.next;
+>       }
+>     }
+>     return dummy.next;
+>   }
+>   ```
+>
+>   
+>
+> - 链表中环的入口结点：（快慢指针，相遇于环内一点，再让一个从链表头，一个从该相遇点开始，最终相遇即为入口）
+>
+> - 从尾到头打印链表
+>
+> - 【🎖🎖🎖🎖】 [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
 
 ------
 
@@ -82,7 +112,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 树类
 
-> - 【🎖🎖】平衡二叉树（树）
+> - 【🎖🎖】平衡二叉树
 >
 >   ```java
 >   class Solution {
@@ -107,7 +137,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   
 >
-> - 【🎖🎖】树的子结构（树）
+> - 【🎖🎖】树的子结构
 >
 >   ```java
 >   class Solution {
@@ -231,7 +261,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   
 >
-> - 按之字形顺序打印二叉树：正反序迭代器：iterator/descendingIterator或者用链表的头插/尾插交替（迭代器是对queue的，头插尾插是对当前层遍历的结果的）
+> - 按之字形顺序打印二叉树：正反序迭代器：iterator/descendingIterator或者用链表的头插/尾插交替==插入list==（迭代器是对queue的，头插尾插是对当前层遍历的结果的）
 >
 > - 【🎖🎖🎖🎖】序列化二叉树：关键是利用前序遍历序列重构二叉树：(整体也可使用层序遍历)
 >
@@ -261,7 +291,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   
 > - 【🎖🎖】[从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
 >
-> - 【🎖🎖🎖】  [二叉树中的最大路径和](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
+> - 【🎖🎖🎖🎖】  [二叉树中的最大路径和](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
 >
 >   对于任意一个节点, 如果最大和路径包含该节点, 那么只可能是两种情况:
 >   1. 其左右子树中所构成的和路径值较大的那个加上该节点的值后向父节点回溯构成最大路径
@@ -482,31 +512,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 >   ![img](../PicSource/841505_1472459965615_8640A8F86FB2AB3117629E2456D8C652.jpeg)
 >
->   ```java
->   //这是只用上三角的方法，对角线元素为A[i]
->   public int[] multiply(int[] A) {
->           int len = A.length;
->           int[][] prod = new int[len][len];
->           for(int i = 0; i < len; i++){
->               prod[i][i] = A[i];
->           }
->            
->           for(int i = 0; i < len; i++){
->               for(int j = i+1; j < len; j++){
->                   prod[i][j] = prod[i][j-1] * A[j];
->               }
->           }
->           int[] B = new int[len];
->           for(int i = 0; i < len; i++){
->               int left = i-1 >= 0 ? prod[0][i-1] : 1;
->               int right = i + 1 < len ? prod[i+1][len-1] : 1;
->               B[i] = left * right;
->           }
->           return B;
->       }
->   ```
 >   
->   更简单做法：
 >   
 >   ```java
 >   public class Solution {
@@ -541,7 +547,7 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 栈/堆
 
-> - 栈的压入、弹出序列（栈）
+> - 【🎖🎖】栈的压入、弹出序列（栈）
 >
 > - 包含min函数的栈（栈）：单有一个栈，每轮push都往里压当前min，每轮pop也都往外pop一个。
 >
@@ -613,11 +619,15 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 【🎖🎖🎖】 [简化路径](https://leetcode-cn.com/problems/simplify-path/)：
 >
+>   ```java
 >   // 1.此题主要考察的是““栈””,所以定义一个辅助栈;
 >   // 2.先把字符串以"/"为分隔符分割成数组,此时数组有"路径"、""、"."、".."这四种情况;
 >   // 3.遍历数组,当s[i].equals("..")并且栈不空时pop,当!s[i].equals("") && !s[i].equals(".") && !s[i].equals(".."),即s[i]是路径入栈;
 >   // 4.栈空,返回"/",栈非空,用StringBuffer做一个连接返回即可;
 >   // 5完结。
+>   ```
+>   
+>   
 >   
 > -  [有效的括号字符串](https://leetcode-cn.com/problems/valid-parenthesis-string/)
 >
@@ -798,9 +808,32 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >         }
 >     ```
 >
-> -  【🎖🎖🎖🎖】[01背包问题（有价值）](https://www.lintcode.com/problem/backpack-ii/description)
+> - 【🎖🎖🎖🎖】[01背包问题（有价值）](https://www.lintcode.com/problem/backpack-ii/description)
 >
-> -  【🎖🎖🎖】 [最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/)
+>     ```java
+>     public int backPackII(int m, int[] A, int[] V) {
+>     
+>       int n = A.length;
+>       int[][] dp = new int[n + 1][m + 1];
+>       for (int i = 0; i <= n; i++) {
+>         dp[i][0] = 0;
+>       }
+>       for (int i = 0; i <= m; i++) {
+>         dp[0][i] = 0;
+>       }
+>     
+>       for (int i = 1; i <= n; i++) {
+>         for (int j = 1; j <= m; j++) {
+>           dp[i][j] = Math.max((j >= A[i - 1] ? dp[i - 1][j - A[i -1]] + V[i - 1] : 0), dp[i - 1][j]);
+>         }
+>       }
+>       return dp[n][m];
+>     }
+>     ```
+>
+>     
+>
+> -  【🎖🎖🎖🎖】 [最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/)
 >
 >     ```java
 >     for (int i = 1; i <= len1; i++) {
@@ -858,7 +891,7 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >
 > - [买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
 >
-> - 【🎖🎖】 [完全平方数](https://leetcode-cn.com/problems/perfect-squares/)：找出前面最小dp[i]
+> - 【🎖🎖🎖】 [完全平方数](https://leetcode-cn.com/problems/perfect-squares/)：找出前面最小dp[i]
 >
 >   ```java
 >   for (int i = 2; i <= n; i++) {
@@ -911,14 +944,11 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >     核心：
 >
 >   ```java
->   // 注意遍历起点
->   for(int i = len - 2; i >= 0; i--){
->     for(int j = i + 1; j < len; j++){
->       if(j - 1 >= i + 1 && dp[i+1][j-1] && s.charAt(i) == s.charAt(j)){
->         // 如果i，j之间还有字符串，则先看中间的是不是回文
+>   for (int i = n - 1; i >= 0; i--) {
+>     for (int j = i + 1; j < n; j++) {
+>       if (j - i == 1 && s.charAt(i) == s.charAt(j)) {
 >         dp[i][j] = true;
->       }else if( j - 1 < i + 1 && s.charAt(i) == s.charAt(j)){
->         // 如果i，j之间没有其他字符串了，就直接看i，j是否相同即可
+>       } else if (j - i > 1 && s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1]) {
 >         dp[i][j] = true;
 >       }
 >     }

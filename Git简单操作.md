@@ -17,6 +17,13 @@
 >   ![image-20200127173852621](PicSource/image-20200127173852621.png)
 >
 > - ssh -T git@gitee.com或 ssh -T git@github.com验证公钥配置是否成功
+>
+> - 配置用户信息：
+>
+>   ```shell
+>   $ git config --global user.name "Your Name"
+>   $ git config --global user.email Your_email@example.com
+>   ```
 
 ------
 

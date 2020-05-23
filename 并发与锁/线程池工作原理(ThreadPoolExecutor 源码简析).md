@@ -81,7 +81,7 @@ private static int ctlOf(int rs, int wc) { return rs | wc; }
 >
 > - RUNNING：最正常的状态：接受新的任务，处理等待队列中的任务
 > - SHUTDOWN：<font color='#02C874'>**不接受新的任务提交，但是会继续处理等待队列中的任务**</font>
-> - STOP：不接受新的任务提交，<font color='#02C874'>**不再处理等待队列中的任务，中断正在执行任务的线程**</font>
+> - STOP：不接受新的任务提交，<font color='#02C874'>**不再处理等待队列中的任务，中断销毁正在执行任务的线程**</font>
 > - TIDYING：==**所有的任务都销毁了，workCount 为 0**==。线程池的状态在转换为 TIDYING 状态时，==会执行钩子方法 terminated()==
 > - TERMINATED：terminated() 方法结束后，线程池的状态就会变成这个
 

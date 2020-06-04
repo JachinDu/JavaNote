@@ -5,7 +5,6 @@ if [ -n "$msg" ]; then
 	git push javanote master
 	git push gitee master
 	echo "Success!"
-	git status
 else
 	echo "please add commit msg!"
 fi

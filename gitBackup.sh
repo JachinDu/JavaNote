@@ -1,7 +1,7 @@
-msg=$1
-if [ -n "$msg" ]; then
+
+if [ -n "$1" ]; then
 	git add .
-	git commit -m "${msg}"
+	git commit -m "$1"
 	git push gitee master
 	git push javanote master
 	git status

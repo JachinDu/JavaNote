@@ -9,3 +9,4 @@ if [ -n "$1" ]; then
 else
 	echo "please add commit message!"
 fi
+exit

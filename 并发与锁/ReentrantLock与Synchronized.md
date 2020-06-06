@@ -22,7 +22,7 @@
 
   Lock 锁可以提高多个线程进行读的效率(使用 readWriteLock)
 
-- **<font color='red'>在==竞争不是很激烈==的情况下，Synchronized的性能要优于ReetrantLock（因为优化出了偏向锁、自旋、轻量级锁等）</font>**，但是在资源竞争很激烈的情况下，Synchronized的性能会下降几十倍，但是ReetrantLock的性能能维持常态；
+- **<font color='red'>在==竞争不是很激烈==的情况下，Synchronized的性能要优于ReetrantLock（因为优化出了偏向锁、自旋、轻量级锁等），但是在资源竞争很激烈的情况下，Synchronized的性能会下降几十倍，但是ReetrantLock的性能能维持常态；</font>**
 
 - ReetrantLock 提供了多样化的同步，比如有时间限制的同步，**<font color='#02C874' size=4>*可以被Interrupt的同步（synchronized的同步是不能Interrupt的*</font>**）等
 
@@ -57,7 +57,7 @@ synchronized 是依赖于 JVM 实现的，前面我们也讲到了 虚拟机团�
 ==**场景：锁+队列**==
 
 - <font color='red'>**ReentrantLock 提供了一种能够中断等待锁的线程的机制**，通过 `lock.lockInterruptibly()` 来实现这个机制。也就是说正在等待的线程可以选择放弃等待，改为处理其他事情。</font>
-- **ReentrantLock 可以指定是公平锁还是非公平锁。而 synchronized 只能是非公平锁。所谓的公平锁就是先等待的线程先获得锁。** ReentrantLock 默认情况是非公平的，可以通过 ReentrantLock 类的`ReentrantLock(boolean fair)`构造方法来制定是否是公平的。
+- **ReentrantLock 可以指定是公平锁还是非公平锁。而 synchronized 只能是==非公平锁==。所谓的公平锁就是先等待的线程先获得锁。** ReentrantLock 默认情况是非公平的，可以通过 ReentrantLock 类的`ReentrantLock(boolean fair)`构造方法来制定是否是公平的。
 - **synchronized 关键字与 `wait()`和 `notify/notifyAll()`方法相结合可以实现等待/通知机制。**
 - ReentrantLock 类当然也可以实现，但是**需要借助于 `Condition` 接口与 newCondition() 方法**。Condition 是 JDK1.5 之后才有的，它具有很好的灵活性，比如可以实现多路通知功能也就是在一个 Lock 对象中可以创建多个 Condition 实例（即对象监视器），**<font color='red'>线程对象可以注册在指定的 Condition 中，从而可以有选择性的进行线程通知，在调度线程上更加灵活。 在使用 notify/notifyAll()方法进行通知时，被通知的线程是由 JVM 选择的，用 ReentrantLock 类结合 Condition 实例可以实现“选择性通知”</font>** ，这个功能非常重要，而且是 Condition 接口默认提供的。而 synchronized 关键字就相当于整个 Lock 对象中只有一个 Condition 实例，所有的线程都注册在它一个身上。如果执行 notifyAll()方法的话就会通知所有处于等待状态的线程这样会造成很大的效率问题，而 Condition 实例的 signalAll()方法 只会唤醒注册在该 Condition 实例中的所有等待线程。
 

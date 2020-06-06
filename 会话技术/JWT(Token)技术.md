@@ -246,7 +246,7 @@ payload 中有个标准字段 `exp`，明确表示了这个 token 的过期时�
 
 1. 缩短 token 有效时间
 2. 使用安全系数高的加密算法
-3. token 不要放在 Cookie 中，有 CSRF 风险
+3. **token 不要放在 Cookie 中，有 CSRF 风险**
 4. 使用 HTTPS 加密协议
 5. 对标准字段 iss、sub、aud、nbf、exp 进行校验
 6. 使用成熟的开源库，不要手贱造轮子

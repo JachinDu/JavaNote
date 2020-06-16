@@ -143,5 +143,5 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-**<font color='#02C874'>注意：三个缓存注解是将方法的==“返回值”==作为value存入redis，所以，通常注解不加在Controller层的方法上，因为Controller层的方法通常返回ModelAndView，通常加在Service层。总之，我们通常是要缓存自己定义的数据对象吧。</font>**
+**<font color='#02C874' size = 5>注意：三个缓存注解是将方法的==“返回值”==作为value存入redis，所以，通常注解不加在Controller层的方法上，因为Controller层的方法通常返回ModelAndView，通常加在Service层。总之，我们通常是要缓存自己定义的数据对象吧。</font>**
 

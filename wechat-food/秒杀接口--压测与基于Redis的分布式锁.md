@@ -126,10 +126,6 @@ public synchronized void orderProductMockDiffUser(String productId)
 </dependency>
 ```
 
-
-
-
-
 > 重点基于：redis的两个命令，具体见http://www.redis.cn/commands.html
 >
 >  1. <font color='#02C874'>redis的 [**SETNX key value**] 对应java代码中的 `setIfAbsent`</font>

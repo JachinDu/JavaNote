@@ -37,7 +37,58 @@ public interface FactoryBean<T> {
 复制代码
 ```
 
-<font color='#02C874'>***从它定义的接口可以看出，`FactoryBean`表现的是一个工厂的职责。   即一个Bean A如果实现了FactoryBean接口，那么A就变成了一个工厂，根据A的名称获取到的实际上是工厂调用`getObject()`返回的对象，而不是A本身，如果要获取工厂A自身的实例，那么需要在名称前面加上'`&`'符号。***</font>
+<font color='#02C874'>***从它定义的接口可以看出，`FactoryBean`表现的是一个工厂的职责。   即一个Bean A如果实现了FactoryBean接口，那么A就变成了一个工厂，根据A的名称获取(getBean(A.name))到的实际上是A调用`getObject()`返回的对象，而不是A本身，如果要获取工厂A自身的实例，那么需要在名称前面加上'`&`'符号。***</font>
+```java
+@Component
+public class MyFactoryBean implements FactoryBean<List<String>>, InitializingBean, DisposableBean {
+
+    private static final Logger logger = LoggerFactory.getLogger(MyFactoryBean.class);
+
+    private String params = "";
+
+    private List<String> list;
+
+    //InitializingBean实现方法
+    public void afterPropertiesSet() throws Exception {
+        //属性注入完后，调用该方法，该方法可以实现“业务”逻辑。创建出List<String>集合
+        String[] split = params.split(",");
+        list = Arrays.asList(split);
+    }
+
+    public List<String> getObject() throws Exception {
+        return list;
+    }
+
+    public Class<?> getObjectType() {
+        return List.class;
+    }
+
+    public boolean isSingleton() {
+        return true;
+    }
+
+    //[dɪˈspəʊzəbl]（对象销毁的时候会调用 蒂斯跑则报）DisposableBean  接口的实现方法
+    public void destroy() throws Exception {
+        logger.debug("对象销毁...");
+    }
+
+    public String getParams() {
+        return params;
+    }
+
+    public void setParams(String params) {
+        this.params = params;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
+    }
+}
+```
 
 - getObject('name')返回工厂中的实例
 - getObject('&name')返回工厂本身的实例

@@ -76,3 +76,8 @@ https://www.jianshu.com/p/491a14d414f6
 > - git branch < branch name>：创建分支
 > - git checktout < branch name>：切换分支
 > - git checkout -b \<branch name>：创建新分支并切换到该分支
+
+> 开发前先clone，然后提交push，另一个分支的话要基于一个分支来创建。push到同名远程分支。开发前，先pull一波远程对应分支并rebase：
+>
+> `git pull --rebase remote_name remote_branch_name`
+

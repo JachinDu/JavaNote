@@ -438,6 +438,8 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >
 > - 【🎖🎖🎖】 [下一个排列](https://leetcode-cn.com/problems/next-permutation/)
 >
+>   **核心：Arrays.sort(nums, i, len); 排序数组的指定部分，从i到len**
+>
 >   ```java
 >   class Solution {
 >       public void nextPermutation(int[] nums) {

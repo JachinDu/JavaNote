@@ -112,6 +112,48 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 
 ### &sect; 树类
 
+> - 【🎖🎖🎖🎖】 [将有序数组转换为二叉搜索树](https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/)
+>
+>   ```java
+>   class Solution {
+>       public TreeNode sortedArrayToBST(int[] nums) {
+>           return helper(nums, 0, nums.length - 1);
+>       }
+>   
+>       public TreeNode helper(int[] nums, int left, int right){
+>           if(left > right){
+>               return null;
+>           }
+>   
+>           int mid = left + (right - left) / 2;
+>           TreeNode node = new TreeNode(nums[mid]);
+>           node.left = helper(nums, left, mid - 1);
+>           node.right = helper(nums, mid + 1, right);
+>           return node;
+>       }
+>   }
+>   ```
+>   
+> - 【🎖🎖🎖🎖】 [二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+>
+>   ```java
+>   public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+>     if(root == null || root.val == p.val || root.val == q.val) return root;
+>   
+>     TreeNode left = lowestCommonAncestor(root.left, p, q);
+>     TreeNode right = lowestCommonAncestor(root.right, p, q);
+>     if(left == null){
+>       return right;
+>     }else if(right == null){
+>       return left;
+>     }else{
+>       return root;
+>     }
+>   }
+>   ```
+>
+>   
+>
 > - 【🎖🎖】平衡二叉树
 >
 >   ```java
@@ -843,12 +885,6 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >     
 >       int n = A.length;
 >       int[][] dp = new int[n + 1][m + 1];
->       for (int i = 0; i <= n; i++) {
->         dp[i][0] = 0;
->       }
->       for (int i = 0; i <= m; i++) {
->         dp[0][i] = 0;
->       }
 >     
 >       for (int i = 1; i <= n; i++) {
 >         for (int j = 1; j <= m; j++) {
@@ -858,36 +894,36 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >       return dp[n][m];
 >     }
 >     ```
->
 >     
->
+>     
+>     
 > -  【🎖🎖🎖🎖】 [最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/)
->
+> 
 >     ```java
->     for (int i = 1; i <= len1; i++) {
+>    for (int i = 1; i <= len1; i++) {
 >       for (int j = 1; j <= len2; j++) {
->         dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]); // 无须dp[i-1][j-1]，因为他必然最小，所以取max不会取到的
+>        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]); // 无须dp[i-1][j-1]，因为他必然最小，所以取max不会取到的
 >         if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
->           dp[i][j] = dp[i - 1][j - 1] + 1;
+>          dp[i][j] = dp[i - 1][j - 1] + 1;
 >         }
 >       }
 >     }
->     ```
->
+>    ```
+> 
 >     
->
+> 
 > -  [不同路径](https://leetcode-cn.com/problems/unique-paths/)：机器人走路
->
+> 
 > - 【🎖】 [最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/)：同礼物最大价值
 >
 > - 【🎖🎖🎖🎖】[编辑距离](https://leetcode-cn.com/problems/edit-distance/)
 >
 >     ```java
->     class Solution {
+>    class Solution {
 >         public int minDistance(String word1, String word2) {
->             int len1 = word1.length();
+>            int len1 = word1.length();
 >             int len2 = word2.length();
->     
+>    
 >             int[][] dp = new int[len1 + 1][len2 + 1];
 >     
 >             for (int i = 1; i <= len1; i++) {
@@ -911,34 +947,34 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >             return dp[len1][len2];
 >         }
 >     }
->     ```
->
+>    ```
+> 
 >     
->
+> 
 > - 【🎖】[ 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)：动态规划，并维护一个历史最低price值
->
+> 
 > - [买卖股票的最佳时机 II](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
 >
 > - 【🎖🎖🎖】 [完全平方数](https://leetcode-cn.com/problems/perfect-squares/)：找出前面最小dp[i]
 >
 >   ```java
->   for (int i = 2; i <= n; i++) {
+>  for (int i = 2; i <= n; i++) {
 >     for (int j = 1; j * j <= i; j++) {
->       dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
+>      dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
 >     }
->   }
+>  }
 >   ```
->
+> 
 >   
->
+> 
 > - 【🎖🎖🎖】 [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)：找出前面最大dp[j]，最终遍历所有dp[i]取最大
->
+> 
 >   ```java
->   for (int i = 1; i < len; i++) {
+>  for (int i = 1; i < len; i++) {
 >     for (int j = 0; j < i; j++) {
->       if (nums[j] < nums[i]) {
+>      if (nums[j] < nums[i]) {
 >         dp[i] = Math.max(dp[i], dp[j] + 1);
->       }
+>      }
 >     }
 >   }
 >   ```
@@ -946,37 +982,37 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >   
 >   
 > - 【🎖🎖】 [二维区域和检索 - 矩阵不可变](https://leetcode-cn.com/problems/range-sum-query-2d-immutable/)：先把每行元素按dp叠加，然后再对结果进行计算。
->
-> - 【🎖🎖🎖】 [最大正方形](https://leetcode-cn.com/problems/maximal-square/)：`dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]);`
->
+> 
+> - 【🎖🎖🎖🎖】 [最大正方形](https://leetcode-cn.com/problems/maximal-square/)：`dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]);`
+> 
 > - 【🎖🎖🎖】 [俄罗斯套娃信封问题](https://leetcode-cn.com/problems/russian-doll-envelopes/)：先按宽度升序排序，宽度相等时按高度降序排序，然后按高度用最长上升子序列的解法
->
+> 
 > - 【🎖🎖🎖】 [最长回文子序列](https://leetcode-cn.com/problems/longest-palindromic-subsequence/):
 >
 >     ```java
->     for (int i = len - 1; i >= 0; i--) {
+>    for (int i = len - 1; i >= 0; i--) {
 >       for (int j = i + 1; j < len; j++) {
->         if (s.charAt(i) == s.charAt(j)) {
+>        if (s.charAt(i) == s.charAt(j)) {
 >           dp[i][j] = dp[i + 1][j - 1] + 2;
->         } else {
+>        } else {
 >           dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
 >         }
 >       }
 >     }
->     ```
->
+>    ```
+> 
 >     
->
+> 
 > - 【🎖🎖🎖🎖】 [最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)：
->
+> 
 >     核心：
 >
 >   ```java
->   for (int i = n - 1; i >= 0; i--) {
+>  for (int i = n - 1; i >= 0; i--) {
 >     for (int j = i + 1; j < n; j++) {
->       if (j - i == 1 && s.charAt(i) == s.charAt(j)) {
+>      if (j - i == 1 && s.charAt(i) == s.charAt(j)) {
 >         dp[i][j] = true;
->       } else if (j - i > 1 && s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1]) {
+>      } else if (j - i > 1 && s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1]) {
 >         dp[i][j] = true;
 >       }
 >     }
@@ -991,7 +1027,7 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 
 > - 第一个只出现一次的字符
 >
-> - 【🎖🎖🎖🎖】字符串的排列(固定一位，递归交换)
+> - 【🎖🎖🎖🎖】字符串的排列(固定一位，**递归交换**)
 >
 >   ```java
 >   public void helper(char[] strArr, int start, int end){
@@ -1269,7 +1305,6 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 >   }
 >   ```
 >
->   
 
 ------
 
@@ -1481,3 +1516,7 @@ https://mp.weixin.qq.com/s/45mfS3ciiVt8nghUSjezFg
 > ```
 >
 > 
+
+### 二分查找
+
+> - #### [搜索旋转排序数组](https://leetcode-cn.com/problems/search-in-rotated-sorted-array/)

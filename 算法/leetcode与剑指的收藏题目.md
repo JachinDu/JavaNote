@@ -70,36 +70,32 @@ map的遍历：https://www.jianshu.com/p/3d1fb84b2b63
 >   
 > - **删除链表中重复的结点（注意指针处理）**
 >
+>   左右指针的感觉
+>   
 >   ```java
->   public ListNode deleteDuplication(ListNode pHead)
->   {
+>   public ListNode deleteDuplicates(ListNode head) {
+>     if(head == null) return null;
 >     ListNode dummy = new ListNode(-1);
->     dummy.next = pHead;
->     ListNode curr = pHead;
->     ListNode pre = dummy;
->     int rm = -1;
->     while(curr!= null){
->       if(curr.next == null) { // 防止没删干净
->         if(curr.val == rm){
->           pre.next = null;
->         }
->         break;
+>     dummy.next = head;
+>     ListNode left = head;
+>     ListNode right = head.next;
+>     while(right != null){
+>       if(right.val != left.val){
+>         left.next = right;
+>         left = right;
 >       }
->       if(curr.val == curr.next.val){
->         rm = curr.val;
->         pre.next = curr.next.next;
->         curr = pre.next;
->       }else{
->         pre = curr;
->         curr = curr.next;
+>       if(right.next == null && right.val == left.val){
+>         left.next = null;
 >       }
+>       right = right.next;
 >     }
+>   
 >     return dummy.next;
 >   }
 >   ```
->
 >   
->
+>   
+>   
 > - 链表中环的入口结点：（快慢指针，相遇于环内一点，再让一个从链表头，一个从该相遇点开始，最终相遇即为入口）
 >
 > - 从尾到头打印链表

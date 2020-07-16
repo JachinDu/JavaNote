@@ -374,9 +374,10 @@ Redis支持持久化，而且支持两种不同的持久化操作。
 >   - <font color='#02C874' size=4>**可以通过设置fsync的频率，几乎不丢数据。**</font>
 >
 >   
->**缺点：**
->   
->- <font color='red' size=4>**一样的数据，AOF文件比RDB还要大，一直追加，需要瘦身序列化。**</font>
+>
+> **缺点：**
+>
+> - <font color='red' size=4>**一样的数据，AOF文件比RDB还要大，一直追加，需要瘦身序列化。**</font>
 >   - <font color='red' size=4>**fsync频率太高会影响redis性能。**</font>
 >
 >   - <font color='red' size=4>**恢复慢（因为要执行命令的嘛）**</font>
